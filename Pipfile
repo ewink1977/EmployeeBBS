@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 python-dotenv = "*"
 bcrypt = "*"
+django-crispy-forms = "*"
+fontawesome-free = "*"
 
 [dev-packages]
 
