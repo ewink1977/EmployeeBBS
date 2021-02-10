@@ -19,7 +19,7 @@ from bbs import views as bbsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', bbsView.LogInRegisterView, name = 'home'),
+    path('', bbsView.HomePageView, name = 'home'),
     # path('bbs/', include('bbs.urls')),
     # path('events/', include('events.urls')),
     # path('posts/', include('posts.urls')),

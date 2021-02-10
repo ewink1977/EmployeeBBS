@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
-def LogInRegisterView(request):
-    return render(request, 'bbs/login_registration.html')
+def HomePageView(request):
+    return render(request, 'bbs/homepage.html')
