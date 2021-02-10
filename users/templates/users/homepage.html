@@ -1,0 +1,23 @@
+{% extends 'bbs/base.html' %}
+{% block content %}
+    <div class="row border border-secondary rounded shadow">
+        <div class="col-md-4 home-bg pt-5 d-none d-sm-none d-md-block">
+        </div>
+        <div class="col-md">
+            <div class="text-center">
+                <h1 class="mt-2 display-2 krona">MgRonald's</h1>
+                <h3 class="text-secondary">Employee Digital Bulletin Board System</h3>
+            </div>
+            <div class="col mt-2 border border-secondary rounded shadow">
+                <small class="text-muted">
+                    This system is for MgRonald's employees only! Any unauthorized access is punishable by fines and jail time.
+                </small>
+                <h2>Employee Log In</h2>
+                <hr class="mx-5 my-2 border-info">
+                <div class="col border-top border-secondary pt-2 text-right">
+                    <small class="text-muted">If you do not have an account yet, please <a href="{% url 'register' %}">register here</a>!</small>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

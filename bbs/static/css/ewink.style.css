@@ -1,7 +1,18 @@
 /* Local Styles Go Here! */
 .home-bg {
-    background-image: url('http://douglasavenue.com/img/cheeseburger.png');
-    background-position: top;
+    background-image: url('http://douglasavenue.com/bbsimg/mgronald1.jpg');
+    background-position: top left;
     background-repeat: no-repeat;
     min-height: 800px;
+}
+
+.reg-bg {
+    background-image: url('http://douglasavenue.com/bbsimg/mgronald2.jpg');
+    background-position: top left;
+    background-repeat: no-repeat;
+    min-height: 800px;
+}
+
+.krona {
+    font-family: 'Krona One', sans-serif;
 }

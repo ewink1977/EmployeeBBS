@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'bbs.apps.BbsConfig',
     'events.apps.EventsConfig',
     'posts.apps.PostsConfig',
-    'user.apps.UserConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

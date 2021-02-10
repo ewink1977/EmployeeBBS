@@ -18,11 +18,27 @@
     <link rel="stylesheet" 
         href="{% static 'fontawesome_free/css/all.min.css' %}" 
         type="text/css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" 
+        href="https://fonts.gstatic.com">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap">
 </head>
 <body>
-    {% block content %}
-    {% endblock content %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="col-8">
+                    <div class="alert alert-{{ message.tags }} rounded shadow" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
 
+        {% block content %}
+        {% endblock content %}
+    </div>
     <!-- jQuery & Booty Scripts -->
     <script 
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

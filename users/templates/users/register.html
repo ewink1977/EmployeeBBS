@@ -1,0 +1,27 @@
+{% extends 'bbs/base.html' %}
+{% block content %}
+<div class="row border border-secondary rounded shadow">
+    <div class="col-md-4 reg-bg pt-5 d-none d-sm-none d-md-block"></div>
+    <div class="col-md">
+        <div class="text-center">
+            <h1 class="mt-2 display-2 krona">MgRonald's</h1>
+            <h3 class="text-secondary">Welcome to the Team! We're glad to have you aboard!</h3>
+        </div>
+        <div class="col mt-2 border border-secondary rounded shadow">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend>Sign up for an employee BBS account!</legend>
+                    {{ RegForm.as_p }}
+                </fieldset>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-outline-primary">Sign Up!</button>
+                </div>
+                <div class="border-top border-secondary p-1 text-right">
+                    <small class="text-muted">If you already have an account, please <a href="{% url 'home' %}">Log In</a>.</small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
