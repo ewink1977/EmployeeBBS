@@ -10,6 +10,7 @@ class UserProfile(models.Model):
         on_delete = models.CASCADE
         )
     position = models.CharField(max_length = 255, blank = True)
+    bio = models.TextField(blank = True)
     department = models.IntegerField(default = 1)
     access_level = models.IntegerField(default = 1)
     created_at = models.DateTimeField(auto_now_add = True)

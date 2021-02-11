@@ -19,7 +19,7 @@ class BBSPosts(models.Model):
     )
     content = models.TextField(max_length = 255)
     priority = models.IntegerField(default = 1)
-    display_level = models.IntegerField(default = 1)
+    department = models.IntegerField(default = 1)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
@@ -29,5 +29,3 @@ class BBSReply(BBSPosts):
         related_name = 'bbsReply', 
         on_delete = models.CASCADE
     )
-
-

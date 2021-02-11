@@ -9,6 +9,7 @@ python-dotenv = "*"
 bcrypt = "*"
 django-crispy-forms = "*"
 fontawesome-free = "*"
+pillow = "*"
 
 [dev-packages]
 

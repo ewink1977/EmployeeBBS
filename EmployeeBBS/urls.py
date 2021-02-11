@@ -27,5 +27,5 @@ urlpatterns = [
     path('bbs/', include('bbs.urls')),
     # path('events/', include('events.urls')),
     # path('posts/', include('posts.urls')),
-    # path('users/', include('users.urls')),
+    path('users/', include('users.urls')),
 ]

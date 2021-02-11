@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import BBSPosts, BBSReply
 
-# Register your models here.
+admin.site.register(BBSPosts)
+
+admin.site.register(BBSReply)

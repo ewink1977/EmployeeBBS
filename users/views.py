@@ -2,6 +2,22 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+
+# DEPARTMENT DICTIONARY
+departments = {
+    1: 'Front-Line Crew',
+    2: 'Kitchen',
+    3: 'Maintainance',
+    4: 'Shift Management',
+    5: 'Store Management',
+    6: 'Reserved',
+    7: 'Reserved',
+    8: 'Reserved',
+    9: 'Information Technology'
+}
 
 def Login(request):
     if request.method == 'POST':
@@ -10,8 +26,6 @@ def Login(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
-            # messages.success(request, f'Welcome, @{ user.username }! You have successfully logged in!')
-            # return redirect('bbsHome')
         else:
             messages.error(request, f'Log in has failed. Either create an account or contact your supervisor for help.', extra_tags = 'danger')
             return redirect('home')
@@ -36,3 +50,15 @@ def Register(request):
     else:
         RegistrationForm = RegisterForm()
     return render(request, 'users/register.html', { 'RegForm': RegistrationForm })
+
+@login_required
+def profileView(request, username):
+    viewUser = User.objects.get(username = username)
+    context = {
+        'viewUser': viewUser,
+        'deptList': departments,
+    }
+    return render(request, 'users/profile.html', context)
+
+class profileEdit(View):
+    pass
