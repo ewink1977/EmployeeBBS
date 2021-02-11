@@ -8,8 +8,8 @@ def Register(request):
         RegistrationForm = RegisterForm(request.POST)
         if RegistrationForm.is_valid():
             username = RegistrationForm.cleaned_data.get('username')
-            messages.success(request, f'Account created for @{ username }!')
-            return redirect('bbsHome')
+            messages.success(request, f'Account created for @{ username }! You can now log in.')
+            return redirect('home')
     else:
         RegistrationForm = RegisterForm()
     return render(request, 'users/register.html', { 'RegForm': RegistrationForm })

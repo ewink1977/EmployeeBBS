@@ -1,4 +1,5 @@
 {% extends 'bbs/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="row border border-secondary rounded shadow">
         <div class="col-md-4 home-bg pt-5 d-none d-sm-none d-md-block">
@@ -14,6 +15,16 @@
                 </small>
                 <h2>Employee Log In</h2>
                 <hr class="mx-5 my-2 border-info">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend>Log in to your employee BBS account!</legend>
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group text-right">
+                        <button type="submit" class="btn btn-outline-primary">Log In!</button>
+                    </div>
+                </form>
                 <div class="col border-top border-secondary pt-2 text-right">
                     <small class="text-muted">If you do not have an account yet, please <a href="{% url 'register' %}">register here</a>!</small>
                 </div>

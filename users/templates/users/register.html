@@ -1,4 +1,5 @@
 {% extends 'bbs/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="row border border-secondary rounded shadow">
     <div class="col-md-4 reg-bg pt-5 d-none d-sm-none d-md-block"></div>
@@ -12,7 +13,7 @@
                 {% csrf_token %}
                 <fieldset class="form-group">
                     <legend>Sign up for an employee BBS account!</legend>
-                    {{ RegForm.as_p }}
+                    {{ RegForm|crispy }}
                 </fieldset>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-outline-primary">Sign Up!</button>

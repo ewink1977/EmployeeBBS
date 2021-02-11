@@ -1,0 +1,19 @@
+{% extends 'bbs/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="row border border-secondary rounded shadow">
+        <div class="col-md-4 home-bg pt-5 d-none d-sm-none d-md-block">
+        </div>
+        <div class="col-md">
+                <div class="alert alert-success shadow mt-4 text-center" role="alert">
+                    You have been logged out. Log in again or have a nice day! Your choice!
+                </div>
+            <div class="text-center">
+                <h1 class="mt-2 display-2 krona">MgRonald's</h1>
+                <h3 class="text-secondary">Employee Digital Bulletin Board System</h3>
+            </div>
+            <a href="{% url 'home' %}"><button type="button" class="my-5 btn btn-primary btn-lg btn-block shadow">Log Back In</button></a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
