@@ -44,15 +44,18 @@
     </div>
     <!-- USER DIV -->
     <div class="col">
-        <div class="row border-bottom border-secondary">
+        <div class="row border-bottom border-secondary pb-4">
             <div class="col-sm">
                 <img src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="Placeholder Image" class="rounded shadow placeholder">
             </div>
             <div class="col-sm-8">
-                <a href=""><h1 class="kanit-900">@USERNAME</h1></a>
-                <h5 class="kanit-200">FIRSTNAME LASTNAME</h5>
-                <button type="button" class="btn btn-outline-success my-3">Clock In</button>
-                <small class="text-muted">Previous: OUT > Friday, Feburary 6 @ 18:54</small>
+                <a href=""><h1 class="kanit-900">@{{ user.username }}</h1></a>
+                <h5 class="kanit-200">{{ user.first_name }} {{ user.last_name }}</h5>
+                <small>{{ user.userProfile.department }}</small>
+                <div class="pt-4 text-right">
+                    <button type="button" class="btn btn-outline-success">Clock In</button>
+                    <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-dark">Log Out</button></a>
+                </div>
             </div>
         </div>
         <div class="row border border-secondary justify-content-end">

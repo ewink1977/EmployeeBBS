@@ -21,10 +21,11 @@ from users import views as userView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', AuthViews.LoginView.as_view(template_name = 'users/homepage.html'), name = 'home'),
-    path('logout/', AuthViews.LogoutView.as_view(template_name = 'users/logout.html'), name = 'logout'),
+    path('login/', userView.Login, name = 'login'), 
+    path('logout/', userView.Logout, name = 'logout'),
     path('register/', userView.Register, name = 'register'),
     path('bbs/', include('bbs.urls')),
     # path('events/', include('events.urls')),
     # path('posts/', include('posts.urls')),
-    # path('user/', include('user.urls')),
+    # path('users/', include('users.urls')),
 ]
