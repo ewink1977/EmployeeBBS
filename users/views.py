@@ -60,5 +60,15 @@ def profileView(request, username):
     }
     return render(request, 'users/profile.html', context)
 
+
 class profileEdit(View):
-    pass
+    def get(self, request, username):
+        viewUser = User.objects.get(username = username)
+        if request.user.userProfile.access_level >= 2 or request.user.username == username:
+            context = {
+                'viewUser': viewUser,
+            }
+            return render(request, 'users/edit_profile.html', context)
+        else:
+            messages.error(request, 'Sorry. You do not have access to edit this profile. Contact your supervisor if you believe this is an error.', extra_tags = 'danger')
+            return redirect('userProfile', username)

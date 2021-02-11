@@ -9,6 +9,7 @@
         <h3>{{ viewUser.first_name }} {{ viewUser.last_name }}</h3>
         <h4>{{ viewUser.email }}</h4>
         <h4>{{ viewUser.userProfile.position }}</h4>
+        <p>{{ viewUser.userProfile.bio }}</p>
         
         <!-- Convert Department Number into Department Name! -->
         {% for key, value in deptList.items %}
@@ -17,9 +18,9 @@
             {% endif %}
         {% endfor %}
 
-        {% if user.id == viewUser.id %}
+        {% if user.id == viewUser.id or user.userProfile.access_level > 1 %}
         <div class="col-sm p-4 text-right">
-            <a href=""><button type="button" class="btn btn-outline-primary">Update</button></a>
+            <a href="{% url 'editUserProfile' viewUser.username %}"><button type="button" class="btn btn-outline-primary">Update</button></a>
         </div>
         {% endif %}
     </div>
