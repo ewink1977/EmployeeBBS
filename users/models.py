@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
+        related_name = 'userProfile',
         on_delete = models.CASCADE
         )
     position = models.CharField(max_length = 255, blank = True)
@@ -21,6 +22,6 @@ class UserProfile(models.Model):
         if created:
             UserProfile.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+    # @receiver(post_save, sender=User)
+    # def save_user_profile(sender, instance, **kwargs):
+    #     instance.profile.save()

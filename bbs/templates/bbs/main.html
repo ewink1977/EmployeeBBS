@@ -1,5 +1,101 @@
 {% extends 'bbs/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+<div class="row mt-5">
+    <!-- POST DIV -->
+    <div class="col">
+        <!-- BBS POST -->
+        <div class="row border border-secondary rounded shadow p-2 mx-1 my-1">
+            <div class="row w-100">
+                <div class="col-2">
+                    <img src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="Placeholder Image" class="rounded-circle shadow postPic">
+                </div>
+                <div class="col align-self-center">
+                    <h3 class="anton">@USERNAME <small class="kanit-200 text-muted">First Last</small></h3>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-10">
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit eveniet repellendus cumque dignissimos maxime culpa sequi, neque minus quisquam, enim aliquid, distinctio et nisi tenetur commodi qui autem ipsum molestias?</p>
+                </div>
+            </div>
+            <hr class="w-100 mx-5 my-2 border rounded shadow">
+            <div class="row w-100 p-3 mx-auto align-items-center justify-content-around">
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.5rem;"><i class="text-success fas fa-comment-dots"></i> 5</span>
+                </div>
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.5rem;"><i class="text-danger fas fa-heart"></i> 6</span>
+                </div>
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.5rem;"><i class="text-primary fas fa-bullhorn"></i></span>
+                </div>
+            </div>
+        </div>
+        <!-- END BBS POST -->
+    </div>
+    <!-- USER DIV -->
+    <div class="col">
+        <div class="row border-bottom border-secondary">
+            <div class="col-sm">
+                <img src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="Placeholder Image" class="rounded shadow placeholder">
+            </div>
+            <div class="col-sm-8">
+                <a href=""><h1 class="kanit-900">@USERNAME</h1></a>
+                <h5 class="kanit-200">FIRSTNAME LASTNAME</h5>
+                <button type="button" class="btn btn-outline-success my-3">Clock In</button>
+                <small class="text-muted">Previous: OUT > Friday, Feburary 6 @ 18:54</small>
+            </div>
+        </div>
+        <div class="row border border-secondary justify-content-end">
+            <div class="col-12 text-center p-2">
+                <h1 class="kula">Upcoming Events</h1>
+            </div>
+            <div class="col-10 p-3">
+                <a href=""><strong>Employee Picnic</strong></a>
+                <p>April 3rd, 2021</p>
+                <hr class="my-2 border border-info">
+            </div>
+            <div class="col-10 p-3">
+                <a href=""><strong>Cheeseburder Sale!</strong></a>
+                <p>May 8th, 2021 - May 15th, 2021</p>
+                <hr class="my-2 border border-info">
+            </div>
+            <div class="col-10 p-3">
+                <a href=""><strong>Summer Break Starts!</strong></a>
+                <p>June 3rd, 2021</p>
+                <hr class="my-2 border border-info">
+            </div>
+        </div>
+        <div class="row border border-secondary justify-content-end">
+            <div class="col-12 text-center p-2">
+                <h1 class="kula mt-1">Post A Message!</h1>
+            </div>
+            <div class="col-12 my-3 px-2">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" id="bbsPostMessage" name="bbsPostMessage" rows="5">Type your message here...</textarea>
+                    </div>
+                    <div class="form-inline">
+                        <div class="col text-right">
+                            <select class="custom-select" name="bbsPostDistribution">
+                                <option selected>Distribution</option>
+                                <option value="1">Department</option>
+                                <option value="2">Management</option>
+                                <option value="3">Storewide</option>
+                            </select>
+                            <select class="custom-select" name="bbsPostPriority">
+                                <option selected>Post Priority</option>
+                                <option value="1">Normal</option>
+                                <option value="2">Sticky</option>
+                            </select>
+                            <button type="submit" class="btn btn-outline-primary">Post Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

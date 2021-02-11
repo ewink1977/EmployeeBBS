@@ -16,3 +16,30 @@
 .krona {
     font-family: 'Krona One', sans-serif;
 }
+
+.anton {
+    font-family: 'Anton', sans-serif;
+}
+
+.kanit-200 {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 200;
+}
+
+.kanit-900 {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 900;
+}
+
+.kula {
+    font-family: 'Khula', sans-serif;
+    font-weight: 800;
+}
+
+.placeholder {
+    width: 150px;
+}
+
+.postPic {
+    width: 50px;
+}

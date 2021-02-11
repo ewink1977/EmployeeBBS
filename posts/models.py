@@ -10,12 +10,12 @@ class BBSPosts(models.Model):
         )
     author = models.ForeignKey(
         User,
-        related_name = 'postAuthor',
+        related_name = 'bbsPost',
         on_delete = models.CASCADE
         )
     likes = models.ManyToManyField(
         User,
-        related_name = 'userLike'
+        related_name = 'bbsLike'
     )
     content = models.TextField(max_length = 255)
     priority = models.IntegerField(default = 1)
@@ -26,6 +26,7 @@ class BBSPosts(models.Model):
 class BBSReply(BBSPosts):
     parent = models.ForeignKey(
         BBSPosts,
+        related_name = 'bbsReply', 
         on_delete = models.CASCADE
     )
 
