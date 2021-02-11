@@ -1,38 +1,46 @@
 {% extends 'bbs/base.html' %}
-{% load crispy_forms_tags %}
 {% block content %}
 <div class="row mt-5">
     <!-- POST DIV -->
     <div class="col">
         <!-- BBS POST -->
-        <div class="row border border-secondary rounded shadow p-2 mx-1 my-1">
-            <div class="row w-100">
+        <div class="row border border-secondary rounded shadow p-2 mx-1">
+            <div class="row mb-2 w-100">
                 <div class="col-2">
                     <img src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="Placeholder Image" class="rounded-circle shadow postPic">
                 </div>
                 <div class="col align-self-center">
-                    <h3 class="anton">@USERNAME <small class="kanit-200 text-muted">First Last</small></h3>
+                    <h3 class="anton"><a href="" class="text-dark">@USERNAME</a> <small class="kanit-200 text-muted">First Last</small></h3>
                 </div>
             </div>
             <div class="row justify-content-end">
-                <div class="col-10">
+                <div class="col mx-2">
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit eveniet repellendus cumque dignissimos maxime culpa sequi, neque minus quisquam, enim aliquid, distinctio et nisi tenetur commodi qui autem ipsum molestias?</p>
                 </div>
             </div>
             <hr class="w-100 mx-5 my-2 border rounded shadow">
-            <div class="row w-100 p-3 mx-auto align-items-center justify-content-around">
+            <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
                 <div class="col-2 align-self-center">
-                    <span style="font-size: 1.5rem;"><i class="text-success fas fa-comment-dots"></i> 5</span>
+                    <span style="font-size: 1.2rem;"><i class="text-success fas fa-comment-dots"></i> 5</span>
                 </div>
                 <div class="col-2 align-self-center">
-                    <span style="font-size: 1.5rem;"><i class="text-danger fas fa-heart"></i> 6</span>
+                    <span style="font-size: 1.2rem;"><i class="text-danger fas fa-heart"></i> 6</span>
                 </div>
                 <div class="col-2 align-self-center">
-                    <span style="font-size: 1.5rem;"><i class="text-primary fas fa-bullhorn"></i></span>
+                    <span style="font-size: 1.2rem;"><i class="text-primary fas fa-bullhorn"></i></span>
                 </div>
             </div>
         </div>
         <!-- END BBS POST -->
+        <!-- PAGINATION -->
+        <div class="w-100 col my-3 text-right">
+            <button type="button" class="btn btn-outline-primary btn-sm">First</button>
+            <button type="button" class="btn btn-outline-primary btn-sm">1</button>
+            <button type="button" class="btn btn-primary btn-sm">2</button>
+            <button type="button" class="btn btn-outline-primary btn-sm">3</button>
+            <button type="button" class="btn btn-outline-primary btn-sm">Last</button>
+        </div>
+        <!-- END PAGINATION -->
     </div>
     <!-- USER DIV -->
     <div class="col">
@@ -68,10 +76,10 @@
             </div>
         </div>
         <div class="row border border-secondary justify-content-end">
-            <div class="col-12 text-center p-2">
+            <div class="col-12 text-center mt-1">
                 <h1 class="kula mt-1">Post A Message!</h1>
             </div>
-            <div class="col-12 my-3 px-2">
+            <div class="col-12 my-3">
                 <form action="" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
