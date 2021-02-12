@@ -13,7 +13,7 @@
 <h2>Goals</h2>
 <p>When complete, the system should:</p>
 <ul>
-  <li>Allow a user to create an account, and log in with that account.
+  <li>Allow a user to create an account, and log in with that account. <strong>FEATURE COMPLETE</strong>
     <ul>
       <li>Users will be able to upload a profile picture to use with their account. The will also be able to edit their account information, including changing their username and password.</li>
       <li>Admins will be able to edit user's accounts, including being able to change a user's password (in the case a user forgets it and gets locked out).</li>
@@ -27,7 +27,10 @@
      <li>Admins will be able to delete any message.</li>
     </ul></li>
   <li>Admins will be able to post and edit events that will be displayed on the user's homepage.</li>
-  <li>Employees and managers will be able to use the system as a basic time management system with a clock-in and clock out option, as well as the ability to edit their timesheets (e.g. in the case they forgot to clock out the night before). Admins will be able to edit any user's timesheet. The timesheet system should add up hours worked.</li>
+  <li>Employees and managers will be able to use the system as a basic time management system with a clock-in and clock out option, as well as the ability to edit their timesheets (e.g. in the case they forgot to clock out the night before). Admins will be able to edit any user's timesheet. The timesheet system should add up hours worked.
+    <ul>
+    <li>It should be noted that TIME MANAGEMENT is a low priority feature which may not be completed on time, in which case it will not be added.</li>
+    </ul></li>
   </ul>
 <h2>Front-End</h2>
 <p>To keep things relatively simple, the front end will be developed using Bootstrap for styling, and will incorporate some jQuery functions, primarily AJAX to basically allow the main page to update without reloading the whole page. Tweaks will appear here and there, which is what this GitHub repo is for - so you can make fun of my tweaks.</p>
