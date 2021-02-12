@@ -49,9 +49,14 @@
                 <img src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="Placeholder Image" class="rounded shadow placeholder">
             </div>
             <div class="col-sm-8">
-                <a href=""><h1 class="kanit-900">@{{ user.username }}</h1></a>
-                <h5 class="kanit-200">{{ user.first_name }} {{ user.last_name }}</h5>
-                <small>{{ user.userProfile.department }}</small>
+                <h1 class="kula m-0"><a href="">@{{ user.username }}</a></h1>
+                <h3 class="kanit-200 m-0">{{ user.first_name }} {{ user.last_name }}</h5>
+                <!-- Convert Department Number into Department Name! -->
+                {% for key, value in deptList.items %}
+                    {% if key == user.userProfile.department %}
+                    <h4 class="kanit-200 m-0">{{ value }}</h4>
+                    {% endif %}
+                {% endfor %}
                 <div class="pt-4 text-right">
                     <button type="button" class="btn btn-outline-success">Clock In</button>
                     <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-dark">Log Out</button></a>
@@ -82,6 +87,7 @@
             <!-- PAGINATION -->
             <div class="row mr-3 mb-2">
                 <div class="w-100 col p-0 text-right">
+                    <button type="button" class="btn btn-outline-primary btn-sm">All Events</button>
                     <button type="button" class="btn btn-outline-primary btn-sm">First</button>
                     <button type="button" class="btn btn-outline-primary btn-sm">1</button>
                     <button type="button" class="btn btn-primary btn-sm">2</button>

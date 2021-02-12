@@ -43,3 +43,11 @@
 .postPic {
     width: 50px;
 }
+
+.xl-text {
+    font-size: 4.5rem;
+}
+
+a:hover {
+    text-decoration: none;
+}

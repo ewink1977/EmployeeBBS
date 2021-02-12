@@ -15,7 +15,7 @@ departments = {
     5: 'Store Management',
     6: 'Reserved',
     7: 'Reserved',
-    8: 'Reserved',
+    8: 'Storewide',
     9: 'Information Technology'
 }
 
@@ -72,3 +72,5 @@ class profileEdit(View):
         else:
             messages.error(request, 'Sorry. You do not have access to edit this profile. Contact your supervisor if you believe this is an error.', extra_tags = 'danger')
             return redirect('userProfile', username)
+    def post(self, request):
+        pass
