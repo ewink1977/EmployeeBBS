@@ -2,7 +2,7 @@
 {% block content %}
 <div class="row">
     <div class="col-7 p-5 text-center">
-        <h2 class="anton">Create A New Event!</h2>
+        <h2 class="anton">Update Event</h2>
         <hr class="mx-5 border border-secondary rounded shadow">
     </div>
 </div>
@@ -10,7 +10,7 @@
     <form action="" method="POST">
         <div class="form-group">
             <label for="eventTitle">Title</label>
-            <input type="text" name="eventTitle" id="eventTitle" placeholder="Choose a title for the event..." class="form-control">
+            <input type="text" name="eventTitle" id="eventTitle" class="form-control" value="">
         </div>
         <div class="form-group">
             <label for="eventDesc">Description</label>
@@ -19,11 +19,11 @@
         <div class="form-row">
             <div class="form-group col-4">
                 <label for="eventStart">Start Date:</label>
-                <input type="date" name="eventStart" id="eventStart" class="form-control">
+                <input type="date" name="eventStart" id="eventStart" class="form-control" value="">
             </div>
             <div class="form-group col-4">
                 <label for="eventEnd">End Date:</label>
-                <input type="date" name="eventEnd" id="eventEnd" aria-describedby="dateHelp" class="form-control">
+                <input type="date" name="eventEnd" id="eventEnd" aria-describedby="dateHelp" class="form-control" value="">
                 <small id="dateHelp" class="form-text text-muted">Choose same as start for one-day event.</small>
             </div>
             <div class="form-group col-4">
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col text-right">
-            <button type="submit" class="btn btn-primary">Create Event</button>
+            <button type="submit" class="btn btn-primary">Update Event</button>
         </div>
     </form>
 </div>

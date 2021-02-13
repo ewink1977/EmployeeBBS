@@ -5,19 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
-
-# DEPARTMENT DICTIONARY
-departments = {
-    1: 'Front-Line Crew',
-    2: 'Kitchen',
-    3: 'Maintainance',
-    4: 'Shift Management',
-    5: 'Store Management',
-    6: 'Reserved',
-    7: 'Reserved',
-    8: 'Storewide',
-    9: 'Information Technology'
-}
+from bbs.departments import departments
 
 def Login(request):
     if request.method == 'POST':
