@@ -27,6 +27,6 @@ urlpatterns = [
     path('register/', userView.Register, name = 'register'),
     path('bbs/', include('bbs.urls')),
     path('events/', include('events.urls')),
-    # path('posts/', include('posts.urls')),
+    path('posts/', include('posts.urls')),
     path('users/', include('users.urls')),
 ]
