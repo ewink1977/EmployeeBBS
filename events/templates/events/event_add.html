@@ -1,5 +1,8 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
+<div class="col text-right">
+    <small><a href="{% url 'bbsHome' %}">BBS Main</a> | <a href="{% url 'logout' %}">Log Out</a></small></span>
+</div>
 <div class="row">
     <div class="col-7 p-5 text-center">
         <h2 class="anton">Create A New Event!</h2>
@@ -7,7 +10,8 @@
     </div>
 </div>
 <div class="row mt-2">
-    <form action="" method="POST">
+    <form action="{% url 'createEvent' %}" method="POST">
+        {% csrf_token %}
         <div class="form-group">
             <label for="eventTitle">Title</label>
             <input type="text" name="eventTitle" id="eventTitle" placeholder="Choose a title for the event..." class="form-control">

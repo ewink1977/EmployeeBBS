@@ -1,33 +1,44 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
 <div class="rounded shadow mt-3 px-3 py-2">
+    <div class="col text-right">
+        <small><a href="{% url 'bbsHome' %}">BBS Main</a> | <a href="{% url 'logout' %}">Log Out</a></small></span>
+    </div>
+    <!-- ADD EVENTS -->
+    <div class="row justify-content-end my-3">
+        <div class="col-2">
+            <a href="{% url 'createEvent' %}"><button type="button" class="btn btn-success shadow">New Event</button></a>
+        </div>
+    </div>
     <!-- BEGIN EVENT LIST -->
+    {% for event_obj in events %}
     <div class="row w-100 rounded text-center">
         <div class="col mt-5">
-            <p class="kanit-900 xl-text">Sale On Cheeseburgers!</p>
-            <h3 class="m-0 kula">Storewide</h3>
-            <h5 class="kula">From February 15, 2021 through February 25, 2021</h5>
+            <a href="{% url 'eventView' event_obj.id %}"><p class="kanit-900 xl-text">{{ event_obj.title }}</p></a>
+            {% for key, value in deptList.items %}
+                {% if key == event_obj.department %}
+            <h3 class="m-0 kula">{{ value }}</h3>
+                {% endif %}
+            {% endfor %}
+            {% if event_obj.start_date == event_obj.end_date %}
+            <h5 class="kula">On {{ event_obj.start_date|date:'l, F j, Y' }}</h5>
+            {% else %}
+            <h5 class="kula">From {{ event_obj.start_date|date:'l, F j, Y' }} through {{ event_obj.end_date|date:'l, F j, Y' }}</h5>
+            {% endif %}
         </div>
     </div>
     <hr class="mx-5 border border-light shadow">
     <div class="row justify-content-end w-75">
         <div class="col-11">
-            <h2 class="anton">Added by @USERNAME</h2>
+            <h2 class="anton">Added by <a href="{% url 'userProfile' event_obj.poster.username %}">{{ event_obj.poster.username }}</a></h2>
         </div>
     </div>
     <div class="row justify-content-end">
         <div class="col-11">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id in rem ut magni quam rerum, consequuntur corrupti quos expedita porro delectus, 
-                necessitatibus deserunt commodi labore officia asperiores repellat dicta at.</p>
+            <p>{{ event_obj.description }}</p>
         </div>
     </div>
-    <div class="row justify-content-end my-3">
-        <div class="col-4">
-            <button type="button" class="btn btn-success shadow">New Event</button>
-            <button type="button" class="btn btn-primary shadow">Edit Event</button>
-            <button type="button" class="btn btn-danger shadow">Delete Event</button>
-        </div>
-    </div>
+    {% endfor %}
     <!-- END EVENT LIST -->
 </div>
 {% endblock content %}

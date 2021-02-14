@@ -7,6 +7,12 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from bbs.departments import departments
 
+def homeAuthCheck(request):
+    if request.user:
+        return redirect('bbsHome')
+    else:
+        return redirect('home')
+
 def Login(request):
     if request.method == 'POST':
         username = request.POST['username']

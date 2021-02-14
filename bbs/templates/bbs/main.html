@@ -63,39 +63,31 @@
                 </div>
             </div>
         </div>
-        <div class="row border border-secondary justify-content-end">
+        <div class="row justify-content-end">
             <div class="col-12 text-center p-2">
                 <h1 class="kula">Upcoming Events</h1>
             </div>
+        </div>
+        <div class="row border border-secondary justify-content-end">
             <!-- EVENT LIST -->
+            {% for event_obj in eventList|slice:':5' %}
             <div class="col-10 p-3">
-                <a href=""><strong>Employee Picnic</strong></a>
-                <p>April 3rd, 2021</p>
-                <hr class="my-2 border border-info">
+                <a href="{% url 'eventView' event_obj.pk %}"><strong>{{ event_obj.title }}</strong></a>
+                {% if event_obj.start_date == event_obj.end_date %}
+                <p>On {{ event_obj.start_date|date:'l, F j, Y' }}</p>
+                {% else %}
+                <p>From {{ event_obj.start_date|date:'l, F j, Y' }} through <br />
+                        {{ event_obj.end_date|date:'l, F j, Y' }}</p>
+                {% endif %}
+                <hr class="mx-5 my-1 border border-info">
             </div>
-            <div class="col-10 p-3">
-                <a href=""><strong>Cheeseburder Sale!</strong></a>
-                <p>May 8th, 2021 - May 15th, 2021</p>
-                <hr class="my-2 border border-info">
-            </div>
-            <div class="col-10 p-3">
-                <a href=""><strong>Summer Break Starts!</strong></a>
-                <p>June 3rd, 2021</p>
-                <hr class="my-2 border border-info">
-            </div>
+            {% endfor %}
             <!-- END EVENT LIST -->
-            <!-- PAGINATION -->
-            <div class="row mr-3 mb-2">
+            <div class="row mx-3 my-4">
                 <div class="w-100 col p-0 text-right">
-                    <button type="button" class="btn btn-outline-primary btn-sm">All Events</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">First</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">1</button>
-                    <button type="button" class="btn btn-primary btn-sm">2</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">3</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">Last</button>
+                    <button type="button" class="btn btn-outline-primary btn">All Events</button>
                 </div>
             </div>
-            <!-- END PAGINATION -->
         </div>
         <div class="row border border-secondary justify-content-end">
             <div class="col-12 text-center mt-1">

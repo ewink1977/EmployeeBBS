@@ -19,8 +19,9 @@ from django.urls import path, include
 from users import views as userView
 
 urlpatterns = [
+    path('', userView.homeAuthCheck),
     path('admin/', admin.site.urls),
-    path('', AuthViews.LoginView.as_view(template_name = 'users/homepage.html'), name = 'home'),
+    path('home/', AuthViews.LoginView.as_view(template_name = 'users/homepage.html'), name = 'home'),
     path('login/', userView.Login, name = 'login'), 
     path('logout/', userView.Logout, name = 'logout'),
     path('register/', userView.Register, name = 'register'),
