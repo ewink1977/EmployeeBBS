@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from posts.models import BBSPosts, BBSReply
 
@@ -75,11 +75,31 @@ def createNewPost(request):
         messages.error(request, 'Sorry, you do not have permission to do this.', extra_tags = 'danger')
         return redirect('bbsHome')
 
-def replyToPost(request):
-    pass
+def replyPost(request):
+    if request.method == 'POST':
+        parentUUID = request.POST['bbsReplyParent']
+        parentPost = BBSPosts.objects.get(id = parentUUID)
+        replyAuthor = request.user
+        newReply = BBSReply.objects.create(
+            author = replyAuthor,
+            content = request.POST['bbsReplyMessage'],
+            priority = 1,
+            department = parentPost.department,
+            parent = parentPost
+        )
+        newReply.save()
+        messages.success(request, f'Nice work, @{replyAuthor.username}! Reply posted successfully!')
+        return redirect('postView', parentUUID)
+    else:
+        messages.error(request, 'Sorry, you do not have permission to do this.', extra_tags = 'danger')
+        return redirect('bbsHome')
 
 def likePost(request, postID):
-    pass
+    postToLike = BBSPosts.objects.get(id = postID)
+    userLikingPost = User.objects.get(id = request.user.id)
+    userLikingPost.bbsLike.add(postToLike)
+    messages.success(request, f"You are a nice person for liking {postToLike.author.username}'s post!!")
+    return redirect('bbsHome')
 
 def deletePostConfirm(request, postID):
     postToDelete = BBSPosts.objects.get(id = postID)

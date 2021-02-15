@@ -51,8 +51,8 @@
 </div>
 {% if replies %}
     {% for reply_obj in replies %}
-<div class="row">
-    <div class="col-8">
+<div class="row justify-content-end">
+    <div class="col-10">
         <!-- REPLY POST -->
         <div class="row border border-rounded shadow p-2 mx-1 my-3">
             <div class="row mb-2 w-100">
@@ -86,7 +86,7 @@
 {% endif %}
 <div class="row justify-content-end" id="reply">
     <div class="col-8">
-        <form action="{% url 'replyToPost' %}">
+        <form action="{% url 'replyPost' %}" method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <textarea class="form-control" id="bbsReplyMessage" name="bbsReplyMessage" rows="5">Type your message here...</textarea>
