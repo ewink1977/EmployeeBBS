@@ -11,15 +11,17 @@ from bbs.departments import departments
 def bbsMainView(request):
     if request.user.userProfile.department >= 6:
         postFilter = BBSPosts.objects.filter(priority = 1)
+        eventFilter = storeEvent.objects.order_by('-start_date')
     else:
         postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department)
+        eventFilter = storeEvent.objects.order_by('-start_date').filter(department = 8 or request.user.userProfile.department)
     stickyPosts = BBSPosts.objects.filter(priority = 2)
     storewidePosts = BBSPosts.objects.filter(department = 8)
     # paginator = Paginator(postFilter, 10)
 
     context = {
         'deptList': departments,
-        'eventList': storeEvent.objects.order_by('-start_date'),
+        'eventList': eventFilter,
         'postList': postFilter,
         'storewidePosts': storewidePosts,
         'stickyPosts': stickyPosts,
