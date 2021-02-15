@@ -1,18 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.views.generic import View
+from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from posts.models import BBSPosts, BBSReply
 
 def viewSinglePost(request, postID):
-    pass
+    postObj = BBSPosts.objects.get(id = postID)
+    replies = BBSReply.objects.filter(parent = postObj)
 
-def viewReply(request, postID, replyID):
-    pass
+    context = {
+        'postObj': postObj,
+        'replies': replies,
+    }
+    return render(request, 'posts/post_display.html', context)
 
 def partialPostReturn(request):
-    userPosting = request.user
     if request.user.userProfile.department >= 6:
         postFilter = BBSPosts.objects.filter(priority = 1)
     else:
@@ -77,3 +80,39 @@ def replyToPost(request):
 
 def likePost(request, postID):
     pass
+
+def deletePostConfirm(request, postID):
+    postToDelete = BBSPosts.objects.get(id = postID)
+    context = {
+        'postInfo': postToDelete,
+        'postType': 1
+    }
+    return render(request, 'posts/confirm_delete.html', context)
+
+def deleteReplyConfirm(request, postID):
+    replyToDelete = BBSReply.objects.get(id = postID)
+    context = {
+        'postInfo': replyToDelete,
+        'postType': 2
+        }
+    return render(request, 'posts/confirm_delete.html', context)
+
+def deletePostFinal(request, postID):
+    if request.method == 'POST':
+        deletePost = BBSPosts.objects.get(id = request.POST['postID'])
+        deletePost.delete()
+        messages.success(request, 'Done. The post has been successfully deleted!')
+        return redirect('bbsHome')
+    else:
+        messages.error(request, 'Sorry, you do not have permission to do this.', extra_tags = 'danger')
+        return redirect('bbsHome')
+
+def deleteReplyFinal(request, postID):
+    if request.method == 'POST':
+        deleteReply = BBSReply.objects.get(id = request.POST['replyID'])
+        deleteReply.delete()
+        messages.success(request, 'Done. The reply has been successfully deleted!')
+        return redirect('bbsHome')
+    else:
+        messages.error(request, 'Sorry, you do not have permission to do this.', extra_tags = 'danger')
+        return redirect('bbsHome')

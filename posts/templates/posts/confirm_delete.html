@@ -1,0 +1,30 @@
+{% extends 'bbs/base.html' %}
+{% block content %}
+<div class="row m-5 p-5">
+    <div class="col text-center">
+        <h1>
+            ARE YOU SURE YOU WANT TO DELETE THE POST?
+        </h1>
+        <h4>THERE IS NO UNDOING THIS!</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6 text-right">
+        <a href=""><button type="button" class="btn btn-secondary btn-lg">NO! CANCEL!!</button></a>
+    </div>
+    <div class="col-6 text-left">
+        {% if postType == 1 %}
+        <form action="{% url 'deletePostFinal' postInfo.pk %}" method="POST">
+        <input type="hidden" name="postType" name="postType" value="1">
+        <input type="hidden" name="postID" name="postID" value="{{ postInfo.pk }}">
+        {% elif postType == 2 %}
+        <form action="{% url 'deleteReplyFinal' postInfo.pk %}" method="POST">
+        <input type="hidden" name="postType" name="postType" value="2">
+        <input type="hidden" name="replyID" name="replyID" value="{{ postInfo.pk }}">
+        {% endif %}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-lg">YUP! DELETE IT!</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
