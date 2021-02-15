@@ -1,0 +1,47 @@
+<!-- POST BODY -->
+<div class="row border border-{{ tag }} rounded shadow p-2 mx-1 my-3">
+    <div class="row mb-2 w-100">
+        <div class="media">
+            <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
+            <div class="media-body ml-3 mt-2">
+                <h3 class="anton"><a href="{% url 'userProfile' post_obj.author.username %}" class="text-dark">@{{ post_obj.author.username }}</a> 
+                    <small class="kanit-200 text-muted">{{ post_obj.author.first_name }} {{ post_obj.author.last_name }}</small></h3>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col mx-2">
+            <p>
+                {{ post_obj.content }}
+            </p>
+            <small>
+                <a href="{% url 'postView' post_obj.pk %}">{{ post_obj.created_at|date:"l, N j, Y @ f A" }}</a>
+            </small>
+        </div>
+    </div>
+    <hr class="w-100 mx-5 my-2 border rounded shadow">
+    <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
+        <div class="col-2 align-self-center">
+            <span style="font-size: 1.2rem;"><a href="{% url 'postView' post_obj.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
+                {% if post_obj.bbsReply.all|length > 0 %}
+                {{ post_obj.bbsReply.all|length }}</span>
+                {% else %}
+                0</span>
+                {% endif %}
+        </div>
+        <div class="col-2 align-self-center">
+            <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post_obj.pk %}"><i class="text-danger fas fa-heart"></i></a> 
+                {% if post_obj.likes.all|length > 0 %}
+                {{ post_obj.likes.all|length }}</span>
+                {% else %}
+                0</span>
+                {% endif %}
+        </div>
+        {% if post_obj.priority == 2 or post_obj.department == 8 %}
+        <div class="col-2 align-self-center">
+            <span style="font-size: 1.2rem;"><i class="text-{{ tag }} fas fa-bullhorn"></i></span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- END POST BODY -->

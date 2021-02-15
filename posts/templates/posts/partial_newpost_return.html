@@ -1,172 +1,43 @@
 <!-- THIS SHOULD REPLACE THE CONTENT IN THE POST DIV UPON NEW POST CREATION OR JS REFRESH. -->
 <!-- STICKY LOGIC -->
 {% if stickyPosts %}
-{% for post_obj in stickyPosts %}
-<!-- POST BODY -->
-<div class="row border border-danger rounded shadow p-2 mx-1 my-3">
-    <div class="row mb-2 w-100">
-        <div class="media">
-            <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
-            <div class="media-body ml-3 mt-2">
-                <h3 class="anton"><a href="{% url 'userProfile' post_obj.author.username %}" class="text-dark">@{{ post_obj.author.username }}</a> 
-                    <small class="kanit-200 text-muted">{{ post_obj.author.first_name }} {{ post_obj.author.last_name }}</small></h3>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-end">
-        <div class="col mx-2">
-            <p>
-                {{ post_obj.content }}
-            </p>
-            <small>
-                <a href="{% url 'postView' post_obj.pk %}">{{ post_obj.created_at|date:"l, N j, Y @ f A" }}</a>
-            </small>
-        </div>
-    </div>
-    <hr class="w-100 mx-5 my-2 border rounded shadow">
-    <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><a href="{% url 'postView' post_obj.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
-                {% if post_obj.bbsReply.all|length > 0 %}
-                {{ post_obj.bbsReply.all|length }}</span>
-                {% else %}
-                0</span>
-                {% endif %}
-        </div>
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post_obj.pk %}"><i class="text-danger fas fa-heart"></i></a> 
-                {% if post_obj.likes.all|length > 0 %}
-                {{ post_obj.likes.all|length }}</span>
-                {% else %}
-                0</span>
-                {% endif %}
-        </div>
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><i class="text-danger fas fa-bullhorn"></i></span>
-        </div>
-    </div>
-</div>
-<!-- END POST BODY -->
-{% endfor %}
+    {% for post_obj in stickyPosts %}
+        {% include 'posts/post_body.html' with tag="danger" %}
+    {% endfor %}
 {% endif %}
 <!-- STOREWIDE POSTS ARE NEXT IN LINE! -->
 {% if storewidePosts %}
-{% for post_obj in storewidePosts %}
-<!-- POST BODY -->
-<div class="row border border-warning rounded shadow p-2 mx-1 my-3">
-    <div class="row mb-2 w-100">
-        <div class="media">
-            <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
-            <div class="media-body ml-3 mt-2">
-                <h3 class="anton"><a href="{% url 'userProfile' post_obj.author.username %}" class="text-dark">@{{ post_obj.author.username }}</a> 
-                    <small class="kanit-200 text-muted">{{ post_obj.author.first_name }} {{ post_obj.author.last_name }}</small></h3>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-end">
-        <div class="col mx-2">
-            <p>
-                {{ post_obj.content }}
-            </p>
-            <small>
-                <a href="{% url 'postView' post_obj.pk %}">{{ post_obj.created_at|date:"l, N j, Y @ f A" }}</a>
-            </small>
-        </div>
-    </div>
-    <hr class="w-100 mx-5 my-2 border rounded shadow">
-    <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><a href="{% url 'postView' post_obj.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
-                {% if post_obj.bbsReply.all|length > 0 %}
-                {{ post_obj.bbsReply.all|length }}</span>
-                {% else %}
-                0</span>
-                {% endif %}
-        </div>
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post_obj.pk %}"><i class="text-danger fas fa-heart"></i></a> 
-                {% if post_obj.likes.all|length > 0 %}
-                {{ post_obj.likes.all|length }}</span>
-                {% else %}
-                0</span>
-                {% endif %}
-        </div>
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><i class="text-warning fas fa-bullhorn"></i></span>
-        </div>
-    </div>
-</div>
-<!-- END POST BODY -->
-{% endfor %}
+    {% for post_obj in storewidePosts %}
+        {% include 'posts/post_body.html' with tag="warning" %}
+    {% endfor %}
 {% endif %}
 <!-- FINALLY, THE DEPARTMENT LEVEL POSTS! -->
-{% if postList %}
-{% for post_obj in postList.all|dictsortreversed:'created_at' %}
-{% if post_obj.department != 8 %}
-<!-- POST BODY -->
-<div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
-    <div class="row mb-2 w-100">
-        <div class="media">
-            <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
-            <div class="media-body ml-3 mt-2">
-                <h3 class="anton"><a href="{% url 'userProfile' post_obj.author.username %}" class="text-dark">@{{ post_obj.author.username }}</a> 
-                    <small class="kanit-200 text-muted">{{ post_obj.author.first_name }} {{ post_obj.author.last_name }}</small></h3>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-end">
-        <div class="col mx-2">
-            <p>
-                {{ post_obj.content }}
-            </p>
-            <small>
-                <a href="{% url 'postView' post_obj.pk %}">{{ post_obj.created_at|date:"l, N j, Y @ f A" }}</a>
-            </small>
-        </div>
-    </div>
-    <hr class="w-100 mx-5 my-2 border rounded shadow">
-    <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><a href="{% url 'postView' post_obj.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
-                {% if post_obj.bbsReply.all|length > 0 %}
-                {{ post_obj.bbsReply.all|length }}</span>
-                {% else %}
-                0</span>
-                {% endif %}
-        </div>
-        <div class="col-2 align-self-center">
-            <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post_obj.pk %}"><i class="text-danger fas fa-heart"></i></a> 
-                {% if post_obj.likes.all|length > 0 %}
-                {{ post_obj.likes.all|length }}</span>
-                {% else %}
-                0</span>
-                {% endif %}
-        </div>
-    </div>
-</div>
-<!-- END POST BODY -->
-{% endif %}
-{% endfor %}
+{% if page_obj %}
+    {% for post_obj in page_obj %}
+        {% if post_obj.department != 8 %}
+            {% include 'posts/post_body.html' with tag="secondary" %}
+        {% endif %}
+    {% endfor %}
 {% endif %}
 <!-- POST LIST PAGINATION -->
-{% if postList.has_other_pages %}
+{% if page_obj.has_other_pages %}
 <div class="w-100 col my-3 text-right">
-    {% if postList.has_previous %}
+    {% if page_obj.has_previous %}
     <a href="?page=1"><button type="button" class="btn btn-outline-primary btn-sm">First</button></a>
-    <a href="href=?page={{ postList.previous_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&laquo;</button></a>
+    <a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&laquo;</button></a>
     {% else %}
     <button type="button" class="btn btn-outline-primary btn-sm disabled">&laquo;</button>
     {% endif %}
-    {% for num in postList.paginator.page_range %}
-        {% if postList.number == num %}
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
         <a href="?page={{ num }}"><button type="button" class="btn btn-primary btn-sm">{{ num }}</button></a>
-        {% elif num > postList.number|add:'-3' and num < postList.number|add:'3' %}
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
         <a href="?page={{ num }}"><button type="button" class="btn btn-outline-primary btn-sm">{{ num }}</button></a>
         {% endif %}
     {% endfor %}
     {% if page_obj.has_next %}
-        <a href="?page={{ postList.next_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&raquo;</button></a>
-        <a href="?page={{ postList.paginator.num_pages }}"><button type="button" class="btn btn-outline-primary btn-sm">Last</button></a>
+        <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&raquo;</button></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-outline-primary btn-sm">Last</button></a>
     {% endif %}
 </div>
 {% endif %}
