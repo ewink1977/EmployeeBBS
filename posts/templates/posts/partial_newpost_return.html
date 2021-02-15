@@ -102,6 +102,7 @@
 <!-- FINALLY, THE DEPARTMENT LEVEL POSTS! -->
 {% if postList %}
 {% for post_obj in postList.all|dictsortreversed:'created_at' %}
+{% if post_obj.department != 8 %}
 <!-- POST BODY -->
 <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
     <div class="row mb-2 w-100">
@@ -144,6 +145,7 @@
     </div>
 </div>
 <!-- END POST BODY -->
+{% endif %}
 {% endfor %}
 {% endif %}
 <!-- POST LIST PAGINATION -->

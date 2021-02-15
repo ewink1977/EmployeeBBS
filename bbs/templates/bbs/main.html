@@ -106,6 +106,7 @@
         <!-- FINALLY, THE DEPARTMENT LEVEL POSTS! -->
         {% if postList %}
         {% for post_obj in postList.all|dictsortreversed:'created_at' %}
+        {% if post_obj.department != 8 %}
         <!-- POST BODY -->
         <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
             <div class="row mb-2 w-100">
@@ -148,6 +149,7 @@
             </div>
         </div>
         <!-- END POST BODY -->
+        {% endif %}
         {% endfor %}
         {% endif %}
         <!-- POST LIST PAGINATION -->
@@ -217,7 +219,7 @@
             <!-- END EVENT LIST -->
             <div class="row mx-3 my-4">
                 <div class="w-100 col p-0 text-right">
-                    <button type="button" class="btn btn-outline-primary btn">All Events</button>
+                    <a href="{% url 'eventHome' %}"><button type="button" class="btn btn-outline-primary btn">All Events</button></a>
                 </div>
             </div>
         </div>
@@ -226,7 +228,7 @@
         </div>
         <div class="row border border-secondary justify-content-end">
             <div class="col-12 my-3">
-                <form action="" method="POST">
+                <form action="{% url 'createPost' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
                         <textarea class="form-control" id="bbsPostMessage" name="bbsPostMessage" rows="5">Type your message here...</textarea>
@@ -234,11 +236,11 @@
                     <div class="form-inline">
                         <div class="col text-right">
                             {% if user.userProfile.access_level > 1 %}
-                            <select class="custom-select" name="bbsPostDistribution">
-                                <option selected>Distribution</option>
-                                <option value="1">Department</option>
-                                <option value="2">Management</option>
-                                <option value="3">Storewide</option>
+                            <select class="custom-select" name="bbsPostDepartment">
+                                <option selected>Department/Distribution</option>
+                                {% for key, value in deptList.items %}
+                                <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
                             </select>
                             <select class="custom-select" name="bbsPostPriority">
                                 <option selected>Post Priority</option>

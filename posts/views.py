@@ -11,7 +11,35 @@ def viewReply(request, postID, replyID):
     pass
 
 def createNewPost(request):
-    pass
+    userPosting = request.user
+    if request.user.userProfile.department >= 6:
+        postFilter = BBSPosts.objects.filter(priority = 1)
+    else:
+        postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department)
+    stickyPosts = BBSPosts.objects.filter(priority = 2)
+    storewidePosts = BBSPosts.objects.filter(department = 8)
+    context = {
+        'postList': postFilter,
+        'storewidePosts': storewidePosts,
+        'stickyPosts': stickyPosts,
+    }
+
+    if not request.POST['bbsPostDepartment']:
+        newPost = BBSPosts.objects.create(
+            author = userPosting,
+            content = request.POST['bbsPostMessage']
+        )
+        newPost.save()
+        return render(request, 'posts/partial_newpost_return.html', context)
+    else:
+        newPost = BBSPosts.objects.create(
+            author = userPosting,
+            content = request.POST['bbsPostMessage'],
+            priority = request.POST['bbsPostPriority'],
+            department = request.POST['bbsPostDepartment']
+        )
+        newPost.save()
+        return render(request, 'posts/partial_newpost_return.html', context)
 
 def replyToPost(request):
     pass
