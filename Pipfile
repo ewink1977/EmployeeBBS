@@ -10,6 +10,8 @@ bcrypt = "*"
 django-crispy-forms = "*"
 fontawesome-free = "*"
 pillow = "*"
+boto3 = "*"
+django-storages = "*"
 
 [dev-packages]
 

@@ -1,6 +1,9 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
 <div class="row justify-content-end">
+    <div class="col text-right">
+        <small><a href="{% url 'bbsHome' %}">BBS Main</a> | <a href="{% url 'logout' %}">Log Out</a></small>
+    </div>
     <div class="col-12 my-3">
         <!-- MAIN POST -->
         <div class="row border border-rounded shadow p-4 mx-1 my-3">

@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from bbs.departments import departments
+from posts.models import BBSPosts
 
 def homeAuthCheck(request):
     if request.user:
@@ -48,12 +49,13 @@ def Register(request):
 @login_required
 def profileView(request, username):
     viewUser = User.objects.get(username = username)
+    userPosts = BBSPosts.objects.filter(author = viewUser)
     context = {
         'viewUser': viewUser,
         'deptList': departments,
+        'userPosts': userPosts,
     }
     return render(request, 'users/profile.html', context)
-
 
 class profileEdit(View):
     def get(self, request, username):

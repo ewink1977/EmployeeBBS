@@ -20,13 +20,13 @@
     </ul></li>
   <li>Allow a user to post messages that will appear on their and other user's timeline.
    <ul>
-     <li>Superusers will be able to sticky messages that will appear to all users, regardless of admin level or department.</li>
-     <li>Managers will be able to sticky messages that will appear to only their department.</li>
-     <li>Users will be able to like and reply to messages.</li>
-     <li>Users will be able to delete their own messages.</li>
-     <li>Admins will be able to delete any message.</li>
+     <li>Superusers will be able to sticky messages that will appear to all users, regardless of admin level or department. <strong>FEATURE COMPLETE</strong></li>
+     <li>Managers will be able to sticky messages that will appear to only their department. <strong>FEATURE COMPLETE</strong></li>
+     <li>Users will be able to like and reply to messages. <strong>FEATURE COMPLETE</strong></li>
+     <li>Users will be able to delete their own messages. <strong>FEATURE COMPLETE</strong></li>
+     <li>Admins will be able to delete any message. <strong>FEATURE COMPLETE</strong></li>
     </ul></li>
-  <li>Admins will be able to post and edit events that will be displayed on the user's homepage.</li>
+  <li>Admins will be able to post and edit events that will be displayed on the user's homepage. <strong>FEATURE COMPLETE</strong></li>
   <li>Employees and managers will be able to use the system as a basic time management system with a clock-in and clock out option, as well as the ability to edit their timesheets (e.g. in the case they forgot to clock out the night before). Admins will be able to edit any user's timesheet. The timesheet system should add up hours worked.
     <ul>
     <li>It should be noted that TIME MANAGEMENT is a low priority feature which may not be completed on time, in which case it will not be added.</li>

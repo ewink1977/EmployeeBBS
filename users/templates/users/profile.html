@@ -25,41 +25,65 @@
         {% endif %}
     </div>
     <div class="col-5 p-5 text-right">
-        <img src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="Placeholder Image" class="rounded shadow" style="width: 300px;">
+        <img src="{{ viewUser.userProfile.image.url }}" alt="{{ viewUser.username }}'s Profile Picture" class="rounded shadow" style="width: 300px;">
     </div>
 </div>
 <h2 class="mx-5 my-2">{{ viewUser.username }}'s Posts</h2>
 <div class="row my-3 mx-3">
     <div class="col-8">
+        {% for post in userPosts %}
         <!-- BBS POST -->
-        <div class="row border border-secondary rounded shadow p-2 mx-1">
+        <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
             <div class="row mb-2 w-100">
                 <div class="media">
-                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
+                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ post.author.userProfile.image.url }}" alt="{{ post.author.username }}'s Profile Picture!">
                     <div class="media-body ml-3 mt-2">
-                        <h3 class="anton"><a href="" class="text-dark">@USERNAME</a> <small class="kanit-200 text-muted">First Last</small></h3>
+                        <h3 class="anton"><a href="{% url 'userProfile' post.author.username %}" class="text-dark">@{{ post.author.username }}</a> 
+                            <small class="kanit-200 text-muted">{{ post.author.first_name }} {{ post.author.last_name }}</small></h3>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-end">
                 <div class="col mx-2">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit eveniet repellendus cumque dignissimos maxime culpa sequi, neque minus quisquam, enim aliquid, distinctio et nisi tenetur commodi qui autem ipsum molestias?</p>
+                    <p>
+                        {{ post.content }}
+                    </p>
+                    <small>
+                        <a href="{% url 'postView' post.pk %}">{{ post.created_at|date:"l, N j, Y @ f A" }}</a>
+                    </small>
                 </div>
             </div>
             <hr class="w-100 mx-5 my-2 border rounded shadow">
             <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
                 <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><i class="text-success fas fa-comment-dots"></i> 5</span>
+                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
+                        {% if post.bbsReply.all|length > 0 %}
+                        {{ post.bbsReply.all|length }}</span>
+                        {% else %}
+                        0</span>
+                        {% endif %}
                 </div>
                 <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><i class="text-danger fas fa-heart"></i> 6</span>
+                    <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post.pk %}"><i class="text-danger fas fa-heart"></i></a> 
+                        {% if post.likes.all|length > 0 %}
+                        {{ post.likes.all|length }}</span>
+                        {% else %}
+                        0</span>
+                        {% endif %}
                 </div>
+                {% if post.priority == 2 %}
                 <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><i class="text-primary fas fa-bullhorn"></i></span>
+                    <span style="font-size: 1.2rem;"><i class="text-danger fas fa-bullhorn"></i></span>
                 </div>
+                {% elif post.department == 8 %}
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.2rem;"><i class="text-warning fas fa-bullhorn"></i></span>
+                </div>
+                {% endif %}
             </div>
         </div>
         <!-- END BBS POST -->
+        {% endfor %}
     </div>
     <div class="col-4">
         <span class="text-center"><h3>Time Management?</h3></span>

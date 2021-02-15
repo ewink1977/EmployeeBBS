@@ -1,7 +1,6 @@
 from django.urls import path
 from posts import views as postViews
 
-
 urlpatterns = [
     path('create/', postViews.createNewPost, name = 'createPost'),
     path('partial/', postViews.partialPostReturn, name = 'partialReturn'),
