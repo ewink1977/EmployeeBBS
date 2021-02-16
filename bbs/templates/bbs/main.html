@@ -70,12 +70,14 @@
                             <button type="submit" class="btn btn-outline-success mx-1">Clock In</button>
                             <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-dark mx-1">Log Out</button></a>
                         </form>
+                        <small>Did you forget to clock in? Oops! <a href="#clockModal" data-toggle="modal" data-target="#clockModal">Click here</a>.</small>
                         {% else %}
                         <form action="{% url 'clockOUT' %}" class="form-inline" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-outline-danger mx-1">Clock Out</button>
                             <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-dark mx-1">Log Out</button></a>
                         </form>
+                        <small>Did you forget to clock out? Oops! <a href="#clockModal" data-toggle="modal" data-target="#clockModal">Click here</a>.</small>
                         {% endif %}
                     </div>
                 </div>
@@ -140,6 +142,37 @@
         </div>
     </div>
 </div>
+<!-- TIME EDIT MODAL -->
+<div class="modal fade" id="clockModal" tabindex="-1" role="dialog" aria-labelledby="clockModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clockModalLabel">Manual Time Entry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                {% if timeBoolean == False %}
+                <form action="{% url 'clockIN' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="time">Set your clock in time.</label>
+                    <input type="time" name="time" id="time" class="form-control mb-3">
+                {% else %}
+                <form action="{% url 'clockOUT' %}" method="POST"> 
+                    {% csrf_token %}
+                    <label for="time">Set your clock out time.</label>
+                    <input type="time" name="time" id="time" class="form-control mb-3">
+                {% endif %}
+                    <button type="button" class="btn btn-secondary my-1" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary my-1">Submit Time</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END TIME EDIT MODAL -->
+
 <!-- AJAX FOR THE POST LIST GOES HERE! -->
 <!-- UPDATE THE DISPLAY AFTER A POST IS ADDED! -->
 <script>

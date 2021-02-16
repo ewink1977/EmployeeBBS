@@ -94,7 +94,13 @@ def profileEdit(request):
 def clockIN(request):
     if request.method == 'POST':
         user = request.user
-        time = datetime.now(pytz.utc).time()
+        # CHECK IF TIME INPUT COMES FROM SINGLE CLICK BUTTON OR TIME ADD MODAL.
+        if request.POST['time']:
+            POSTtime = request.POST['time']
+            time = datetime.strptime(POSTtime, "%H:%M").time()
+        else:
+            time = datetime.now(pytz.utc).time()
+
         newPunch = UserTimeManagement.objects.create(
             user = user,
             clocked_in = True,
@@ -110,12 +116,19 @@ def clockIN(request):
 def clockOUT(request):
     if request.method == 'POST':
         user = request.user
-        time = datetime.now(pytz.utc).time()
+        # CHECK IF TIME INPUT COMES FROM SINGLE CLICK BUTTON OR TIME ADD MODAL.
+        if request.POST['time']:
+            POSTtime = request.POST['time']
+            time = datetime.strptime(POSTtime, "%H:%M").time()
+        else:
+            time = datetime.now(pytz.utc).time()
+
         # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
         lastPunch = UserTimeManagement.objects.filter(user = user).last()
         # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.
-        lastPunch.clocked_in = False
         lastPunch.time_out = time
+        lastPunch.clocked_in = False
+        lastPunch.save()
         total_worked = datetime.combine(date.min, lastPunch.time_out) - datetime.combine(date.min, lastPunch.time_in)
         lastPunch.total = total_worked
         lastPunch.save()
