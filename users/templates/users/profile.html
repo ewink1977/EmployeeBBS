@@ -18,9 +18,9 @@
             {% endif %}
         {% endfor %}
 
-        {% if user.id == viewUser.id or user.userProfile.access_level > 1 %}
+        {% if user.id == viewUser.id %}
         <div class="col-sm p-4 text-right">
-            <a href="{% url 'editUserProfile' viewUser.username %}"><button type="button" class="btn btn-outline-primary">Update</button></a>
+            <a href="{% url 'editUserProfile' %}"><button type="button" class="btn btn-outline-primary">Update</button></a>
         </div>
         {% endif %}
     </div>
@@ -89,5 +89,4 @@
         <span class="text-center"><h3>Time Management?</h3></span>
     </div>
 </div>
-
 {% endblock content %}

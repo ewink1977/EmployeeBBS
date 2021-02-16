@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from users.forms import RegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -7,6 +7,7 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from bbs.departments import departments
 from posts.models import BBSPosts
+
 
 def homeAuthCheck(request):
     if request.user:
@@ -57,16 +58,28 @@ def profileView(request, username):
     }
     return render(request, 'users/profile.html', context)
 
-class profileEdit(View):
-    def get(self, request, username):
-        viewUser = User.objects.get(username = username)
-        if request.user.userProfile.access_level >= 2 or request.user.username == username:
-            context = {
-                'viewUser': viewUser,
-            }
-            return render(request, 'users/edit_profile.html', context)
-        else:
-            messages.error(request, 'Sorry. You do not have access to edit this profile. Contact your supervisor if you believe this is an error.', extra_tags = 'danger')
+@login_required
+def profileEdit(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST,
+            instance = request.user
+            )
+        p_form = ProfileUpdateForm(request.POST,
+            request.FILES,
+            instance = request.user.userProfile
+            )
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            username = request.user.username
+            messages.success(request, f'Account updated for @{ username }!')
             return redirect('userProfile', username)
-    def post(self, request):
-        pass
+    else:
+        u_form = UserUpdateForm(instance = request.user)
+        p_form = ProfileUpdateForm(instance = request.user.userProfile)
+    context = {
+        'viewUser': request.user,
+        'u_form': u_form,
+        'p_form': p_form
+    }
+    return render(request, 'users/edit_profile.html', context)

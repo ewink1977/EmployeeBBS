@@ -2,7 +2,7 @@
 <div class="row border border-{{ tag }} rounded shadow p-2 mx-1 my-3">
     <div class="row mb-2 w-100">
         <div class="media">
-            <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
+            <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ post_obj.author.userProfile.image.url }}" alt="{{ post_obj.author.username }}'s picture.">
             <div class="media-body ml-3 mt-2">
                 <h3 class="anton"><a href="{% url 'userProfile' post_obj.author.username %}" class="text-dark">@{{ post_obj.author.username }}</a> 
                     <small class="kanit-200 text-muted">{{ post_obj.author.first_name }} {{ post_obj.author.last_name }}</small></h3>

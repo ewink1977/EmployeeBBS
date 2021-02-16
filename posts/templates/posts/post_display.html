@@ -9,7 +9,7 @@
         <div class="row border border-rounded shadow p-4 mx-1 my-3">
             <div class="row mb-2 w-100">
                 <div class="media">
-                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
+                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ postObj.author.userProfile.image.url }}" alt="{{ postObj.author.username }}'s picture.">
                     <div class="media-body ml-3 mt-2">
                         <h3 class="anton"><a href="{% url 'userProfile' postObj.author.username %}" class="text-dark">@{{ postObj.author.username }}</a> 
                             <small class="kanit-200 text-muted">{{ postObj.author.first_name }} {{ postObj.author.last_name }}</small></h3>
@@ -60,7 +60,7 @@
         <div class="row border border-rounded shadow p-2 mx-1 my-3">
             <div class="row mb-2 w-100">
                 <div class="media">
-                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="placeholder image">
+                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ reply_obj.author.userProfile.image.url }}" alt="{{ reply_obj.author.username }}'s picture.">
                     <div class="media-body ml-3 mt-2">
                         <h3 class="anton"><a href="{% url 'userProfile' reply_obj.author.username %}" class="text-dark">@{{ reply_obj.author.username }}</a> 
                             <small class="kanit-200 text-muted">{{ reply_obj.author.first_name }} {{ reply_obj.author.last_name }}</small></h3>

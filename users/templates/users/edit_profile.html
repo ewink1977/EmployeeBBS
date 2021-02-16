@@ -1,6 +1,7 @@
 {% extends 'bbs/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-<div class="row my-3 mx-3 border border-dark rounded shadow">
+<div class="row my-3 mx-3 p-3 border border-dark rounded shadow">
     <div class="col text-right">
         <small><a href="{% url 'userProfile' viewUser.username %}">Back To Profile</a> | <a href="{% url 'logout' %}">Log Out</a></small></span>
     </div>
@@ -10,50 +11,21 @@
             <hr class="mx-4 border border-secondary rounded shadow">
         </div>
     </div>
-    <div class="row">
-        <div class="col-7 ml-5 mt-2 text-right">
-            <h1 class="anton">{{ viewUser.username }}</h1>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ viewUser.first_name }}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ viewUser.last_name }}">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="email">email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ viewUser.email }}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        {% if user.userProfile.access_level < 2 %}
-                        <fieldset disabled="disabled">
-                        {% endif %}
-                            <label for="position">Position</label>
-                            <input type="text" class="form-control" id="position" name="position" value="{{ viewUser.userProfile.position }}">
-                        {% if user.userProfile.access_level < 2 %}
-                        </fieldset>
-                        {% endif %}
-                    </div>
-                    <div class="form-group col w-100">
-                        <label for="bio">Personal Biography!</label>
-                        <textarea class="form-control" name="bio" id="bio" rows="5">{{ viewUser.userProfile.bio }}</textarea>
-                    </div>
-                </div>
-                <div class="text-right p-3 my-2">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
-        </div>
-        <div class="col p-5 text-right">
-            <img src="http://douglasavenue.com/bbsimg/bbsplaceholder.jpg" alt="Placeholder Image" class="rounded shadow" style="width: 300px;">
-            <button type="button" class="btn btn-outline-dark m-3">Update Image</button>
-        </div>
+    <div class="col mt-2 border border-secondary rounded shadow">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="anton">{{ viewUser.username }}</legend>
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-outline-primary">Update Profile!</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-5 p-5 text-right">
+        <img src="{{ viewUser.userProfile.image.url }}" alt="Your Image!" class="rounded shadow" style="width: 300px;">
     </div>
 </div>
 {% endblock content %}
