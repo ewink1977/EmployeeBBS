@@ -1,5 +1,6 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
+{% load tz %}
 <div class="row my-3 mx-3 justify-content-end">
     <div class="col-3 text-right"><small><a href="{% url 'bbsHome' %}">BBS Main Page</a> | <a href="{% url 'logout' %}">Log Out</a></div></small>
 </div>
@@ -93,19 +94,23 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Punch ID</th>
-                        <th scope="col">Clock In</th>
-                        <th scope="col">Clock Out</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">In</th>
+                        <th scope="col">Out</th>
                         <th scope="col">Time Worked</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for punch in timeClock %}
                     <tr>
-                        <th scope="row">PUNCH ID</th>
-                        <td>00:00</td>
-                        <td>08:00</td>
-                        <td>8 hrs</td>
+                        <th scope="row">{{ punch.pk }}</th>
+                        <td>{{ punch.updated_at|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td>{{ punch.time_in|date:"H:i" }}</td>
+                        <td>{{ punch.time_out|date:"H:i" }}</td>
+                        <td>{{ punch.total }}</td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
