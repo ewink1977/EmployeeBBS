@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 from posts.models import BBSPosts
 from events.models import storeEvent
+from users.models import UserTimeManagement
 # DEPARTMENT DICTIONARY IMPORT!
 from bbs.departments import departments
 
@@ -22,6 +23,14 @@ def bbsMainView(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    # GET THE USER'S PUNCHS. ALL OF THEM!!!
+    lastPunch = UserTimeManagement.objects.filter(user = request.user).last()
+    # GOTTA MAKE THIS WORK FOR PEOPLE WHO HAVE NEVER CLOCKED IN BEFORE AND HAVE NO TIME RECORDS!
+    if lastPunch:
+        lastPunchBoolean = lastPunch.clocked_in
+    else:
+        lastPunchBoolean = False
+
     context = {
         'deptList': departments,
         'eventList': eventFilter,
@@ -29,5 +38,6 @@ def bbsMainView(request):
         'page_obj': page_obj,
         'storewidePosts': storewidePosts,
         'stickyPosts': stickyPosts,
+        'timeBoolean': lastPunchBoolean,
     }
     return render(request, 'bbs/main.html', context)

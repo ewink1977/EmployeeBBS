@@ -7,6 +7,9 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from bbs.departments import departments
 from posts.models import BBSPosts
+from users.models import UserTimeManagement
+from datetime import datetime, date, timedelta
+import pytz
 
 
 def homeAuthCheck(request):
@@ -47,6 +50,8 @@ def Register(request):
         RegistrationForm = RegisterForm()
     return render(request, 'users/register.html', { 'RegForm': RegistrationForm })
 
+# vv PROFILE MANAGEMENT vv
+
 @login_required
 def profileView(request, username):
     viewUser = User.objects.get(username = username)
@@ -83,3 +88,39 @@ def profileEdit(request):
         'p_form': p_form
     }
     return render(request, 'users/edit_profile.html', context)
+
+# vv TIME MANAGEMENT vv
+
+def clockIN(request):
+    if request.method == 'POST':
+        user = request.user
+        time = datetime.now(pytz.utc).time()
+        newPunch = UserTimeManagement.objects.create(
+            user = user,
+            clocked_in = True,
+            time_in = time
+        )
+        newPunch.save()
+        messages.success(request, f'{ user.username }, you have been successfully clocked in!')
+        return redirect('bbsHome')
+    else:
+        messages.error(request, "You can't do things this way. If you think you got this message in error, please contact IT or your supervisor.", extra_tags = 'danger')
+        return redirect('bbsHome')
+
+def clockOUT(request):
+    if request.method == 'POST':
+        user = request.user
+        time = datetime.now(pytz.utc).time()
+        # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
+        lastPunch = UserTimeManagement.objects.filter(user = user).last()
+        # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.
+        lastPunch.clocked_in = False
+        lastPunch.time_out = time
+        total_worked = datetime.combine(date.min, lastPunch.time_out) - datetime.combine(date.min, lastPunch.time_in)
+        lastPunch.total = total_worked
+        lastPunch.save()
+        messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')
+        return redirect('bbsHome')
+    else:
+        messages.error(request, "You can't do things this way. If you think you got this message in error, please contact IT or your supervisor.", extra_tags = 'danger')
+        return redirect('bbsHome')
