@@ -30,7 +30,7 @@
 </div>
 <h2 class="mx-5 my-2">{{ viewUser.username }}'s Posts</h2>
 <div class="row my-3 mx-3">
-    <div class="col-8">
+    <div class="col-7">
         {% for post in userPosts %}
         <!-- BBS POST -->
         <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
@@ -85,8 +85,31 @@
         <!-- END BBS POST -->
         {% endfor %}
     </div>
-    <div class="col-4">
-        <span class="text-center"><h3>Time Management?</h3></span>
+    {% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
+    <div class="col-5">
+        <span class="text-center"><h3>Time Management</h3></span>
+        <hr class="border border-secondary rounded shadow mx-5">
+        <div class="row border border-secondary rounded shadow my-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Punch ID</th>
+                        <th scope="col">Clock In</th>
+                        <th scope="col">Clock Out</th>
+                        <th scope="col">Time Worked</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">PUNCH ID</th>
+                        <td>00:00</td>
+                        <td>08:00</td>
+                        <td>8 hrs</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+    {% endif %}
 </div>
 {% endblock content %}

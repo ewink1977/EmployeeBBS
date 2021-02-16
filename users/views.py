@@ -3,14 +3,12 @@ from users.forms import RegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from bbs.departments import departments
 from posts.models import BBSPosts
 from users.models import UserTimeManagement
 from datetime import datetime, date, timedelta
 import pytz
-
 
 def homeAuthCheck(request):
     if request.user:
@@ -56,10 +54,12 @@ def Register(request):
 def profileView(request, username):
     viewUser = User.objects.get(username = username)
     userPosts = BBSPosts.objects.filter(author = viewUser)
+    timeClock = UserTimeManagement.objects.filter(user = viewUser)
     context = {
         'viewUser': viewUser,
         'deptList': departments,
         'userPosts': userPosts,
+        'timeClock': timeClock,
     }
     return render(request, 'users/profile.html', context)
 
@@ -91,15 +91,49 @@ def profileEdit(request):
 
 # vv TIME MANAGEMENT vv
 
+def manualClockIN(request):
+    if request.method == 'POST':
+        user = request.user
+        POSTtime = request.POST['time']
+        time = datetime.strptime(POSTtime, "%Y-%m-%dT%H:%M")
+        adjustedTime = time + timedelta(hours=8)
+        newPunch = UserTimeManagement.objects.create(
+            user = user,
+            clocked_in = True,
+            time_in = adjustedTime.time()
+        )
+        newPunch.save()
+        messages.success(request, f'{ user.username }, you have been successfully clocked in!')
+        return redirect('bbsHome')
+    else:
+        messages.error(request, "You can't do things this way. If you think you got this message in error, please contact IT or your supervisor.", extra_tags = 'danger')
+        return redirect('bbsHome')
+
+def manualClockOUT(request):
+    if request.method == 'POST':
+        user = request.user
+        POSTtime = request.POST['time']
+        time = datetime.strptime(POSTtime, "%Y-%m-%dT%H:%M")
+        adjustedTime = time + timedelta(hours=8)
+        # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
+        lastPunch = UserTimeManagement.objects.filter(user = user).last()
+        # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.
+        lastPunch.time_out = adjustedTime.time()
+        lastPunch.clocked_in = False
+        lastPunch.save()
+        total_worked = datetime.combine(date.min, lastPunch.time_out) - datetime.combine(date.min, lastPunch.time_in)
+        lastPunch.total = total_worked
+        lastPunch.save()
+        messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')
+        return redirect('bbsHome')
+    else:
+        messages.error(request, "You can't do things this way. If you think you got this message in error, please contact IT or your supervisor.", extra_tags = 'danger')
+        return redirect('bbsHome')
+
 def clockIN(request):
     if request.method == 'POST':
         user = request.user
-        # CHECK IF TIME INPUT COMES FROM SINGLE CLICK BUTTON OR TIME ADD MODAL.
-        if request.POST['time']:
-            POSTtime = request.POST['time']
-            time = datetime.strptime(POSTtime, "%H:%M").time()
-        else:
-            time = datetime.now(pytz.utc).time()
+        time = datetime.now(pytz.utc).time()
 
         newPunch = UserTimeManagement.objects.create(
             user = user,
@@ -116,13 +150,7 @@ def clockIN(request):
 def clockOUT(request):
     if request.method == 'POST':
         user = request.user
-        # CHECK IF TIME INPUT COMES FROM SINGLE CLICK BUTTON OR TIME ADD MODAL.
-        if request.POST['time']:
-            POSTtime = request.POST['time']
-            time = datetime.strptime(POSTtime, "%H:%M").time()
-        else:
-            time = datetime.now(pytz.utc).time()
-
+        time = datetime.now(pytz.utc).time()
         # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
         lastPunch = UserTimeManagement.objects.filter(user = user).last()
         # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.

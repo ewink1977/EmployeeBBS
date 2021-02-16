@@ -67,6 +67,7 @@
                         {% if timeBoolean == False %}
                         <form action="{% url 'clockIN' %}" class="form-inline" method="POST">
                             {% csrf_token %}
+                            <input type="hidden" name="oneClick" value="1">
                             <button type="submit" class="btn btn-outline-success mx-1">Clock In</button>
                             <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-dark mx-1">Log Out</button></a>
                         </form>
@@ -154,15 +155,15 @@
             </div>
             <div class="modal-body p-4">
                 {% if timeBoolean == False %}
-                <form action="{% url 'clockIN' %}" method="POST">
+                <form action="{% url 'manualClockIN' %}" method="POST">
                     {% csrf_token %}
                     <label for="time">Set your clock in time.</label>
-                    <input type="time" name="time" id="time" class="form-control mb-3">
+                    <input type="datetime-local" name="time" id="time" class="form-control mb-3">
                 {% else %}
-                <form action="{% url 'clockOUT' %}" method="POST"> 
+                <form action="{% url 'manualClockOUT' %}" method="POST"> 
                     {% csrf_token %}
                     <label for="time">Set your clock out time.</label>
-                    <input type="time" name="time" id="time" class="form-control mb-3">
+                    <input type="datetime-local" name="time" id="time" class="form-control mb-3">
                 {% endif %}
                     <button type="button" class="btn btn-secondary my-1" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary my-1">Submit Time</button>
