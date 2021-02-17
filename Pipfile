@@ -12,6 +12,7 @@ fontawesome-free = "*"
 pillow = "*"
 boto3 = "*"
 django-storages = "*"
+ipython = "*"
 
 [dev-packages]
 

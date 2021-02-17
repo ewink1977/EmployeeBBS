@@ -85,7 +85,8 @@ def replyPost(request):
             content = request.POST['bbsReplyMessage'],
             priority = 1,
             department = parentPost.department,
-            parent = parentPost
+            parent = parentPost,
+            is_reply = True
         )
         newReply.save()
         messages.success(request, f'Nice work, @{replyAuthor.username}! Reply posted successfully!')

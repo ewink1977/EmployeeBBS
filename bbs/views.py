@@ -11,9 +11,11 @@ from bbs.departments import departments
 @login_required
 def bbsMainView(request):
     if request.user.userProfile.department >= 6:
+        # 6+ ARE MANAGERS, SO THEY GET ALL POSTS AND EVENTS.
         postFilter = BBSPosts.objects.filter(priority = 1)
         eventFilter = storeEvent.objects.order_by('-start_date')
     else:
+        # <6 ARE NORMAL STAFF, SO THEY ONLY SEE WHAT THEY NEED TO SEE!
         postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department)
         eventFilter = storeEvent.objects.order_by('-start_date').filter(department = 8 or request.user.userProfile.department)
     stickyPosts = BBSPosts.objects.filter(priority = 2)
@@ -23,7 +25,7 @@ def bbsMainView(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # GET THE USER'S PUNCHS. ALL OF THEM!!!
+    # GET THE USER'S LAST PUNCH.
     lastPunch = UserTimeManagement.objects.filter(user = request.user).last()
     # GOTTA MAKE THIS WORK FOR PEOPLE WHO HAVE NEVER CLOCKED IN BEFORE AND HAVE NO TIME RECORDS!
     if lastPunch:

@@ -23,9 +23,15 @@ class BBSPosts(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
-class BBSReply(BBSPosts):
+    def __str__(self):
+        return f'POST'
+class BBSReply(models.Model):
     parent = models.ForeignKey(
         BBSPosts,
         related_name = 'bbsReply', 
         on_delete = models.CASCADE
     )
+    is_reply = models.BooleanField(default = True)
+
+    def __str__(self):
+        return f"POST'S PARENT IS {self.parent.id}"
