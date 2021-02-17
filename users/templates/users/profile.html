@@ -85,9 +85,33 @@
         </div>
         <!-- END BBS POST -->
         {% endfor %}
+        {% if userPosts.has_other_pages %}
+        <div class="w-100 col my-3 text-right">
+            {% if userPosts.has_previous %}
+            <a href="?page=1"><button type="button" class="btn btn-outline-primary btn-sm">First</button></a>
+            <a href="?page={{ userPosts.previous_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&laquo;</button></a>
+            {% else %}
+            <button type="button" class="btn btn-outline-primary btn-sm disabled">&laquo;</button>
+            {% endif %}
+            {% for num in userPosts.paginator.page_range %}
+                {% if userPosts.number == num %}
+                <a href="?page={{ num }}"><button type="button" class="btn btn-primary btn-sm">{{ num }}</button></a>
+                {% elif num > userPosts.number|add:'-3' and num < userPosts.number|add:'3' %}
+                <a href="?page={{ num }}"><button type="button" class="btn btn-outline-primary btn-sm">{{ num }}</button></a>
+                {% endif %}
+            {% endfor %}
+            {% if userPosts.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&raquo;</button></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-outline-primary btn-sm">Last</button></a>
+            {% endif %}
+        </div>
+        {% endif %}
+        <!-- END PAGINATION -->
     </div>
-    {% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
-    <div class="col-5">
+</div>
+{% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
+<div class="row">
+    <div class="col-9 border border-secondary rounded shadow p-4 my-2">
         <span class="text-center"><h3>Time Management</h3></span>
         <hr class="border border-secondary rounded shadow mx-5">
         <div class="row border border-secondary rounded shadow my-4">
@@ -96,13 +120,13 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Date</th>
-                        <th scope="col">In</th>
-                        <th scope="col">Out</th>
-                        <th scope="col">Time Worked</th>
+                        <th scope="col">Clock In</th>
+                        <th scope="col">Clock Out</th>
+                        <th scope="col">Time Worked (H:M:S)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for punch in timeClock %}
+                    {% for punch in timeClock|slice:":10" %}
                     <tr>
                         <th scope="row">{{ punch.pk }}</th>
                         <td>{{ punch.updated_at|date:"SHORT_DATE_FORMAT" }}</td>
@@ -114,7 +138,12 @@
                 </tbody>
             </table>
         </div>
+        <div class="row justify-content-end">
+            <div class="col-2">
+                <small><a href="{% url 'allPunches' viewUser.username %}">See all punches.</a></small>
+            </div>
+        </div>
     </div>
-    {% endif %}
 </div>
+{% endif %}
 {% endblock content %}

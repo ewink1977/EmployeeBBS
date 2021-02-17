@@ -1,0 +1,38 @@
+{% extends 'bbs/base.html' %}
+{% block content %}
+<div class="row justify-content-center my-4">
+    <h1>Timesheet for <span class="anton">{{ viewUser.username }}</span></h1>
+</div>
+{% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
+<div class="row justify-content-center">
+    <div class="col-9 border border-secondary rounded shadow p-4 my-2">
+        <span class="text-center"><h3>Time Management</h3></span>
+        <hr class="border border-secondary rounded shadow mx-5">
+        <div class="row border border-secondary rounded shadow my-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Clock In</th>
+                        <th scope="col">Clock Out</th>
+                        <th scope="col">Time Worked (H:M:S)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for punch in page_obj %}
+                    <tr>
+                        <th scope="row">{{ punch.pk }}</th>
+                        <td>{{ punch.updated_at|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td>{{ punch.time_in|date:"H:i" }}</td>
+                        <td>{{ punch.time_out|date:"H:i" }}</td>
+                        <td>{{ punch.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

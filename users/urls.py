@@ -8,4 +8,5 @@ urlpatterns = [
     path('manual/clock_out/', UserViews.manualClockOUT, name='manualClockOUT'),
     path('profile/edit/', UserViews.profileEdit, name = 'editUserProfile'),
     path('profile/<str:username>/', UserViews.profileView, name = 'userProfile'),
+    path('timeclock/<str:username>', UserViews.allPunches, name = 'allPunches'),
 ]

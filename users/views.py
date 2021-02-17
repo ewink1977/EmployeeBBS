@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from bbs.departments import departments
 from posts.models import BBSPosts
 from users.models import UserTimeManagement
@@ -55,10 +56,15 @@ def profileView(request, username):
     viewUser = User.objects.get(username = username)
     userPosts = BBSPosts.objects.filter(author = viewUser)
     timeClock = UserTimeManagement.objects.filter(user = viewUser)
+
+    paginatedPosts = Paginator(userPosts.order_by('-created_at'), 5)
+    page_number = request.GET.get('page')
+    post_page_obj = paginatedPosts.get_page(page_number)
+
     context = {
         'viewUser': viewUser,
         'deptList': departments,
-        'userPosts': userPosts,
+        'userPosts': post_page_obj,
         'timeClock': timeClock,
     }
     return render(request, 'users/profile.html', context)
@@ -90,6 +96,20 @@ def profileEdit(request):
     return render(request, 'users/edit_profile.html', context)
 
 # vv TIME MANAGEMENT vv
+
+def allPunches(request, username):
+    viewUser = User.objects.get(username = username)
+    everyPunch = UserTimeManagement.objects.filter(user = viewUser)
+
+    paginated = Paginator(everyPunch.order_by('-created_at'), 15)
+    page_number = request.GET.get('page')
+    page_obj = paginated.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'viewUser': viewUser,
+    }
+    return render(request, 'users/punch_full.html', context)
 
 def manualClockIN(request):
     if request.method == 'POST':
