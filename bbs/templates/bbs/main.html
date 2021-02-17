@@ -51,7 +51,7 @@
     <div class="col">
         <div class="row border-bottom border-secondary pb-4">
             <div class="col-sm">
-                <img src="{{ user.userProfile.image.url }}" alt="{{ user.username }}'s Profile Picture!" class="rounded shadow placeholder">
+                <img src="{{ user.userProfile.image.url }}" alt="{{ user.username }}'s Profile Picture!" class="mainpic rounded shadow">
             </div>
             <div class="col-sm-8">
                 <h1 class="kula m-0"><a href="{% url 'userProfile' user.username %}">@{{ user.username }}</a></h1>
@@ -189,18 +189,18 @@
             }
         })
     })
+
+// <!-- UPDATE THE DISPLAY EVERY 10 SECONDS IN CASE SOMEONE ELSE ADDED A POST! -->
+// <!-- This is not working as intented. -->
+// <!-- See https://github.com/ewink1977/CDGP-EmployeeBBS/issues/2 -->
+
+//     $( document ).ready(function update() {
+//         $.get("{% url 'partialReturn' %}", function(serverResponse) {
+//         console.log("Poking the server!");
+//         $( ".postDisplayZone" ).html(serverResponse);
+//         });
+//         window.setInterval(update, 10000);
+//     }
+// )
 </script>
-<!-- UPDATE THE DISPLAY EVERY 10 SECONDS IN CASE SOMEONE ELSE ADDED A POST! -->
-<!-- This is not working as intented. -->
-<!-- See https://github.com/ewink1977/CDGP-EmployeeBBS/issues/2 -->
-<!-- <script>
-    $( document ).ready(function update() {
-        $.get("{% url 'partialReturn' %}", function(data) {
-        console.log("Poking the server!");
-        $( ".postDisplayZone" ).html(data);
-        window.setInterval(update, 10000);
-        });
-    }
-)
-</script> -->
 {% endblock content %}
