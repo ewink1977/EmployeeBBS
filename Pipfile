@@ -13,6 +13,7 @@ pillow = "*"
 boto3 = "*"
 django-storages = "*"
 ipython = "*"
+django-imagekit = "*"
 
 [dev-packages]
 

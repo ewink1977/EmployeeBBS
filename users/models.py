@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
@@ -9,7 +11,12 @@ class UserProfile(models.Model):
         )
     position = models.CharField(max_length = 255, blank = True)
     bio = models.TextField(blank = True)
-    image = models.ImageField(default = 'default.jpg', upload_to = 'profilePics')
+    image = ProcessedImageField(default = 'default.jpg', 
+        upload_to='profilePics', 
+        processors=[ResizeToFit(500, 500)], 
+        format='JPEG', 
+        options={'quality': 80}
+        )
     department = models.IntegerField(default = 1)
     access_level = models.IntegerField(default = 1)
     created_at = models.DateTimeField(auto_now_add = True)
