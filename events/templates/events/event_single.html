@@ -30,6 +30,7 @@
             <p>{{ event.description }}</p>
         </div>
     </div>
+    {% if user.userProfile.access_level > 1 %}
     <div class="row justify-content-end my-3">
         <div class="col-4">
             <a href="{% url 'createEvent' %}"><button type="button" class="btn btn-success shadow">New Event</button></a>
@@ -37,8 +38,10 @@
             <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#deleteEvent">Delete Event</button>
         </div>
     </div>
+    {% endif %}
 </div>
 
+{% if user.userProfile.access_level > 1 %}
 <!-- DELETE MODAL -->
 <div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="deleteEventTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -66,4 +69,5 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock content %}

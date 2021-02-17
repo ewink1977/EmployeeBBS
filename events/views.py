@@ -8,10 +8,13 @@ from bbs.departments import departments
 
 @login_required
 def allEventsView(request):
-    events = storeEvent.objects.all()
+    if request.user.userProfile.department >= 6:
+        eventFilter = storeEvent.objects.order_by('-start_date')
+    else:
+        eventFilter = storeEvent.objects.order_by('-start_date').filter(department = 8 or request.user.userProfile.department)
     context = {
         'deptList': departments,
-        'events': events
+        'events': eventFilter,
     }
     return render(request, 'events/event_main.html', context)
 
