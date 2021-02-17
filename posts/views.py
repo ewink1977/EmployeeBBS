@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from posts.models import BBSPosts, BBSReply
 
+@login_required
 def viewSinglePost(request, postID):
     postObj = BBSPosts.objects.get(id = postID)
     replies = BBSReply.objects.filter(parent = postObj)
@@ -46,7 +47,7 @@ def createNewPost(request):
         if request.user.userProfile.access_level == 1:
             newPost = BBSPosts.objects.create(
                 author = userPosting,
-                content = request.POST['bbsPostMessage']
+                content = request.POST['bbsPostMessage'],
             )
             newPost.save()
         else:
@@ -85,8 +86,8 @@ def replyPost(request):
             content = request.POST['bbsReplyMessage'],
             priority = 1,
             department = parentPost.department,
+            is_reply = True,
             parent = parentPost,
-            is_reply = True
         )
         newReply.save()
         messages.success(request, f'Nice work, @{replyAuthor.username}! Reply posted successfully!')

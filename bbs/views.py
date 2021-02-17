@@ -12,11 +12,11 @@ from bbs.departments import departments
 def bbsMainView(request):
     if request.user.userProfile.department >= 6:
         # 6+ ARE MANAGERS, SO THEY GET ALL POSTS AND EVENTS.
-        postFilter = BBSPosts.objects.filter(priority = 1)
+        postFilter = BBSPosts.objects.filter(priority = 1, is_reply = False)
         eventFilter = storeEvent.objects.order_by('-start_date')
     else:
         # <6 ARE NORMAL STAFF, SO THEY ONLY SEE WHAT THEY NEED TO SEE!
-        postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department)
+        postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department, is_reply = False)
         eventFilter = storeEvent.objects.order_by('-start_date').filter(department = 8 or request.user.userProfile.department)
     stickyPosts = BBSPosts.objects.filter(priority = 2)
     storewidePosts = BBSPosts.objects.filter(department = 8)
