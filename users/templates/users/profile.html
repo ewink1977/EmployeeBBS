@@ -131,8 +131,10 @@
                     <tr>
                         <th scope="row">{{ punch.pk }}</th>
                         <td>{{ punch.updated_at|date:"SHORT_DATE_FORMAT" }}</td>
+                        {% localtime on %}
                         <td>{{ punch.time_in|date:"H:i" }}</td>
                         <td>{{ punch.time_out|date:"H:i" }}</td>
+                        {% endlocaltime %}
                         <td>{{ punch.total|duration }}</td>
                     </tr>
                     {% endfor %}

@@ -2,7 +2,7 @@
 {% block content %}
 <div class="row my-5">
     <!-- POST DIV -->
-    <div class="col postDisplayZone" id="postDisplayZone">
+    <div class="col" id="postDisplayZone">
         <!-- STICKY LOGIC -->
         {% if stickyPosts %}
             {% for post_obj in stickyPosts %}
@@ -110,6 +110,9 @@
                 </div>
             </div>
         </div>
+
+        <!-- ADD A NEW POST -->
+
         <div class="col-12 text-center my-3">
             <h1 class="kula mt-1">Post A Message!</h1>
         </div>
@@ -143,6 +146,7 @@
         </div>
     </div>
 </div>
+
 <!-- TIME EDIT MODAL -->
 <div class="modal fade" id="clockModal" tabindex="-1" role="dialog" aria-labelledby="clockModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -175,7 +179,7 @@
 <!-- END TIME EDIT MODAL -->
 
 <!-- AJAX FOR THE POST LIST GOES HERE! -->
-<!-- UPDATE THE DISPLAY AFTER A POST IS ADDED! -->
+<!-- UPDATE THE DISPLAY AFTER A POST IS ADDED & CLEAR THE FORM DATA! -->
 <script>
     $('#newPost').submit(function (e) {
         e.preventDefault()
@@ -184,7 +188,7 @@
             method: 'post',
             data: $(this).serialize(),
             success: function(serverResponse) {
-                $( '.postDisplayZone' ).html(serverResponse);
+                $( '#postDisplayZone' ).html(serverResponse);
                 $( '#newPost' ).trigger("reset");
             }
         })
@@ -195,10 +199,10 @@
 // <!-- See https://github.com/ewink1977/CDGP-EmployeeBBS/issues/2 -->
 
 //     $( document ).ready(function update() {
-//         $.get("{% url 'partialReturn' %}", function(serverResponse) {
-//         console.log("Poking the server!");
-//         $( ".postDisplayZone" ).html(serverResponse);
-//         });
+        // $.get("{% url 'partialReturn' %}", function(serverResponse) {
+        // console.log("Poking the server!");
+        // $( "#postDisplayZone" ).html(serverResponse);
+        // });
 //         window.setInterval(update, 10000);
 //     }
 // )

@@ -11,6 +11,7 @@ from users.models import UserTimeManagement
 from datetime import datetime, date, timedelta
 import pytz
 
+
 def homeAuthCheck(request):
     if request.user:
         return redirect('bbsHome')
@@ -120,7 +121,7 @@ def manualClockIN(request):
         newPunch = UserTimeManagement.objects.create(
             user = user,
             clocked_in = True,
-            time_in = adjustedTime.time()
+            time_in = adjustedTime # took off .time()
         )
         newPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked in!')
@@ -138,7 +139,7 @@ def manualClockOUT(request):
         # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
         lastPunch = UserTimeManagement.objects.filter(user = user).last()
         # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.
-        lastPunch.time_out = adjustedTime.time()
+        lastPunch.time_out = adjustedTime # took off .time()
         lastPunch.clocked_in = False
         lastPunch.save()
         total_worked = datetime.combine(date.min, lastPunch.time_out) - datetime.combine(date.min, lastPunch.time_in)
@@ -153,7 +154,7 @@ def manualClockOUT(request):
 def clockIN(request):
     if request.method == 'POST':
         user = request.user
-        time = datetime.now(pytz.utc).time()
+        time = datetime.now(pytz.utc) # took off .time()
 
         newPunch = UserTimeManagement.objects.create(
             user = user,
@@ -170,7 +171,7 @@ def clockIN(request):
 def clockOUT(request):
     if request.method == 'POST':
         user = request.user
-        time = datetime.now(pytz.utc).time()
+        time = datetime.now(pytz.utc) # took off .time()
         # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
         lastPunch = UserTimeManagement.objects.filter(user = user).last()
         # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.
