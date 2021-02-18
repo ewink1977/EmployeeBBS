@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from bbs.departments import departments
-from posts.models import BBSPosts
+from posts.models import BBSPosts, BBSReply
 from users.models import UserTimeManagement
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 import pytz
 
 
@@ -55,8 +55,9 @@ def Register(request):
 @login_required
 def profileView(request, username):
     viewUser = User.objects.get(username = username)
-    userPosts = BBSPosts.objects.filter(author = viewUser)
-    timeClock = UserTimeManagement.objects.filter(user = viewUser)
+    userPosts = BBSPosts.objects.filter(author = viewUser, is_reply = False)
+    userReplies = BBSReply.objects.filter(author = viewUser, is_reply = True)
+    timeClock = UserTimeManagement.objects.filter(user = viewUser).order_by('-created_at')
 
     paginatedPosts = Paginator(userPosts.order_by('-created_at'), 5)
     page_number = request.GET.get('page')
@@ -66,6 +67,7 @@ def profileView(request, username):
         'viewUser': viewUser,
         'deptList': departments,
         'userPosts': post_page_obj,
+        'userReplies': userReplies,
         'timeClock': timeClock,
     }
     return render(request, 'users/profile.html', context)
@@ -117,11 +119,12 @@ def manualClockIN(request):
         user = request.user
         POSTtime = request.POST['time']
         time = datetime.strptime(POSTtime, "%Y-%m-%dT%H:%M")
-        adjustedTime = time + timedelta(hours=8)
+        newTime = pytz.utc.localize(time)
+        adjustedTime = newTime + timedelta(hours=8)
         newPunch = UserTimeManagement.objects.create(
             user = user,
             clocked_in = True,
-            time_in = adjustedTime # took off .time()
+            time_in = adjustedTime
         )
         newPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked in!')
@@ -135,14 +138,15 @@ def manualClockOUT(request):
         user = request.user
         POSTtime = request.POST['time']
         time = datetime.strptime(POSTtime, "%Y-%m-%dT%H:%M")
-        adjustedTime = time + timedelta(hours=8)
+        newTime = pytz.utc.localize(time)
+        adjustedTime = newTime + timedelta(hours=8)
         # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
         lastPunch = UserTimeManagement.objects.filter(user = user).last()
         # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.
-        lastPunch.time_out = adjustedTime # took off .time()
+        lastPunch.time_out = adjustedTime
         lastPunch.clocked_in = False
         lastPunch.save()
-        total_worked = datetime.combine(date.min, lastPunch.time_out) - datetime.combine(date.min, lastPunch.time_in)
+        total_worked = lastPunch.time_out - lastPunch.time_in
         lastPunch.total = total_worked
         lastPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')
@@ -154,7 +158,7 @@ def manualClockOUT(request):
 def clockIN(request):
     if request.method == 'POST':
         user = request.user
-        time = datetime.now(pytz.utc) # took off .time()
+        time = datetime.now(pytz.utc)
 
         newPunch = UserTimeManagement.objects.create(
             user = user,
@@ -171,14 +175,14 @@ def clockIN(request):
 def clockOUT(request):
     if request.method == 'POST':
         user = request.user
-        time = datetime.now(pytz.utc) # took off .time()
+        time = datetime.now(pytz.utc)
         # GET THE USER'S PUNCHES. BUT JUST THE LAST ONE.
         lastPunch = UserTimeManagement.objects.filter(user = user).last()
         # NOW ADD THE CLOCK OUT, SET THE USER TO CLOCKED OUT, AND DO SOME TIME MATH.
         lastPunch.time_out = time
         lastPunch.clocked_in = False
         lastPunch.save()
-        total_worked = datetime.combine(date.min, lastPunch.time_out) - datetime.combine(date.min, lastPunch.time_in)
+        total_worked = lastPunch.time_out - lastPunch.time_in
         lastPunch.total = total_worked
         lastPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')

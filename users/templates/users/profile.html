@@ -30,9 +30,9 @@
         <img src="{{ viewUser.userProfile.image.url }}" alt="{{ viewUser.username }}'s Profile Picture" class="rounded shadow" style="width: 300px;">
     </div>
 </div>
-<h2 class="mx-5 my-2">{{ viewUser.username }}'s Posts</h2>
 <div class="row my-3 mx-3">
-    <div class="col-7">
+    <div class="col-6">
+        <h2 class="mx-5 my-2">{{ viewUser.username }}'s Posts</h2>
         {% for post in userPosts %}
         <!-- BBS POST -->
         <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
@@ -82,6 +82,12 @@
                     <span style="font-size: 1.2rem;"><i class="text-warning fas fa-bullhorn"></i></span>
                 </div>
                 {% endif %}
+                {% if post.is_reply == True and post.parent %}
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.parent.id %}" data-toggle="tooltip" data-placement="top" title="View Parent Post!">
+                        <i class="text-primary fab fa-replyd"></i></a> 
+                </div>
+                {% endif %}
             </div>
         </div>
         <!-- END BBS POST -->
@@ -109,10 +115,72 @@
         {% endif %}
         <!-- END PAGINATION -->
     </div>
+    <div class="col-6">
+        <h2 class="mx-5 my-2">{{ viewUser.username }}'s Last 5 Replies</h2>
+        {% for post in userReplies|slice:":5" %}
+        <!-- BBS REPLIES -->
+        <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
+            <div class="row mb-2 w-100">
+                <div class="media">
+                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ post.author.userProfile.image.url }}" alt="{{ post.author.username }}'s Profile Picture!">
+                    <div class="media-body ml-3 mt-2">
+                        <h3 class="anton"><a href="{% url 'userProfile' post.author.username %}" class="text-dark">@{{ post.author.username }}</a> 
+                            <small class="kanit-200 text-muted">{{ post.author.first_name }} {{ post.author.last_name }}</small></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col mx-2">
+                    <p>
+                        {{ post.content }}
+                    </p>
+                    <small>
+                        <a href="{% url 'postView' post.pk %}">{{ post.created_at|date:"l, N j, Y @ f A" }}</a>
+                    </small>
+                </div>
+            </div>
+            <hr class="w-100 mx-5 my-2 border rounded shadow">
+            <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
+                        {% if post.bbsReply.all|length > 0 %}
+                        {{ post.bbsReply.all|length }}</span>
+                        {% else %}
+                        0</span>
+                        {% endif %}
+                </div>
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post.pk %}"><i class="text-danger fas fa-heart"></i></a> 
+                        {% if post.likes.all|length > 0 %}
+                        {{ post.likes.all|length }}</span>
+                        {% else %}
+                        0</span>
+                        {% endif %}
+                </div>
+                {% if post.priority == 2 %}
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.2rem;"><i class="text-danger fas fa-bullhorn"></i></span>
+                </div>
+                {% elif post.department == 8 %}
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.2rem;"><i class="text-warning fas fa-bullhorn"></i></span>
+                </div>
+                {% endif %}
+                {% if post.is_reply %}
+                <div class="col-2 align-self-center">
+                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.parent.id %}" data-toggle="tooltip" data-placement="top" title="View Parent Post!">
+                        <i class="text-primary fab fa-replyd"></i></a> 
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END BBS REPLY POST -->
+        {% endfor %}
+    </div>
 </div>
 {% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
 <div class="row">
-    <div class="col-9 border border-secondary rounded shadow p-4 my-2">
+    <div class="col border border-secondary rounded shadow p-4 my-2">
         <span class="text-center"><h3>Time Management</h3></span>
         <hr class="border border-secondary rounded shadow mx-5">
         <div class="row border border-secondary rounded shadow my-4">
