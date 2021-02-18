@@ -32,11 +32,10 @@ class UserTimeManagement(models.Model):
         on_delete = models.CASCADE
     )
     clocked_in = models.BooleanField(default = False)
-    time_in = models.TimeField(blank = True, null = True)
-    time_out = models.TimeField(blank = True, null = True)
+    time_in = models.DateTimeField(blank = True, null = True)
+    time_out = models.DateTimeField(blank = True, null = True)
     total = models.DurationField(blank = True, null = True)
     note = models.CharField(max_length = 255, blank = True, null = True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
-    
