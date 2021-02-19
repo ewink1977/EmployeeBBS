@@ -36,7 +36,6 @@ def bbsMainView(request):
     context = {
         'deptList': departments,
         'eventList': eventFilter,
-        'postList': postFilter,
         'page_obj': page_obj,
         'storewidePosts': storewidePosts,
         'stickyPosts': stickyPosts,

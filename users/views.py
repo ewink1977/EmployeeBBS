@@ -147,6 +147,7 @@ def manualClockOUT(request):
         lastPunch.clocked_in = False
         lastPunch.save()
         total_worked = lastPunch.time_out - lastPunch.time_in
+        print(total_worked)
         lastPunch.total = total_worked
         lastPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')
@@ -183,6 +184,7 @@ def clockOUT(request):
         lastPunch.clocked_in = False
         lastPunch.save()
         total_worked = lastPunch.time_out - lastPunch.time_in
+        print(total_worked)
         lastPunch.total = total_worked
         lastPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')

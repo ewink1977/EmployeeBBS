@@ -1,5 +1,6 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
+{% load tz %}
 {% load durations %}
 <div class="row justify-content-end">
     <div class="col-3 text-right"><small><a href="{% url 'userProfile' user.username %}">Back To Profile</a> | <a href="{% url 'bbsHome' %}">BBS Main Page</a> | <a href="{% url 'logout' %}">Log Out</a></div></small>
@@ -28,8 +29,10 @@
                     <tr>
                         <th scope="row">{{ punch.pk }}</th>
                         <td>{{ punch.updated_at|date:"SHORT_DATE_FORMAT" }}</td>
+                        {% localtime on %}
                         <td>{{ punch.time_in|date:"H:i" }}</td>
                         <td>{{ punch.time_out|date:"H:i" }}</td>
+                        {% endlocaltime %}
                         <td>{{ punch.total|duration }}</td>
                     </tr>
                     {% endfor %}

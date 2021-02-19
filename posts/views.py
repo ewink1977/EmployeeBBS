@@ -18,9 +18,9 @@ def viewSinglePost(request, postID):
 
 def partialPostReturn(request):
     if request.user.userProfile.department >= 6:
-        postFilter = BBSPosts.objects.filter(priority = 1)
+        postFilter = BBSPosts.objects.filter(priority = 1, is_reply = False)
     else:
-        postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department)
+        postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department, is_reply = False)
 
     stickyPosts = BBSPosts.objects.filter(priority = 2)
     storewidePosts = BBSPosts.objects.filter(department = 8)
