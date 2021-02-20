@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.generic import View
@@ -8,10 +9,11 @@ from bbs.departments import departments
 
 @login_required
 def allEventsView(request):
+    now = datetime.now()
     if request.user.userProfile.department >= 6:
-        eventFilter = storeEvent.objects.order_by('start_date')
+        eventFilter = storeEvent.objects.filter(end_date__gte = now).order_by('start_date')
     else:
-        eventFilter = storeEvent.objects.order_by('start_date').filter(department = 8 or request.user.userProfile.department)
+        eventFilter = storeEvent.objects.order_by('start_date').filter(department = 8 or request.user.userProfile.department, end_date__gte = now)
     context = {
         'deptList': departments,
         'events': eventFilter,

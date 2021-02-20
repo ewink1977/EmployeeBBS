@@ -130,3 +130,5 @@ dmypy.json
 
 # There's no need to upload the MEDIA files.
 media/
+
+readme.html

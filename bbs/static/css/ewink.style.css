@@ -6,6 +6,12 @@
     min-height: 800px;
 }
 
+.tester_block {
+    margin-top: 150px;
+    background-color: aliceblue;
+    opacity: 80%;
+}
+
 .reg-bg {
     background-image: url('http://douglasavenue.com/bbsimg/mgronald2.jpg');
     background-position: top left;

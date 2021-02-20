@@ -48,6 +48,7 @@ def createNewPost(request):
             newPost = BBSPosts.objects.create(
                 author = userPosting,
                 content = request.POST['bbsPostMessage'],
+                department = userPosting.userProfile.department,
             )
             newPost.save()
         else:

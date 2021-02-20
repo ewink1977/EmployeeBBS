@@ -2,7 +2,13 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="row border border-secondary rounded shadow">
-        <div class="col-md-4 home-bg pt-5 d-none d-sm-none d-md-block">
+        <div class="col-md-4 home-bg pt-5 d-none d-sm-none d-md-block align-items-center">
+            <div class="tester_block border border-dark rounded p-4">
+                <h4>Test Users!</h4>
+                <p>If you want to take a look around the system, please feel free to <a href="{% url 'register' %}">create an account</a>.</p>
+                <p>This will give you basic user access which will let you use the Time Management System, post messages, reply to messages, and view events!</p>
+                <p>You can check out all of the features on the <a href="https://github.com/ewink1977/CDGP-EmployeeBBS" target="_blank" rel="noopener noreferrer">project's GitHub page</a>!</p>
+            </div>
         </div>
         <div class="col-md">
             <div class="text-center">

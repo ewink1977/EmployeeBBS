@@ -3,6 +3,7 @@
 <h2> It's CRUNCH time!</h2>
 <img src="https://www.douglasavenue.com/img/mikucomputer.jpg" alt="Miku at a computer.">
 <p> I feel like this is going to be me in a few days, except I won't have anywhere near as much hair, won't be anywhere close to being as adorable as Miku is, and will be a real human male, rather than a fictional girl. So, I guess that's won't be me?</p>
+<p>UPDATE: Yeah, it is me, without the kawaii...</p>
 <p>Anyway, welcome to the GitRepo for my solo graduation project.</p>
 <h2>Concept</h2>
 <p>When complete, this project will act as a mini-intranet Twitter style message board for a business' employees. Basically, a digital breakroom corkboard.</p>
@@ -10,6 +11,16 @@
 <p>To increase the systems usefulness, there will also be a time management system built into the BBS, allowing employees to clock in and out and track their hours.</p>
 <h3>Terminology</h3>
 <p>For the purpose of this README, there are three classes of users. <b>Superuser</b> which could be considered top-tier level management (e.g. a store's general manager). <b>Managers</b> which would run departments (e.g. a restaurant's head chef, or a shift supervisor). <b>Employees</b>, which should be considered base-level hourly staff with little or no supervisory role. <i>Admins</i>, for the purpose of this explanation, are both Superusers and Managers. <i>Users</i> are all users of the system, regardless of admin level.</p>
+<h2>Functions</h2>
+<p>There are three </p>
+
+
+
+
+
+
+
+
 <h2>Goals</h2>
 <p>When complete, the system should:</p>
 <ul>
