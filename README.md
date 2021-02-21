@@ -1,5 +1,5 @@
 <h1>Employee BBS & Time Management System</h1>
-<h3><a href="">FULL DOCUMENTATION!!</a></h3>
+<h3><a href="https://douglasavenue.com/ebbsdoc/documentation.html" target="_blank">FULL DOCUMENTATION!!</a></h3>
 <p>ewink's Coding Dojo SOLO graduation project!</p>
 <h2> It's CRUNCH time!</h2>
 <img src="https://www.douglasavenue.com/img/mikucomputer.jpg" alt="Miku at a computer.">
