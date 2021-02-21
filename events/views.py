@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from events.models import storeEvent
+from itertools import chain
 # Department List Dictionary Import!
 from bbs.departments import departments
 
@@ -13,7 +14,9 @@ def allEventsView(request):
     if request.user.userProfile.department >= 6:
         eventFilter = storeEvent.objects.filter(end_date__gte = now).order_by('start_date')
     else:
-        eventFilter = storeEvent.objects.order_by('start_date').filter(department = 8 or request.user.userProfile.department, end_date__gte = now)
+        eventFilterDept = storeEvent.objects.filter(department = request.user.userProfile.department, end_date__gte = now).order_by('start_date')
+        eventFilterStorewide = storeEvent.objects.filter(department = 8, end_date__gte = now).order_by('start_date')
+        eventFilter = sorted(chain(eventFilterDept, eventFilterStorewide), key=lambda data: data.start_date)
     context = {
         'deptList': departments,
         'events': eventFilter,

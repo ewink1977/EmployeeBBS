@@ -5,6 +5,7 @@ from posts.models import BBSPosts
 from events.models import storeEvent
 from users.models import UserTimeManagement
 from datetime import datetime
+from itertools import chain
 # DEPARTMENT DICTIONARY IMPORT!
 from bbs.departments import departments
 
@@ -19,7 +20,9 @@ def bbsMainView(request):
     else:
         # <6 ARE NORMAL STAFF, SO THEY ONLY SEE WHAT THEY NEED TO SEE!
         postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department, is_reply = False)
-        eventFilter = storeEvent.objects.filter(department = 8 or request.user.userProfile.department, end_date__gte = now).order_by('start_date')
+        eventFilterDept = storeEvent.objects.filter(department = request.user.userProfile.department, end_date__gte = now).order_by('start_date')
+        eventFilterStorewide = storeEvent.objects.filter(department = 8, end_date__gte = now).order_by('start_date')
+        eventFilter = sorted(chain(eventFilterDept, eventFilterStorewide), key=lambda data: data.start_date)
     stickyPosts = BBSPosts.objects.filter(priority = 2)
     storewidePosts = BBSPosts.objects.filter(department = 8)
     paginator = Paginator(postFilter.order_by('-created_at'), 5)
