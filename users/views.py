@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from bbs.departments import departments
 from posts.models import BBSPosts, BBSReply
 from users.models import UserTimeManagement
-from datetime import datetime, date, timedelta, timezone
+from datetime import datetime, timedelta
 import pytz
 
 
@@ -100,6 +100,7 @@ def profileEdit(request):
 
 # vv TIME MANAGEMENT vv
 
+@login_required
 def allPunches(request, username):
     viewUser = User.objects.get(username = username)
     everyPunch = UserTimeManagement.objects.filter(user = viewUser)

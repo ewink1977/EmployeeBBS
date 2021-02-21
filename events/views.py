@@ -52,6 +52,7 @@ class editEvent(View):
         messages.success(request, f'Event #{ eventID } has been successfully updated!')
         return redirect('eventView', eventID)
 
+@login_required
 def deleteEvent(request):
     if request.method == 'POST':
         eventToDelete = storeEvent.objects.get(id = request.POST['eventID'])

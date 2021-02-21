@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ewink's EMPLOYEE BBS & TIME MANAGEMENT SYSTEM //</title>
+    <link rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
+        crossorigin="anonymous">
+    <!-- jQuery Needs To Be Up Here For AJAX To Work Right! -->
+    <script 
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container p-5 border border-secondary shadow rounded">
+<h1>Employee BBS & Time Management System</h1>
+    <p>ewink's Coding Dojo SOLO graduation project!</p>
+        <h2> It's CRUNCH time!</h2>
+            <img src="https://www.douglasavenue.com/img/mikucomputer.jpg" alt="Miku at a computer." class="rounded mx-auto d-block shadow my-3" style="width: 1000px;">
+            <p> I feel like this is going to be me in a few days, except I won't have anywhere near as much hair, won't be anywhere close to being as adorable as Miku is, 
+                and will be a real human male, rather than a fictional girl. So, I guess that's won't be me?</p>
+            <p>UPDATE: Yeah, it is me, without the kawaii...</p>
+            <p>Anyway, welcome to the GitRepo for my solo graduation project.</p>
+            <p>The web application is at <code>version 1.0</code> right now. For the record, MgRonald's is a McDonald's stand in often used in anime, which is why I chose it to be my 
+                fake business for the purpose of this project. Weeb's gotta weeb.
+            </p>
+        
+        <h2>Concept</h2>
+            <p>When complete, this project will act as a mini-intranet Twitter style message board for a business' employees. Basically, a digital breakroom corkboard.</p>
+            <p>Managers at both the department and top tier levels will be able to sticky messages and add events to the system to ensure all users see things that will be 
+                affecting them and their departments.</p>
+            <p>To increase the systems usefulness, there will also be a time management system built into the BBS, allowing employees to clock in and out and track their hours.</p>
+                <h3>Terminology</h3>
+                    <p>For the purpose of this README, there are three classes of users. <b>Superuser</b> which could be considered top-tier level management 
+                        (e.g. a store's general manager). <b>Managers</b> which would run departments (e.g. a restaurant's head chef, or a shift supervisor). <b>Employees</b>, 
+                        which should be considered base-level hourly staff with little or no supervisory role. <i>Admins</i>, for the purpose of this explanation, are both Superusers and 
+                        Managers. <i>Users</i> are all users of the system, regardless of admin level.</p>
+        
+        <h2>Functions</h2>
+            <p>There are three primary functions of the BBS:</p>
+            <ul>
+                <li><a href="#Dynamic">Dynamic Posting & User Profiles</a></li>
+                <li><a href="#Event">Event Promotion</a></li>
+                <li><a href="#TMS">Time Management System</a></li>
+            </ul>
+
+            <h3 id="Dynamic">Dynamic Posting</h3>
+                <p>The purpose of the posting function on the system is to mirror a system similar to Twitter. Simple messages posted to a group.</p>
+                <p>The current version (1.0) allows site management to set 'departments'. Employee level staff will only see messages from their own department on their timeline, 
+                    with a couple of exceptions.</p>
+                <a href="http://douglasavenue.com/ebbsdoc/postclasses.jpg" target="_blank"><img src="http://douglasavenue.com/ebbsdoc/postclasses.jpg" 
+                    alt="Posts Example" class="rounded float-left mr-3" style="height: 300px;"></a>
+                <p><strong>Sticky posts</strong>, that are set by <em>admins</em>, are always at the top of the list and are not included in the pagination. They are 
+                    identified as sticky posts by both the <span class="text-danger">red</span> border around the post, and the red bullhorn icon in the bottom right hand corner.</p>
+                <p><strong>Storewide posts</strong>, also set by <em>admins</em>, have less priority than sticky posts, and as such fall below them in the post list, but still maintain 
+                    priority over normal posts, so they are also not included in pagination. They have a <span class="text-warning">yellow</span> border and a yellow bullhorn icon.</p>
+                <p>The difference between STICKY posts and STOREWIDE posts are that STICKY posts can be and should only be restricted to a single department. Making a storewide post 
+                    sticky will result in the post being double-displayed. This is something that can be possibly changed in a future version.</p>
+                <p>Below the priority posts, <em>Employee</em> level posts will be displayed. These posts are paginated to make the page from being too long. In v1.0, the list will 
+                    update every 10 seconds.</p>
+                <hr class="mx-5 border border-secondary">
+                <img src="http://douglasavenue.com/ebbsdoc/postmessage.jpg" alt="How To Post" class="rounded float-left mr-3">
+                <p>Posting to the main timeline happens from the main BBS page. Adding a post will refresh the post list. An <em>employee</em> level user has no control over the 
+                    post priority or what department the post is sent to (it will always default to the employee's department and level one (normal) post priority.</p>
+                <img src="http://douglasavenue.com/ebbsdoc/postdistribution.jpg" alt="Post Distribution" class="rounded float-right ml-3">
+                <p><em>Manager</em> level employees can set what department they broadcast their message to. It's important to remember that only users in the department you set
+                    will be able to see a department restricted post. Only <em>manager</em> level staff have the ability to view all department posts.</p>
+                <p>As well as department, managers can set whether or not the post will be stickied. Again, stickied posts should NOT be set as storwide, since those posts are 
+                    sticky by default. A future version of the app should have the ability to set expiration dates on the sticky/storewide posts to ensure there isn't clutter and 
+                    admins aren't forced to manually prune posts.</p>
+                <img src="http://douglasavenue.com/ebbsdoc/postreplies.jpg" alt="Post Replies" class="rounded mx-auto d-block">
+                <p>Replying to posts is as easy as clicking on the <span class="text-success">green</span> reply icon! Doing so will take the user to the post's display page, which will 
+                    only show the post selected and that post's replies. You can also access this page by clicking on the post date hyperlink.</p>
+                <p>On the post page there is another <code>textarea</code> input box that will accept a reply to the origional message. Replies <strong>will not</strong> display 
+                    in the BBS main page. The number of replies are displayed, so it's a simple task to go to the post page to see the replies. </p>
+                <p>Replies cannot be posted to a different department than the parent post. Replies cannot be set to sticky.</p>
+                <p>Replies each have their own post page and can accept likes and replies as well. Both posts and replies can be deleted from their page. Editing posts is NOT allowed. 
+                    This may be changed in a future update.</p>
+                    <hr class="mx-5 border border-secondary">
+                    <h4>User Profiles</h4>
+                    <a href="http://douglasavenue.com/ebbsdoc/updateprofile.jpg" target="_blank">
+                        <img src="http://douglasavenue.com/ebbsdoc/updateprofile.jpg" alt="Update Profile" class="rounded float-left img-thumbnail mr-2" style="width: 250px;"></a>
+                        <p>Users are provided a profile that will allow them to upload a custom picture and set a biography. There are no programming rules to either of these fields, so they 
+                            would have to be set by management policy.</p>
+                        <a href="http://douglasavenue.com/ebbsdoc/profileupdated.jpg" target="_blank">
+                            <img src="http://douglasavenue.com/ebbsdoc/profileupdated.jpg" alt="Updated Profile" class="rounded float-right img-thumbnail ml-2" style="width: 250px;"></a>
+                        <p>In v1.0, all images are resized during upload to 500px wide or 500px high, maintaining the aspect ratio. It is encouraged to use a square image so the 
+                            reshaping of the post avatars will still look good. </p>
+                        <p>After upload, images are changed postwide, so all images of the user will reflect the uploaded image.</p>
+                        <p>For the demo site, images are stored off site in an Amazon S3 bucket. Old images are not deleted when no longer used, so eventually a function will need 
+                            to be added to handle that. A default image is provided for users that have not uploaded their own image.</p>
+                            <hr class="mx-5 border border-secondary">
+            <h3 id="Event">Event Promotion</h3>
+                <img src="http://douglasavenue.com/ebbsdoc/eventsummary.jpg" alt="Event Summary" class="rounded float-left mr-2">
+                <p>Included in the BBS Home page is an event summary box. This will display events that have been setup to be relevant for the user.</p>
+                <p>Like posts, events can be set to be restricted to departments (for instance, if there is a training class for a new grill, the front of the house staff wouldn't 
+                    care about that or need to know). There are also storewide events which are displayed for all.</p>
+                <p>The summary is not paginated, but it is reduced to only display the next 5 relevant events.</p>
+                <img src="http://douglasavenue.com/ebbsdoc/eventfull.jpg" alt="Full Event Display" class="rounded mx-auto d-block">
+                <p>The user has two options. They can click a link to view all the relevant posts (if there are more events than 5, otherwise the list display will be the same as 
+                    the BBSHome list), or they can click on the post its self and view the event details. </p>
+                <p>Management level users have the ability to CREATE NEW, EDIT EVENT, or DELETE EVENT. </p>
+                <p>Old events (events where the END DATE has passed) remain in the database but are no longer displayed.</p>
+            
+            <h3 id="TMS">Time Management System</h3>
+                <p>The application's Time Management System (TMS) as it is right now is rather simplex. It tracks the time you clock in, the time you clock out, and the time elapsed 
+                    between those two 'punches'.</p>
+                    <h4>Single Click Punch</h4>
+                    <img src="http://douglasavenue.com/ebbsdoc/clockin.jpg" alt="Clock In" class="rounded float-left mr-2">
+                    <img src="http://douglasavenue.com/ebbsdoc/clockout.jpg" alt="Clock Out" class="rounded float-right ml-2">
+                    <p>Using the single click punch method of clocking in or out, you simply click the 'CLOCK IN/OUT' button on the BBSHome page. This button will offer you only 
+                        the option of clocking in if you are shown as being clocked out. Conversely, if you are shown as being clocked in, it will only provide you with the 
+                        option of clocking out.</p>
+                    <h4>Manual Punch Option</h4>
+                    <p>Mistakes happen and sometimes people forget to clock in or out. This is what the 'oops' hyperlink is for!</p>
+                    <img src="http://douglasavenue.com/ebbsdoc/manual_out.jpg" alt="Manual Clock Out" class="rounded float-left mr-2" style="width: 250px;">
+                    <p>If a staff member has forgotten to clock in or out, clicking the link will allow them to manually enter the date and time of when they should have clocked in or 
+                        out. Once that is submitted, they will be able to clock in or out via the Single Click Punch method. This can also be used to enter in sick or vacation time in a 
+                        very basic way. Functionality to more directly add PTO could be included in a future update.</p>
+                        <br>
+                    <h4>Profile View Time</h4>
+                    <img src="http://douglasavenue.com/ebbsdoc/tms_profile_view.jpg" alt="Profile Time View" class="rounded mx-auto d-block">
+                    <p>On the user's profile, the last few punches are show, sorted from most recent to oldest in the display range (10 by default). </p>
+                    <p>The punch ID, clock in, clock out, and total hours:minutes worked is displayed. In version 1.0, there is no method for editing or deleting time through
+                        the front end, though all time punches can be edited or deleted via the backend administration. This is not the prefered method and would be changed in a 
+                        future update.</p>
+                    <p>As well, in version 1.0 there is no method for calulating the weekly total of time worked. Again, the TMS is a very, very simplex system designed, as of now, 
+                        to do nothing more than track time and durations. Future updates would hopefully allow for the 'declaration' of a work week and more complex time tracking
+                        processes.</p>
+        <h2>Front-End</h2>
+            <p>The front end of the EmployeeBBS Web Application is developed using SASS/Bootstrap 4, custom CSS, Google Fonts, Font Awesome, and Crispy Forms. jQuery and JavaScript is also 
+                used in some places. Colors can be changed relatively easily, and the entire website could have its look overhauled by switching to a Bootswatch theme.</p>
+        <h2>Back-end</h2>
+            <p>The back end of the application is built using Django v2.2. Django's built in user authentication was used and built upon for the application.</p>
+            <p>The back end also calls upon, in part, some of the following libraries:
+                <ul>
+                    <li>Imagekit - For profile image resizing.</li>
+                    <li>BOTO3/Storages - For image uploading and storage to the AWS S3 bucket.</li>
+                    <li>CrispyForms - For 'Bootstrap' handling of Django created forms.</li>
+                    <li>dotenv -  For protection of sensitive data.</li>
+                </ul>
+            </p>
+        <h2>Questions?</h2>
+            <p>Hit me up at erin@douglasavenue.com, <a href="https://twitter.com/erinwinking" target="_blank" rel="noopener noreferrer">@erinwinking</a> on Twitter, or check out my profile at 
+                <a href="https://www.douglasavenue.com" target="_blank">www.douglasavenue.com</a></p>
+        <hr class="mx-5 border border-secondary rounded shadow">
+            <p>Thanks for checking this out!</p>
+    </div>
+    <!-- Booty Scripts -->
+    <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+    crossorigin="anonymous"></script>
+    <script 
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+    crossorigin="anonymous"></script>
+</body>
+</html>
