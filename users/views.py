@@ -57,7 +57,8 @@ def profileView(request, username):
     viewUser = User.objects.get(username = username)
     userPosts = BBSPosts.objects.filter(author = viewUser, is_reply = False)
     userReplies = BBSReply.objects.filter(author = viewUser, is_reply = True)
-    timeClock = UserTimeManagement.objects.filter(user = viewUser).order_by('-created_at')
+    # Set clocked_in to False so partial punches are not pulled.
+    timeClock = UserTimeManagement.objects.filter(user = viewUser, clocked_in = False).order_by('-created_at')
 
     paginatedPosts = Paginator(userPosts.order_by('-created_at'), 5)
     page_number = request.GET.get('page')
@@ -103,7 +104,7 @@ def profileEdit(request):
 @login_required
 def allPunches(request, username):
     viewUser = User.objects.get(username = username)
-    everyPunch = UserTimeManagement.objects.filter(user = viewUser)
+    everyPunch = UserTimeManagement.objects.filter(user = viewUser, clocked_in = False)
 
     paginated = Paginator(everyPunch.order_by('-created_at'), 15)
     page_number = request.GET.get('page')

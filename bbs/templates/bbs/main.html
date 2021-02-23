@@ -6,7 +6,9 @@
         <!-- STICKY LOGIC -->
         {% if stickyPosts %}
             {% for post_obj in stickyPosts %}
-                {% include 'posts/post_body.html' with tag="danger" %}
+                {% if post_obj.department != 8 %}
+                    {% include 'posts/post_body.html' with tag="danger" %}
+                {% endif %}
             {% endfor %}
         {% endif %}
         <!-- STOREWIDE POSTS ARE NEXT IN LINE! -->
