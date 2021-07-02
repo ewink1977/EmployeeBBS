@@ -1,6 +1,8 @@
 <h1>Employee BBS & Time Management System</h1>
 <h2><a href="http://18.237.101.228/" target="_blank">PROJECT ONLINE HERE!</a></h2>
 <h3><a href="https://douglasavenue.com/ebbsdoc/documentation.html" target="_blank">FULL DOCUMENTATION!!</a></h3>
+<h3>UPDATE!</h3>
+<p>I am working to build this project into a REACT/DJANGO REST FRAMEWORK project! This will be done in a new repo since there's no way a pull request wouldn't implode the sun trying to merge that with this!</p>
 <p>ewink's Coding Dojo SOLO graduation project!</p>
 <h2> It's CRUNCH time!</h2>
 <img src="https://www.douglasavenue.com/img/mikucomputer.jpg" alt="Miku at a computer.">
