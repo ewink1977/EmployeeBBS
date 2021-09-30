@@ -1,4 +1,11 @@
 /* Local Styles Go Here! */
+.landing-showcase {
+    background-image: url('https://cdn.douglasavenue.com/krk/media/img/showcaseBG.png');
+    background-size: cover;
+    min-height: 500px;
+}
+
+
 .home-bg {
     background-image: url('http://douglasavenue.com/bbsimg/mgronald1.jpg');
     background-position: top left;

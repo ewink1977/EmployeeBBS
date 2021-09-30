@@ -19,6 +19,10 @@ def homeAuthCheck(request):
         return redirect('home')
 
 def Login(request):
+    if request.user:
+        return redirect('bbsHome')
+    if request.method == 'GET':
+        return redirect('home')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']

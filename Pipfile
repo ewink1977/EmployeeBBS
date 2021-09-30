@@ -7,14 +7,16 @@ name = "pypi"
 django = "*"
 python-dotenv = "*"
 django-crispy-forms = "*"
-fontawesome-free = "*"
 pillow = "*"
 boto3 = "*"
 django-storages = "*"
 ipython = "*"
 django-imagekit = "*"
+crispy-bootstrap5 = "*"
+fontawesomefree = "*"
 
 [dev-packages]
+autopep8 = "*"
 
 [requires]
 python_version = "3.9"
