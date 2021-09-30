@@ -16,13 +16,13 @@ def homeAuthCheck(request):
     if request.user:
         return redirect('bbsHome')
     else:
-        return redirect('home')
+        return redirect('login')
 
 def Login(request):
     if request.user:
         return redirect('bbsHome')
     if request.method == 'GET':
-        return redirect('home')
+        return redirect('login')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -31,15 +31,15 @@ def Login(request):
             login(request, user)
         else:
             messages.error(request, f'Log in has failed. Either create an account or contact your supervisor for help.', extra_tags = 'danger')
-            return redirect('home')
+            return redirect('login')
     else:
         messages.error(request, f"Invalid access attempt. If you're trying to log in, please try again, otherwise contact your supervisor.", extra_tags = 'danger')
-        return redirect('home')
+        return redirect('login')
 
 def Logout(request):
     logout(request)
     messages.success(request, 'You have been successfully logged out!')
-    return redirect('home')
+    return redirect('login')
 
 def Register(request):
     RegistrationForm = RegisterForm()
@@ -49,7 +49,7 @@ def Register(request):
             RegistrationForm.save()
             username = RegistrationForm.cleaned_data.get('username')
             messages.success(request, f'Account created for @{ username }! You can now log in.')
-            return redirect('home')
+            return redirect('login')
     else:
         RegistrationForm = RegisterForm()
     return render(request, 'users/register.html', { 'RegForm': RegistrationForm })
