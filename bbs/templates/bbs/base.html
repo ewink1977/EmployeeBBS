@@ -1,57 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRKBoard - Internal Area</title>
-    <link rel="stylesheet" 
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
-        crossorigin="anonymous">
-    <link rel="stylesheet" 
-        href="{% static 'css/ewink.style.css' %}">
-    <!-- jQuery Needs To Be Up Here For AJAX To Work Right! -->
-    <script 
-        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Font Awesome Stuff. -->
-    <script 
-        src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
-    <link rel="stylesheet" 
-        href="{% static 'fontawesome_free/css/all.min.css' %}" 
-        type="text/css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" 
-        href="https://fonts.gstatic.com">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Krona+One&family=Anton&family=Kanit:wght@100;200;900&family=Khula:wght@800&display=swap">
-</head>
-<body>
-    <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-            <div class="row justify-content-center mt-3">
-                <div class="col-8">
-                    <div class="alert alert-{{ message.tags }} rounded shadow" role="alert">
-                        {{ message }}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        {% endif %}
+	<head>
+		{% load static %}
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>KRKBoard - The Employee BBS</title>
+		<!-- Font Awesome Stuff. -->
+		<script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+		<link
+			rel="stylesheet"
+			href="{% static 'fontawesomefree/css/all.min.css' %}"
+			type="text/css"
+		/>
+		<!-- Google Fonts MegaURL -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Anton&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Khula:wght@300;400;600;700;800&family=Krona+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- MDB -->
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Local Styles -->
+		<link rel="stylesheet" href="{% static 'css/ewink.style.css' %}" />
+	</head>
 
-        {% block content %}
-        {% endblock content %}
-    </div>
-    <!-- Booty Scripts -->
-    <script 
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
-        crossorigin="anonymous"></script>
-    <script 
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
-        crossorigin="anonymous"></script>
-</body>
+	<body>
+		{% block content %} {% endblock content %}
+
+		<!-- MDB -->
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
+		></script>
+	</body>
 </html>

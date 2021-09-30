@@ -1,8 +1,10 @@
 /* Local Styles Go Here! */
-.landing-showcase {
-    background-image: url('https://cdn.douglasavenue.com/krk/media/img/showcaseBG.png');
-    background-size: cover;
+.sales-row {
     min-height: 500px;
+}
+
+.cta-block {
+    min-height: 300px;
 }
 
 

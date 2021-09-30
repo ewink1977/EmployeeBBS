@@ -1,4 +1,4 @@
-{% extends 'bbs/new_base.html' %} {% block content %}
+{% extends 'bbs/base.html' %} {% block content %}
 <header>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-dark bg-black fixed-top">
@@ -17,7 +17,7 @@
                     </button>
                 </a>
                 <a href="{% url 'register' %}">
-                    <button type="button" class="btn btn-primary me-3">
+                    <button type="button" class="btn btn-link px-3 me-2">
                         Register
                     </button>
                 </a>
@@ -45,10 +45,10 @@
     </div>
 </section>
 <!-- Sales Container -->
-<section class="my-3">
-    <div class="row justify-content-center align-items-start">
-        <div class="col-md-3">
-            <div class="card">
+<section class="my-3 sales-row">
+    <div class="row row-cols-1 row-cols-md-3 mx-2 g-4">
+        <div class="col">
+            <div class="card h-100">
                 <img src="https://cdn.douglasavenue.com/krk/media/img/post-sales-header.png" alt="Posts!"
                     class="card-img-top">
                 <div class="card-body">
@@ -64,10 +64,26 @@
                         to any department as well as pin sitewide
                         messages to the top of the timeline!</p>
                 </div>
+                <div class="card-footer">
+                    <div class="col text-center">
+                        <p>Feel free to log in with our test user
+                            account or register with a new account to
+                            test KRK out, or contact me, Erin Winking,
+                            to discuss the application further!</p>
+                    </div>
+                    <div class="text-center p4">
+                        <a href="{% url 'login' %}">
+                            <button type="button" class="btn btn-success btn-rounded mx-2">Log In!</button>
+                        </a>
+                        <a href="{% url 'register' %}">
+                            <button type="button" class="btn btn-primary btn-rounded mx-2">Register!</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col">
+            <div class="card h-100">
                 <img src="https://cdn.douglasavenue.com/krk/media/img/event-sales-header.png" alt="Events!"
                     class="card-img-top">
                 <div class="card-body">
@@ -81,10 +97,26 @@
                         happening in another department, so no need
                         to clutter up their event calendar.</p>
                 </div>
+                <div class="card-footer">
+                    <div class="col text-center">
+                        <p>Feel free to log in with our test user
+                            account or register with a new account to
+                            test KRK out, or contact me, Erin Winking,
+                            to discuss the application further!</p>
+                    </div>
+                    <div class="text-center p4">
+                        <a href="{% url 'login' %}">
+                            <button type="button" class="btn btn-success btn-rounded mx-2">Log In!</button>
+                        </a>
+                        <a href="{% url 'register' %}">
+                            <button type="button" class="btn btn-primary btn-rounded mx-2">Register!</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-3 h-100 d-inline-block">
-            <div class="card">
+        <div class="col">
+            <div class="card h-100">
                 <img src="https://cdn.douglasavenue.com/krk/media/img/user-sales-header.png" alt="Users!"
                     class="card-img-top">
                 <div class="card-body">
@@ -97,9 +129,93 @@
                         biographies. Supervisors and managers can of
                         course edit anything necessary!</p>
                 </div>
+                <div class="card-footer">
+                    <div class="col text-center">
+                        <p>Feel free to log in with our test user
+                            account or register with a new account to
+                            test KRK out, or contact me, Erin Winking,
+                            to discuss the application further!</p>
+                    </div>
+                    <div class="text-center p4">
+                        <a href="{% url 'login' %}">
+                            <button type="button" class="btn btn-success btn-rounded mx-2">Log In!</button>
+                        </a>
+                        <a href="{% url 'register' %}">
+                            <button type="button" class="btn btn-primary btn-rounded mx-2">Register!</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </section>
+<!-- Call To Action! -->
+<section class="bg-dark cta-block">
+    <div class="row row-cols-1 row-cols-md-2 m-5 gy-4 gx-3">
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Try KRK Out!</h3>
+                    <p class="card-text">
+                        Would you like to take KRK for a spin? Please try out
+                        the demo site by clicking the buttons below or the
+                        buttons on the top menu! You can either create your own
+                        account, which will default to give you the view of a
+                        front-line worker at our fictional restaurant,
+                        MgRonald's. If you don't want to go through all that
+                        trouble, you can use the demo account that is already
+                        set up. User name is 'testuser' and the password is
+                        'testpassword' (without the quotes).
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="text-center p4">
+                        <a href="{% url 'login' %}">
+                            <button type="button" class="btn btn-success mx-2">Log In!</button>
+                        </a>
+                        <a href="{% url 'register' %}">
+                            <button type="button" class="btn btn-primary mx-2">Register!</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">KRK For Your Biz!</h3>
+                    <p class="card-text">
+                        Would you like to have your own KRK Employee Bulletin
+                        Board System? Well, then you will have to hire me as a
+                        web developer and have me build it for you! KRK isn't
+                        sold as SaaS right now (but who knows what the future
+                        might hold). You can look into having me, Erin Winking,
+                        as an employee by checking out my profile, GitHub, or
+                        emailing me!
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="text-center p4">
+                        <a class="btn btn-primary" href="https://douglasavenue.com" target="_blank" role="button">
+                            My Profile!
+                        </a>
+                        <a class="btn btn-primary" href="https://github.com/ewink1977" target="_blank"
+                            style="background-color: #c9510c;" role="button"><i class="fab fa-github me-2"></i>
+                            GitHub
+                        </a>
+                        <a class="btn btn-primary" href="https://www.linkedin.com/in/erinwinking/" target="_blank"
+                            style="background-color: #0077b5;" role="button"><i class="fab fa-linkedin me-2"></i>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="bg-dark text-center text-white w-100 border-top border-color-white pb-2">
+    <div class="p5">
+        <small>©2021 Erin Winking :: erin@douglasavenue.com</small>
+    </div>
+</footer>
 {% endblock content %}
