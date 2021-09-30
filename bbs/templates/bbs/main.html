@@ -123,7 +123,8 @@
                 <form id="newPost" action="{% url 'createPost' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                        <textarea class="form-control" id="bbsPostMessage" name="bbsPostMessage" rows="5">Type your message here...</textarea>
+                        <textarea class="md-textarea form-control" id="bbsPostMessage" name="bbsPostMessage" rows="5"></textarea>
+                        <label for="bbsPostMessage">Type Your Message Here!</label>
                     </div>
                     <div class="form-inline">
                         <div class="col text-right">
@@ -196,15 +197,22 @@
         })
     })
 
-// <!-- UPDATE THE DISPLAY EVERY 10 SECONDS IN CASE SOMEONE ELSE ADDED A POST! -->
+// <!-- UPDATE THE DISPLAY EVERY 30 SECONDS IN CASE SOMEONE ELSE ADDED A POST! -->
 
-    function update() {
-        $.get("{% url 'partialReturn' %}", function(serverResponse) {
-        console.log("Poking the server!");
-        $( "#postDisplayZone" ).html(serverResponse);
-        });
+    const update = () => {
+        $.ajax({
+            url: '{% url 'partialReturn' %}',
+            method: 'get',
+            ifModified: 'true',
+            success: function(serverResponse) {
+                console.log("Poking the server!");
+                $( '#postDisplayZone' ).html(serverResponse);
+            }
+        })
     }
 
-    window.setInterval(update, 10000);
+    window.setInterval(update, 30000);
+    
 </script>
+
 {% endblock content %}
