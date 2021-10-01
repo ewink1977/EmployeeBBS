@@ -30,21 +30,7 @@
 	</head>
 
 	<body>
-		<div class="container">
-			{% if messages %} {% for message in messages %}
-			<div class="row justify-content-center mt-3">
-				<div class="col-8">
-					<div
-						class="alert alert-{{ message.tags }} rounded shadow"
-						role="alert"
-					>
-						{{ message }}
-					</div>
-				</div>
-			</div>
-			{% endfor %} {% endif %} {% block content %} {% endblock content %}
-		</div>
-
+		{% block content %} {% endblock content %}
 		<!-- MDB -->
 		<script
 			type="text/javascript"

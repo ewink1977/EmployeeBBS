@@ -1,0 +1,16 @@
+{% block header %}
+<nav class="navbar sticky-top navbar-dark bg-dark">
+	<div class="container-fluid">
+		<div class="col-2 ms-auto mx-5">
+			<h5 class="d-inline mr-3 text-white">@{{ user.username }}</h5>
+			<img
+				src="{{ user.userProfile.image.url }}"
+				class="rounded-circle mr-5"
+				height="25"
+				alt="@{{ user.username }}"
+				loading="lazy"
+			/>
+		</div>
+	</div>
+</nav>
+{% endblock header %}

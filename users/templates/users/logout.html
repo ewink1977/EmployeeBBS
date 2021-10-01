@@ -1,6 +1,8 @@
 {% extends 'bbs/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% include 'bbs/messages.html' %}
+<div class="container">
     <div class="row border border-secondary rounded shadow">
         <div class="col-md-4 home-bg pt-5 d-none d-sm-none d-md-block">
         </div>
@@ -16,4 +18,5 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock content %}

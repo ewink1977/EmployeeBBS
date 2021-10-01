@@ -1,5 +1,8 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
+{% include 'users/header.html' %}
+{% include 'bbs/messages.html' %}
+<div class="container">
 <div class="row my-5">
     <!-- POST DIV -->
     <div class="col" id="postDisplayZone">
@@ -178,6 +181,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- END TIME EDIT MODAL -->
 

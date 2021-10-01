@@ -1,86 +1,96 @@
-{% extends 'bbs/base.html' %} {% block content %}
-<div class="row border border-dark rounded shadow">
-	<div class="col-md-4 home-bg pt-5 d-none d-md-block align-items-center">
-		<div class="tester_block border border-dark rounded p-4">
-			<h4>Test Users!</h4>
-			<p>
-				If you want to take a look around the system, please feel free
-				to <a href="{% url 'register' %}">create an account</a>. You can
-				log in with the a test user account, username
-				<strong>testuser</strong> and the password
-				<strong>mytestaccount</strong>.
-			</p>
-			<p>
-				This will give you basic user access which will let you use the
-				Time Management System, post messages, reply to messages, and
-				view events!
-			</p>
-			<p>
-				You can check out all of the features via the
-				<a
-					href="https://douglasavenue.com/ebbsdoc/documentation.html"
-					target="_blank"
-					>project's documentation</a
-				>!
-			</p>
+{% extends 'bbs/base.html' %} {% block content %} 
+{% include 'bbs/messages.html' %}
+<div class="container">
+	<div class="row border border-dark rounded shadow">
+		<div class="col-md-4 home-bg pt-5 d-none d-md-block align-items-center">
+			<div class="tester_block border border-dark rounded p-4">
+				<h4>Test Users!</h4>
+				<p>
+					If you want to take a look around the system, please feel
+					free to
+					<a href="{% url 'register' %}">create an account</a>. You
+					can log in with the a test user account, username
+					<strong>testuser</strong> and the password
+					<strong>mytestaccount</strong>.
+				</p>
+				<p>
+					This will give you basic user access which will let you use
+					the Time Management System, post messages, reply to
+					messages, and view events!
+				</p>
+				<p>
+					You can check out all of the features via the
+					<a
+						href="https://douglasavenue.com/ebbsdoc/documentation.html"
+						target="_blank"
+						>project's documentation</a
+					>!
+				</p>
+			</div>
 		</div>
-	</div>
-	<div class="col-md">
-		<div class="text-center">
-			<h1 class="mt-2 display-2 krona">MgRonald's</h1>
-			<h3 class="text-body">Employee Digital Bulletin Board System</h3>
-		</div>
-		<div class="col mt-2 p-3 border border-dark rounded shadow">
-			<small class="text-muted text-center d-block">
-				This system is for MgRonald's employees only!
-			</small>
-			<h2>Employee Log In</h2>
-			<hr class="mx-5 my-2 border-info" />
-			<form action="" method="POST" class="mx-1 mb-5">
-				{% csrf_token %} {{ form.non_field_errors }}
-				<!-- Username input -->
-				<div class="form-outline mb-5">
-					{{ form.username.errors }}
-					<input
-						type="text"
-						class="form-control"
-						id="id_username"
-						name="username"
-						autofocus
-						autocapitalize="none"
-						autocomplete="off"
-						aria-describedby="usernamePrepend"
-						required
-					/>
-					<label class="form-label" for="id_username">username</label>
-					<div class="form-helper mb-2">
-						Do not type the @ sign before your username!
+		<div class="col-md">
+			<div class="text-center">
+				<h1 class="mt-2 display-2 krona">MgRonald's</h1>
+				<h3 class="text-body">
+					Employee Digital Bulletin Board System
+				</h3>
+			</div>
+			<div class="col mt-2 p-3 border border-dark rounded shadow">
+				<small class="text-muted text-center d-block">
+					This system is for MgRonald's employees only!
+				</small>
+				<h2>Employee Log In</h2>
+				<hr class="mx-5 my-2 border-info" />
+				<form action="" method="POST" class="mx-1 mb-5">
+					{% csrf_token %} {{ form.non_field_errors }}
+					<!-- Username input -->
+					<div class="form-outline mb-5">
+						{{ form.username.errors }}
+						<input
+							type="text"
+							class="form-control"
+							id="id_username"
+							name="username"
+							autofocus
+							autocapitalize="none"
+							autocomplete="off"
+							aria-describedby="usernamePrepend"
+							required
+						/>
+						<label class="form-label" for="id_username"
+							>username</label
+						>
+						<div class="form-helper mb-2">
+							Do not type the @ sign before your username!
+						</div>
 					</div>
+					<!-- Password input -->
+					<div class="form-outline mb-4">
+						{{ form.password.errors }}
+						<input
+							class="form-control"
+							type="password"
+							name="password"
+							autocomplete="current-password"
+							required
+							id="id_password"
+						/>
+						<label class="form-label" for="id_password"
+							>Password</label
+						>
+					</div>
+					<div class="form-group text-right">
+						<button type="submit" class="btn btn-primary">
+							Log In!
+						</button>
+					</div>
+				</form>
+				<div class="col border-top border-gray800 pt-2 text-right">
+					<small class="text-muted"
+						>If you do not have an account yet, please
+						<a href="{% url 'register' %}">register here</a>!</small
+					>
 				</div>
-				<!-- Password input -->
-				<div class="form-outline mb-4">
-					{{ form.password.errors }}
-					<input
-						class="form-control"
-						type="password"
-						name="password"
-						autocomplete="current-password"
-						required
-						id="id_password"
-					/>
-					<label class="form-label" for="id_password">Password</label>
-				</div>
-				<div class="form-group text-right">
-					<button type="submit" class="btn btn-primary">
-						Log In!
-					</button>
-				</div>
-			</form>
-			<div class="col border-top border-gray800 pt-2 text-right">
-				<small class="text-muted"
-					>If you do not have an account yet, please
-					<a href="{% url 'register' %}">register here</a>!</small
-				>
 			</div>
 		</div>
 	</div>
