@@ -5,7 +5,7 @@
 <div class="container">
 <div class="row my-5">
     <!-- POST DIV -->
-    <div class="col" id="postDisplayZone">
+    <div class="col-5" id="postDisplayZone">
         <!-- STICKY LOGIC -->
         {% if stickyPosts %}
             {% for post_obj in stickyPosts %}
@@ -24,7 +24,7 @@
         {% if page_obj %}
             {% for post_obj in page_obj %}
                 {% if post_obj.department != 8 %}
-                    {% include 'posts/post_body.html' with tag="secondary" %}
+                    {% include 'posts/post_body.html' %}
                 {% endif %}
             {% endfor %}
         {% endif %}
@@ -215,7 +215,7 @@
         })
     }
 
-    window.setInterval(update, 30000);
+    {% comment %} window.setInterval(update, 30000); {% endcomment %}
     
 </script>
 
