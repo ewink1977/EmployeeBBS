@@ -1,11 +1,11 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
-{% include 'users/header.html' %}
+{% include 'bbs/header.html' %}
 {% include 'bbs/messages.html' %}
 <div class="container">
 <div class="row my-5">
     <!-- POST DIV -->
-    <div class="col-5" id="postDisplayZone">
+    <div class="col-md-5" id="postDisplayZone">
         <!-- STICKY LOGIC -->
         {% if stickyPosts %}
             {% for post_obj in stickyPosts %}
@@ -51,7 +51,7 @@
         <!-- END PAGINATION -->
     </div>
     <!-- USER DIV -->
-    <div class="col">
+    <div class="col-md">
         <div class="row border border-dark rounded mt-2 p-2 shadow-2 align-items-center">
             <div class="col-3">
                 <img src="{{ user.userProfile.image.url }}" alt="{{ user.username }}'s Profile Picture!" class="mainpic rounded shadow">
@@ -223,5 +223,6 @@
     {% comment %} window.setInterval(update, 30000); {% endcomment %}
     
 </script>
+{% include 'bbs/footer.html' %}
 
 {% endblock content %}
