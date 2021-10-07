@@ -98,16 +98,7 @@
             <h3 class="text-body text-center my-3">No events listed right now!</h3>
             {% endif %}
             {% for event_obj in eventList|slice:':5' %}
-            <div class="col-10 p-3">
-                <a href="{% url 'eventView' event_obj.pk %}"><strong>{{ event_obj.title }}</strong></a>
-                {% if event_obj.start_date == event_obj.end_date %}
-                <p>On {{ event_obj.start_date|date:'l, F j, Y' }}</p>
-                {% else %}
-                <p>From {{ event_obj.start_date|date:'l, F j, Y' }} through <br />
-                        {{ event_obj.end_date|date:'l, F j, Y' }}</p>
-                {% endif %}
-                <hr class="mx-5 my-1 border border-info">
-            </div>
+            {% include 'events/event_card_bbs.html' %}
             {% endfor %}
             <!-- END EVENT LIST -->
             <div class="row mx-1 my-4">
