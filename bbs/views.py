@@ -10,6 +10,9 @@ from itertools import chain
 from bbs.departments import departments
 
 
+def landing_page(request):
+    return render(request, 'bbs/landing.html')
+
 @login_required
 def bbsMainView(request):
     now = datetime.now()

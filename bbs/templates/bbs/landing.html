@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% load static %}
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>KRKBoard - The Employee BBS</title>
+		<!-- Font Awesome Stuff. -->
+		<script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+		<link
+			rel="stylesheet"
+			href="{% static 'fontawesomefree/css/all.min.css' %}"
+			type="text/css"
+		/>
+		<!-- Google Fonts MegaURL -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Anton&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Khula:wght@300;400;600;700;800&family=Krona+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- MDB -->
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Local Styles -->
+		<link rel="stylesheet" href="{% static 'css/ewink.style.css' %}" />
+	</head>
+
+	<body>
+		<header>
+			<!-- Navbar -->
+			<nav class="navbar navbar-expand-md navbar-dark bg-black fixed-top">
+				<div class="container-fluid mx-5">
+					<!-- Navbar Brand -->
+					<div class="d-none d-sm-inline">
+						<a class="navbar-brand me-2" href="#">
+							<img
+								src="https://cdn.douglasavenue.com/krk/media/img/krk-icon.png"
+								height="35"
+								alt="KRK Logo"
+								loading="lazy"
+								style="margin-top: 2px; margin-bottom: 2px"
+							/>
+						</a>
+					</div>
+					<div class="d-flex align-items-center">
+						<a href="{% url 'login' %}">
+							<button
+								type="button"
+								class="btn btn-link px-3 me-2"
+							>
+								Login
+							</button>
+						</a>
+						<a href="{% url 'register' %}">
+							<button
+								type="button"
+								class="btn btn-link px-3 me-2"
+							>
+								Register
+							</button>
+						</a>
+					</div>
+				</div>
+			</nav>
+			<!-- Navbar -->
+		</header>
+		<!-- Showcase -->
+		<section
+			class="bg-image w-100 pt-5"
+			style="
+				background-image: url('https://cdn.douglasavenue.com/krk/media/img/showcaseBG.png');
+			"
+		>
+			<div class="row justify-content-evenly align-items-center p1">
+				<div class="p2 col-lg-4">
+					<img
+						src="https://cdn.douglasavenue.com/krk/media/img/krk-logo.png"
+						alt="KRK Logo"
+						class="img-fluid"
+					/>
+				</div>
+				<div class="p2 col-lg-4">
+					<h2 class="text-white">Welcome to KRK!</h2>
+					<p class="text-white">
+						KRK (pronounced ‘cork’) EBBS system is a digital
+						corkboard for businesses that allows employees to
+						communicate with each other, management to communicate
+						with all employees, and event scheduling. Check out the
+						information below to see more details on how KRK can
+						help your business!
+					</p>
+				</div>
+			</div>
+		</section>
+		<!-- Sales Container -->
+		<section class="my-3 sales-row">
+			<div class="row row-cols-1 row-cols-md-3 mx-2 g-4">
+				<div class="col">
+					<div class="card h-100">
+						<img
+							src="https://cdn.douglasavenue.com/krk/media/img/post-sales-header.png"
+							alt="Posts!"
+							class="card-img-top"
+						/>
+						<div class="card-body">
+							<h5 class="card-title">Post Feed For Users!</h5>
+							<p class="card-text">
+								Users can post messages, as well as like and
+								reply to messages other users’ post. Messages
+								are segregated to departments, so it is as if
+								each department has their own personal KRKBoard!
+								Supervisors for that department can prioritize
+								messages so they remain at the top of the
+								message timeline, and site-wide supervisors can
+								send messages to any department as well as pin
+								sitewide messages to the top of the timeline!
+							</p>
+						</div>
+						<div class="card-footer">
+							<div class="col text-center">
+								<p>
+									Feel free to log in with our test user
+									account or register with a new account to
+									test KRK out, or contact me, Erin Winking,
+									to discuss the application further!
+								</p>
+							</div>
+							<div class="text-center p4">
+								<a href="{% url 'login' %}">
+									<button
+										type="button"
+										class="btn btn-success btn-rounded mx-2"
+									>
+										Log In!
+									</button>
+								</a>
+								<a href="{% url 'register' %}">
+									<button
+										type="button"
+										class="btn btn-primary btn-rounded mx-2"
+									>
+										Register!
+									</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card h-100">
+						<img
+							src="https://cdn.douglasavenue.com/krk/media/img/event-sales-header.png"
+							alt="Events!"
+							class="card-img-top"
+						/>
+						<div class="card-body">
+							<h5 class="card-title">Event Calendar For All!</h5>
+							<p class="card-text">
+								KRK comes with an event calendar for your staff!
+								Events can be created as far in advance as you
+								like and can be set to only be displayed for a
+								single department or the entire site! Sometimes
+								your users do not need to know about an event or
+								project happening in another department, so no
+								need to clutter up their event calendar.
+							</p>
+						</div>
+						<div class="card-footer">
+							<div class="col text-center">
+								<p>
+									Feel free to log in with our test user
+									account or register with a new account to
+									test KRK out, or contact me, Erin Winking,
+									to discuss the application further!
+								</p>
+							</div>
+							<div class="text-center p4">
+								<a href="{% url 'login' %}">
+									<button
+										type="button"
+										class="btn btn-success btn-rounded mx-2"
+									>
+										Log In!
+									</button>
+								</a>
+								<a href="{% url 'register' %}">
+									<button
+										type="button"
+										class="btn btn-primary btn-rounded mx-2"
+									>
+										Register!
+									</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card h-100">
+						<img
+							src="https://cdn.douglasavenue.com/krk/media/img/user-sales-header.png"
+							alt="Users!"
+							class="card-img-top"
+						/>
+						<div class="card-body">
+							<h5 class="card-title">Easy User Management!</h5>
+							<p class="card-text">
+								User management is KRK is simple. Users register
+								their account, supervisors set their department
+								as well as their access levels, and that is it!
+								Users can upload their own profile pictures and
+								set their own biographies. Supervisors and
+								managers can of course edit anything necessary!
+							</p>
+						</div>
+						<div class="card-footer">
+							<div class="col text-center">
+								<p>
+									Feel free to log in with our test user
+									account or register with a new account to
+									test KRK out, or contact me, Erin Winking,
+									to discuss the application further!
+								</p>
+							</div>
+							<div class="text-center p4">
+								<a href="{% url 'login' %}">
+									<button
+										type="button"
+										class="btn btn-success btn-rounded mx-2"
+									>
+										Log In!
+									</button>
+								</a>
+								<a href="{% url 'register' %}">
+									<button
+										type="button"
+										class="btn btn-primary btn-rounded mx-2"
+									>
+										Register!
+									</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Call To Action! -->
+		<section class="bg-dark cta-block">
+			<div class="row row-cols-1 row-cols-md-2 m-5 gy-4 gx-3">
+				<div class="col">
+					<div class="card h-100">
+						<div class="card-body">
+							<h3 class="card-title">Try KRK Out!</h3>
+							<p class="card-text">
+								Would you like to take KRK for a spin? Please
+								try out the demo site by clicking the buttons
+								below or the buttons on the top menu! You can
+								either create your own account, which will
+								default to give you the view of a front-line
+								worker at our fictional restaurant, MgRonald's.
+								If you don't want to go through all that
+								trouble, you can use the demo account that is
+								already set up. User name is 'testuser' and the
+								password is 'testpassword' (without the quotes).
+							</p>
+						</div>
+						<div class="card-footer">
+							<div class="text-center p4">
+								<a href="{% url 'login' %}">
+									<button
+										type="button"
+										class="btn btn-success mx-2"
+									>
+										Log In!
+									</button>
+								</a>
+								<a href="{% url 'register' %}">
+									<button
+										type="button"
+										class="btn btn-primary mx-2"
+									>
+										Register!
+									</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card h-100">
+						<div class="card-body">
+							<h3 class="card-title">KRK For Your Biz!</h3>
+							<p class="card-text">
+								Would you like to have your own KRK Employee
+								Bulletin Board System? Well, then you will have
+								to hire me as a web developer and have me build
+								it for you! KRK isn't sold as SaaS right now
+								(but who knows what the future might hold). You
+								can look into having me, Erin Winking, as an
+								employee by checking out my profile, GitHub, or
+								emailing me!
+							</p>
+						</div>
+						<div class="card-footer">
+							<div class="text-center p4">
+								<a
+									class="btn btn-primary"
+									href="https://douglasavenue.com"
+									target="_blank"
+									role="button"
+								>
+									My Profile!
+								</a>
+								<a
+									class="btn btn-primary"
+									href="https://github.com/ewink1977"
+									target="_blank"
+									style="background-color: #c9510c"
+									role="button"
+									><i class="fab fa-github me-2"></i>
+									GitHub
+								</a>
+								<a
+									class="btn btn-primary"
+									href="https://www.linkedin.com/in/erinwinking/"
+									target="_blank"
+									style="background-color: #0077b5"
+									role="button"
+									><i class="fab fa-linkedin me-2"></i>
+									LinkedIn
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer
+			class="
+				bg-dark
+				text-center text-white
+				w-100
+				border-top border-color-white
+				pb-2
+			"
+		>
+			<div class="p5">
+				<img
+					src="https://cdn.douglasavenue.com/krk/media/img/krk-icon.png"
+					class="d-inline"
+					height="15"
+					alt="KRK Logo"
+					loading="lazy"
+					style="margin-top: 2px"
+				/>
+				<small>©2021 Erin Winking :: erin@douglasavenue.com</small>
+			</div>
+		</footer>
+		<!-- MDB -->
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
+		></script>
+	</body>
+</html>

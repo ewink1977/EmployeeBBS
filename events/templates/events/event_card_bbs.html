@@ -1,0 +1,30 @@
+{% block event_card_bbs %}
+<div class="card mb-3 rounded">
+	<div class="row g-0">
+		<div class="col-md-1 bg-success"></div>
+		<div class="col-md-11">
+			<div class="card-body">
+				<a href="{% url 'eventView' event_obj.pk %}"
+					><h4 class="card-title">{{ event_obj.title }}</h4></a
+				>
+				<p class="card-text">
+					{{ event_obj.description }}
+				</p>
+				<p class="card-text">
+					{% if event_obj.start_date == event_obj.end_date %}
+					<small class="text-muted"
+						>On {{ event_obj.start_date|date:'l, F j, Y' }}</small
+					>
+					{% else %}
+					<small class="text-muted"
+						>From {{ event_obj.start_date|date:'l, F j, Y' }}
+						through <br />
+						{{ event_obj.end_date|date:'l, F j, Y' }}</small
+					>
+					{% endif %}
+				</p>
+			</div>
+		</div>
+	</div>
+	{% endblock event_card_bbs %}
+</div>

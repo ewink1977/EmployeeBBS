@@ -1,52 +1,64 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
-<div class="col text-right">
-    <small><a href="{% url 'bbsHome' %}">BBS Main</a> | <a href="{% url 'logout' %}">Log Out</a></small></span>
-</div>
-<div class="row">
-    <div class="col-7 p-5 text-center">
-        <h2 class="anton">Create A New Event!</h2>
-        <hr class="mx-5 border border-secondary rounded shadow">
+{% include 'bbs/header.html' %}
+{% include 'bbs/messages.html' %}
+<div class="container">
+    <div class="col py-3 text-end">
+        <div class="col text-end">
+            <a href="{% url 'bbsHome' %}" class="btn btn-primary btn-lg shadow" role="button"><i
+                    class="fas fa-backspace fa-lg me-2"></i>BACK TO BBS MAIN PAGE</a>
+            <a href="{% url 'eventHome' %}" class="btn btn-info btn-lg shadow" role="button"><i
+                    class="fas fa-backspace fa-lg me-2"></i>BACK TO EVENT MAIN PAGE</a>
+        </div>
     </div>
-</div>
-<div class="row mt-2">
-    <form action="{% url 'createEvent' %}" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="eventTitle">Title</label>
-            <input type="text" name="eventTitle" id="eventTitle" placeholder="Choose a title for the event..." class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="eventDesc">Description</label>
-            <textarea name="eventDesc" id="eventDesc" rows="5" class="form-control"></textarea>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-4">
-                <label for="eventStart">Start Date:</label>
-                <input type="date" name="eventStart" id="eventStart" class="form-control">
+    <div class="row text-center p-5">
+        <h2 class="anton">Create A New Event!</h2>
+        <hr class="border rounded shadow">
+    </div>
+    <div class="w-50">
+        <form action="{% url 'createEvent' %}" method="POST">
+            {% csrf_token %}
+            <div class="col-sm-6 mb-1">
+                <div class="form-outline">
+                    <input type="text" name="eventTitle" id="eventTitle" class="form-control" />
+                    <label for="eventTitle" class="form-label">Choose A Title For The Event...</label>
+                </div>
             </div>
-            <div class="form-group col-4">
-                <label for="eventEnd">End Date:</label>
-                <input type="date" name="eventEnd" id="eventEnd" aria-describedby="dateHelp" class="form-control">
-                <small id="dateHelp" class="form-text text-muted">Choose same as start for one-day event.</small>
+            <div class="col mb-1">
+                <div class="form-outline">
+                    <textarea name="eventDesc" id="eventDesc" rows="5" class="md-textarea form-control"></textarea>
+                    <label class="form-label" for="eventDesc">Description</label>
+                </div>
             </div>
-            <div class="form-group col-4">
-                <label for="eventDept">Department</label>
-                <select name="eventDept" id="eventDept" aria-describedby="deptHelp" class="form-control">
-                    {% for key, value in deptList.items %}
+            <div class="row g-2">
+                <div class="col">
+                    <label for="eventStart">Start Date:</label>
+                    <input type="date" name="eventStart" id="eventStart" class="form-control">
+                </div>
+                <div class="col">
+                    <label for="eventEnd">End Date:</label>
+                    <input type="date" name="eventEnd" id="eventEnd" aria-describedby="dateHelp" class="form-control">
+                    <small id="dateHelp" class="form-text text-muted">Choose same as start for one-day event.</small>
+                </div>
+                <div class="col">
+                    <label for="eventDept">Department</label>
+                    <select name="eventDept" id="eventDept" aria-describedby="deptHelp" class="form-control">
+                        {% for key, value in deptList.items %}
                         {% if key == 8 %}
                         <option selected value="{{ key }}">{{ value }}</option>
                         {% else %}
                         <option value="{{ key }}">{{ value }}</option>
                         {% endif %}
-                    {% endfor %}
-                </select>
-                <small id="deptHelp" class="form-text text-muted">Storewide is default.</small>
+                        {% endfor %}
+                    </select>
+                    <small id="deptHelp" class="form-text text-muted">Storewide is default.</small>
+                </div>
             </div>
-        </div>
-        <div class="col text-right">
-            <button type="submit" class="btn btn-primary">Create Event</button>
-        </div>
-    </form>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Create Event</button>
+            </div>
+        </form>
+    </div>
 </div>
+{% include 'bbs/footer.html' %}
 {% endblock %}

@@ -1,4 +1,13 @@
 /* Local Styles Go Here! */
+.sales-row {
+    min-height: 500px;
+}
+
+.cta-block {
+    min-height: 300px;
+}
+
+
 .home-bg {
     background-image: url('http://douglasavenue.com/bbsimg/mgronald1.jpg');
     background-position: top left;
@@ -49,7 +58,7 @@
 .postPic {
     width: 50px;
     height: 50px;
-    margin: 2px 0 0 6px;
+    /* margin: 2px 0 0 6px; */
 }
 
 .xl-text {

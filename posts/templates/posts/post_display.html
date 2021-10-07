@@ -1,106 +1,44 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
-<div class="row justify-content-end">
-    <div class="col text-right">
-        <small><a href="{% url 'bbsHome' %}">BBS Main</a> | <a href="{% url 'logout' %}">Log Out</a></small>
+{% include 'bbs/header.html' %}
+{% include 'bbs/messages.html' %}
+<div class="container">
+    <div class="col text-end py-3">
+            <a href="{% url 'bbsHome' %}" class="btn btn-primary btn-lg shadow" role="button"><i
+                    class="fas fa-backspace fa-lg me-2"></i>BACK TO BBS MAIN PAGE</a>
     </div>
-    <div class="col-12 my-3">
-        <!-- MAIN POST -->
-        <div class="row border rounded shadow p-4 mx-1 my-3">
-            <div class="row mb-2 w-100">
-                <div class="media">
-                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ postObj.author.userProfile.image.url }}" alt="{{ postObj.author.username }}'s picture.">
-                    <div class="media-body ml-3 mt-2">
-                        <h3 class="anton"><a href="{% url 'userProfile' postObj.author.username %}" class="text-dark">@{{ postObj.author.username }}</a> 
-                            <small class="kanit-200 text-muted">{{ postObj.author.first_name }} {{ postObj.author.last_name }}</small></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-end">
-                <div class="col mx-2">
-                    <p>
-                        {{ postObj.content }}
-                    </p>
-                    <small>
-                        <a href="{% url 'postView' postObj.pk %}">{{ postObj.created_at|date:"l, N j, Y @ f A" }} </a>
-                        {% if request.user.userProfile.access_level >= 2 or request.user == postObj.author %}
-                        | <a href="{% url 'deletePost' postObj.pk %}">Delete Post</a>
-                        {% endif %}
-                    </small>
-                </div>
-            </div>
-            <hr class="w-100 mx-5 my-2 border rounded shadow">
-            <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' postObj.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
-                        {% if postObj.bbsReply.all|length > 0 %}
-                        {{ postObj.bbsReply.all|length }}</span>
-                        {% else %}
-                        0</span>
-                        {% endif %}
-                </div>
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'likePost' postObj.pk %}"><i class="text-danger fas fa-heart"></i></a> 
-                        {% if postObj.likes.all|length > 0 %}
-                        {{ postObj.likes.all|length }}</span>
-                        {% else %}
-                        0</span>
-                        {% endif %}
-                </div>
-            </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+        {% include 'posts/post_body.html' %}
         </div>
-        <!-- END POST BODY -->
     </div>
-</div>
-{% if replies %}
+    {% if replies %}
     {% for reply_obj in replies %}
-<div class="row justify-content-end">
-    <div class="col-10">
-        <!-- REPLY POST -->
-        <div class="row border rounded shadow p-2 mx-1 my-3">
-            <div class="row mb-2 w-100">
-                <div class="media">
-                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ reply_obj.author.userProfile.image.url }}" alt="{{ reply_obj.author.username }}'s picture.">
-                    <div class="media-body ml-3 mt-2">
-                        <h3 class="anton"><a href="{% url 'userProfile' reply_obj.author.username %}" class="text-dark">@{{ reply_obj.author.username }}</a> 
-                            <small class="kanit-200 text-muted">{{ reply_obj.author.first_name }} {{ reply_obj.author.last_name }}</small></h3>
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+        <!-- REPLY POST BODY HERE -->
+        {% include 'posts/reply_body.html' %}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="row d-flex justify-content-center" id="reply">
+        <div class="col-6">
+            <form action="{% url 'replyPost' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-outline">
+                    <textarea class="md-textarea form-control" id="bbsReplyMessage" name="bbsReplyMessage" rows="5"></textarea>
+                    <label class="form-label" for="bbsPostMessage">Type Your Message Here!</label>
+                </div>
+                <input type="hidden" name="bbsReplyParent" id="bbsReplyParent" value="{{ post_obj.pk }}">
+                <div class="form-inline">
+                    <div class="col text-right">
+                        <button type="submit" class="btn btn-outline-primary mt-1">Post Reply</button>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-end">
-                <div class="col mx-2">
-                    <p>
-                        {{reply_obj.content }}
-                    </p>
-                    <small>
-                        <span class="text-primary">{{ reply_obj.created_at|date:"l, N j, Y @ f A" }} </span>
-                        {% if request.user.userProfile.access_level >= 2 or request.user == reply_obj.author %}
-                        | <a href="{% url 'deleteReply' reply_obj.pk %}">Delete Reply</a>
-                        {% endif %}
-                    </small>
-                </div>
-            </div>
-            <hr class="w-100 mx-5 my-2 border rounded shadow">
+            </form>
         </div>
-        <!-- END POST BODY -->
     </div>
 </div>
-    {% endfor %}
-{% endif %}
-<div class="row justify-content-end" id="reply">
-    <div class="col-8">
-        <form action="{% url 'replyPost' %}" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <textarea class="form-control" id="bbsReplyMessage" name="bbsReplyMessage" rows="5">Type your message here...</textarea>
-            </div>
-            <input type="hidden" name="bbsReplyParent" id="bbsReplyParent" value="{{ postObj.pk }}">
-            <div class="form-inline">
-                <div class="col text-right">
-                    <button type="submit" class="btn btn-outline-primary">Post Reply</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+{% include 'bbs/footer.html' %}
 {% endblock %}

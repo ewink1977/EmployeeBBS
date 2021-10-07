@@ -1,0 +1,56 @@
+<!-- REPLY BODY -->
+<div class="card my-2 mr-1 border border-primary">
+    <div class="card-header">
+        <div class="row mb-2 w-100 align-items-center">
+            <div class="col-2">
+                <img class="ml img-fluid rounded-circle shadow-2-strong postPic"
+                    src="{{ reply_obj.author.userProfile.image.url }}" alt="{{ reply_obj.author.username }}'s picture.">
+            </div>
+            <div class="col-10" style="margin-left: -15px;">
+                <h3 class="anton mt-2"><a href="{% url 'userProfile' reply_obj.author.username %}"
+                        class="text-dark">@{{ reply_obj.author.username }}</a>
+                    <small class="kanit-200 text-muted">{{ reply_obj.author.first_name }}
+                        {{ reply_obj.author.last_name }}</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="card-body mx-2">
+        <p class="card-text">
+            {{ reply_obj.content }}
+        </p>
+        <div class="row">
+            <small class="text-end">
+                <a href="{% url 'postView' reply_obj.pk %}">{{ reply_obj.created_at|date:"l, N j, Y @ f A" }}</a>
+                {% if request.user.userProfile.access_level >= 2 or request.user == reply_obj.author %}
+                | <a href="{% url 'deletePost' reply_obj.pk %}" class="text-danger">Delete Post</a>
+                {% endif %}
+            </small>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
+            <div class="col-2 align-self-center">
+                <span style="font-size: 1.2rem;"><a href="{% url 'postView' reply_obj.pk %}#reply"><i
+                            class="text-primary fas fa-reply fa-lg"></i>
+                        {% if reply_obj.bbsReply.all|length > 0 %}
+                        <span
+                            class="badge rounded-pill badge-notification bg-primary border border-dark">{{ reply_obj.bbsReply.all|length }}</span>
+                        {% endif %}</a>
+            </div>
+            <div class="col-2 align-self-center">
+                <span style="font-size: 1.2rem;"><a href="{% url 'likePost' reply_obj.pk %}"><i
+                            class="text-danger fas fa-heart fa-lg"></i></a>
+                    {% if reply_obj.likes.all|length > 0 %}
+                    <span
+                        class="badge rounded-pill badge-notification bg-danger border border-dark">{{ reply_obj.likes.all|length }}</span>
+                    {% endif %}
+            </div>
+            <div class="col-2 align-self-center">
+                <span style="font-size: 1.2rem;" title="This is a reply!"><a href="{% url 'postView' reply_obj.parent.id %}"><i
+                            class="text-primary fab fa-replyd fa-lg"></i></a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

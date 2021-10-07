@@ -2,44 +2,54 @@
 {% block content %}
 {% load tz %}
 {% load durations %}
-<div class="row justify-content-end">
-    <div class="col-3 text-right"><small><a href="{% url 'userProfile' user.username %}">Back To Profile</a> | <a href="{% url 'bbsHome' %}">BBS Main Page</a> | <a href="{% url 'logout' %}">Log Out</a></div></small>
-</div>
-<div class="row justify-content-center my-4">
-    <h1>Timesheet for <span class="anton">{{ viewUser.username }}</span></h1>
-</div>
-{% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
-<div class="row justify-content-center">
-    <div class="col-9 border border-secondary rounded shadow p-4 my-2">
-        <span class="text-center"><h3>Time Management</h3></span>
-        <hr class="border border-secondary rounded shadow mx-5">
-        <div class="row border border-secondary rounded shadow my-4">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Clock In</th>
-                        <th scope="col">Clock Out</th>
-                        <th scope="col">Time Worked (H:M)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for punch in page_obj %}
-                    <tr>
-                        <th scope="row">{{ punch.pk }}</th>
-                        <td>{{ punch.time_in|date:"SHORT_DATE_FORMAT" }}</td>
-                        {% localtime on %}
-                        <td>{{ punch.time_in|date:"H:i" }}</td>
-                        <td>{{ punch.time_out|date:"H:i" }}</td>
-                        {% endlocaltime %}
-                        <td>{{ punch.total|duration }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+{% include 'bbs/header.html' %}
+{% include 'bbs/messages.html' %}
+<div class="container">
+    <div class="col text-end py-3">
+        <a href="{% url 'bbsHome' %}" class="btn btn-primary btn-lg shadow" role="button"><i
+                class="fas fa-backspace fa-lg me-2"></i>BACK TO BBS MAIN PAGE</a>
+        <a href="{% url 'userProfile' user.username %}" class="btn btn-info btn-lg shadow" role="button"><i
+                class="fas fa-backspace fa-lg me-2"></i>BACK TO PROFILE PAGE</a>
+    </div>
+    <div class="row text-center my-4">
+        <h1>Timesheet for <span class="anton">{{ viewUser.username }}</span></h1>
+    </div>
+    {% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
+    <div class="row d-flex justify-content-center rounded shadow mb-5">
+        <div class="col-md-9 p-4 my-2">
+            <span class="text-center">
+                <h3>Time Management</h3>
+            </span>
+            <hr class="border border-dark rounded shadow mx-5">
+            <div class="row border rounded shadow my-4">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Clock In</th>
+                            <th scope="col">Clock Out</th>
+                            <th scope="col">Time Worked (H:M)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for punch in page_obj %}
+                        <tr>
+                            <th scope="row">{{ punch.pk }}</th>
+                            <td>{{ punch.time_in|date:"SHORT_DATE_FORMAT" }}</td>
+                            {% localtime on %}
+                            <td>{{ punch.time_in|date:"H:i" }}</td>
+                            <td>{{ punch.time_out|date:"H:i" }}</td>
+                            {% endlocaltime %}
+                            <td>{{ punch.total|duration }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 {% endif %}
+{% include 'bbs/footer.html' %}
 {% endblock content %}
