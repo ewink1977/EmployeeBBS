@@ -21,7 +21,10 @@
         </p>
         <div class="row">
             <small class="text-end">
-                <a href="{% url 'postView' post_obj.pk %}">{{ post_obj.created_at|date:"l, N j, Y @ f A" }}</a>
+                <a href="{% url 'postView' post_obj.pk %}">{{ post_obj.created_at|date:"l, N j, Y @ f A" }}</a> 
+                {% if request.user.userProfile.access_level >= 2 or request.user == post_obj.author %}
+                | <a href="{% url 'deletePost' post_obj.pk %}" class="text-danger">Delete Post</a>
+                {% endif %}
             </small>
         </div>
     </div>

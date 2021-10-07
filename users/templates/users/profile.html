@@ -2,219 +2,121 @@
 {% block content %}
 {% load tz %}
 {% load durations %}
-<div class="row my-3 mx-3 justify-content-end">
-    <div class="col-3 text-right"><small><a href="{% url 'bbsHome' %}">BBS Main Page</a> | <a href="{% url 'logout' %}">Log Out</a></div></small>
-</div>
-<div class="row my-3 mx-3 border border-dark rounded shadow justify-content-end">
-    <div class="col-6 ml-5 mt-5 text-right">
-        <h1 class="anton">{{ viewUser.username }}</h1>
-        <h3>{{ viewUser.first_name }} {{ viewUser.last_name }}</h3>
-        <h4>{{ viewUser.email }}</h4>
-        <h4>{{ viewUser.userProfile.position }}</h4>
-        <p>{{ viewUser.userProfile.bio }}</p>
-        
-        <!-- Convert Department Number into Department Name! -->
-        {% for key, value in deptList.items %}
+{% include 'bbs/header.html' %}
+{% include 'bbs/messages.html' %}
+<div class="container">
+    <div class="col text-end py-3">
+        <a href="{% url 'bbsHome' %}" class="btn btn-primary btn-lg shadow" role="button"><i
+                class="fas fa-backspace fa-lg me-2"></i>BACK TO BBS MAIN PAGE</a>
+    </div>
+    <div class="row my-3 mx-3 border border-dark rounded shadow justify-content-end">
+        <div class="col-md-6 ml-5 mt-5 text-end">
+            <h1 class="anton">{{ viewUser.username }}</h1>
+            <h3>{{ viewUser.first_name }} {{ viewUser.last_name }}</h3>
+            <h4>{{ viewUser.email }}</h4>
+            <h4>{{ viewUser.userProfile.position }}</h4>
+            <p>{{ viewUser.userProfile.bio }}</p>
+
+            <!-- Convert Department Number into Department Name! -->
+            {% for key, value in deptList.items %}
             {% if key == viewUser.userProfile.department %}
             <h4>{{ value }}</h4>
             {% endif %}
-        {% endfor %}
+            {% endfor %}
 
-        {% if user.id == viewUser.id %}
-        <div class="col-sm p-4 text-right">
-            <a href="{% url 'editUserProfile' %}"><button type="button" class="btn btn-outline-primary">Update</button></a>
-        </div>
-        {% endif %}
-    </div>
-    <div class="col-5 p-5 text-right">
-        <img src="{{ viewUser.userProfile.image.url }}" alt="{{ viewUser.username }}'s Profile Picture" class="rounded shadow" style="width: 300px;">
-    </div>
-</div>
-<div class="row my-3 mx-3">
-    <div class="col-6">
-        <h2 class="mx-5 my-2">{{ viewUser.username }}'s Posts</h2>
-        {% for post in userPosts %}
-        <!-- BBS POST -->
-        <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
-            <div class="row mb-2 w-100">
-                <div class="media">
-                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ post.author.userProfile.image.url }}" alt="{{ post.author.username }}'s Profile Picture!">
-                    <div class="media-body ml-3 mt-2">
-                        <h3 class="anton"><a href="{% url 'userProfile' post.author.username %}" class="text-dark">@{{ post.author.username }}</a> 
-                            <small class="kanit-200 text-muted">{{ post.author.first_name }} {{ post.author.last_name }}</small></h3>
-                    </div>
-                </div>
+            {% if user.id == viewUser.id %}
+            <div class="col-md p-4 text-right">
+                <a href="{% url 'editUserProfile' %}"><button type="button"
+                        class="btn btn-outline-primary">Update</button></a>
             </div>
-            <div class="row justify-content-end">
-                <div class="col mx-2">
-                    <p>
-                        {{ post.content }}
-                    </p>
-                    <small>
-                        <a href="{% url 'postView' post.pk %}">{{ post.created_at|date:"l, N j, Y @ f A" }}</a>
-                    </small>
-                </div>
-            </div>
-            <hr class="w-100 mx-5 my-2 border rounded shadow">
-            <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
-                        {% if post.bbsReply.all|length > 0 %}
-                        {{ post.bbsReply.all|length }}</span>
-                        {% else %}
-                        0</span>
-                        {% endif %}
-                </div>
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post.pk %}"><i class="text-danger fas fa-heart"></i></a> 
-                        {% if post.likes.all|length > 0 %}
-                        {{ post.likes.all|length }}</span>
-                        {% else %}
-                        0</span>
-                        {% endif %}
-                </div>
-                {% if post.priority == 2 %}
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><i class="text-danger fas fa-bullhorn"></i></span>
-                </div>
-                {% elif post.department == 8 %}
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><i class="text-warning fas fa-bullhorn"></i></span>
-                </div>
-                {% endif %}
-                {% if post.is_reply == True and post.parent %}
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.parent.id %}" data-toggle="tooltip" data-placement="top" title="View Parent Post!">
-                        <i class="text-primary fab fa-replyd"></i></a> 
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        <!-- END BBS POST -->
-        {% endfor %}
-        {% if userPosts.has_other_pages %}
-        <div class="w-100 col my-3 text-right">
-            {% if userPosts.has_previous %}
-            <a href="?page=1"><button type="button" class="btn btn-outline-primary btn-sm">First</button></a>
-            <a href="?page={{ userPosts.previous_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&laquo;</button></a>
-            {% else %}
-            <button type="button" class="btn btn-outline-primary btn-sm disabled">&laquo;</button>
             {% endif %}
-            {% for num in userPosts.paginator.page_range %}
+        </div>
+        <div class="col-sm-6 p-5">
+            <img src="{{ viewUser.userProfile.image.url }}" alt="{{ viewUser.username }}'s Profile Picture"
+                class="rounded shadow img-fluid" style="max-height: 275px;">
+        </div>
+    </div>
+    <div class="row my-5 mx-3">
+        <div class="col-md-6">
+            <h2 class="mx-5 my-2">{{ viewUser.username }}'s Posts</h2>
+            {% for post_obj in userPosts %}
+            <!-- BBS POST -->
+            {% include 'posts/post_body.html' %}
+            {% endfor %}
+            {% if userPosts.has_other_pages %}
+            <div class="w-100 col my-3 text-right">
+                {% if userPosts.has_previous %}
+                <a href="?page=1"><button type="button" class="btn btn-outline-primary btn-sm">First</button></a>
+                <a href="?page={{ userPosts.previous_page_number }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">&laquo;</button></a>
+                {% else %}
+                <button type="button" class="btn btn-outline-primary btn-sm disabled">&laquo;</button>
+                {% endif %}
+                {% for num in userPosts.paginator.page_range %}
                 {% if userPosts.number == num %}
                 <a href="?page={{ num }}"><button type="button" class="btn btn-primary btn-sm">{{ num }}</button></a>
                 {% elif num > userPosts.number|add:'-3' and num < userPosts.number|add:'3' %}
-                <a href="?page={{ num }}"><button type="button" class="btn btn-outline-primary btn-sm">{{ num }}</button></a>
+                <a href="?page={{ num }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">{{ num }}</button></a>
                 {% endif %}
-            {% endfor %}
-            {% if userPosts.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&raquo;</button></a>
-                <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-outline-primary btn-sm">Last</button></a>
+                {% endfor %}
+                {% if userPosts.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">&raquo;</button></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">Last</button></a>
+                {% endif %}
+            </div>
             {% endif %}
+            <!-- END PAGINATION -->
         </div>
-        {% endif %}
-        <!-- END PAGINATION -->
+        <div class="col-md-6">
+            <h2 class="mx-5 my-2">{{ viewUser.username }}'s Last 5 Replies</h2>
+            {% for reply_obj in userReplies|slice:":5" %}
+            <!-- BBS REPLIES -->
+            {% include 'posts/reply_body.html' %}
+            <!-- END BBS REPLY POST -->
+            {% endfor %}
+        </div>
     </div>
-    <div class="col-6">
-        <h2 class="mx-5 my-2">{{ viewUser.username }}'s Last 5 Replies</h2>
-        {% for post in userReplies|slice:":5" %}
-        <!-- BBS REPLIES -->
-        <div class="row border border-secondary rounded shadow p-2 mx-1 my-3">
-            <div class="row mb-2 w-100">
-                <div class="media">
-                    <img class="align-self-start ml-3 rounded-circle shadow postPic" src="{{ post.author.userProfile.image.url }}" alt="{{ post.author.username }}'s Profile Picture!">
-                    <div class="media-body ml-3 mt-2">
-                        <h3 class="anton"><a href="{% url 'userProfile' post.author.username %}" class="text-dark">@{{ post.author.username }}</a> 
-                            <small class="kanit-200 text-muted">{{ post.author.first_name }} {{ post.author.last_name }}</small></h3>
-                    </div>
-                </div>
+    {% if user.id == viewUser.id or user.userProfile.access_level > 1 %}
+    <div class="row rounded shadow p-4 mb-5 my-2">
+        <span class="text-center">
+            <h3>Time Management</h3>
+        </span>
+        <hr class="border rounded shadow">
+        <div class="row border border-dark rounded shadow my-4">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Clock In</th>
+                            <th scope="col">Clock Out</th>
+                            <th scope="col">Time Worked (H:M)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for punch in timeClock|slice:":10" %}
+                        <tr>
+                            <th scope="row">{{ punch.pk }}</th>
+                            <td>{{ punch.time_in|date:"SHORT_DATE_FORMAT" }}</td>
+                            {% localtime on %}
+                            <td>{{ punch.time_in|date:"H:i" }}</td>
+                            <td>{{ punch.time_out|date:"H:i" }}</td>
+                            {% endlocaltime %}
+                            <td>{{ punch.total|duration }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <div class="row justify-content-end">
-                <div class="col mx-2">
-                    <p>
-                        {{ post.content }}
-                    </p>
-                    <small>
-                        <a href="{% url 'postView' post.pk %}">{{ post.created_at|date:"l, N j, Y @ f A" }}</a>
-                    </small>
-                </div>
-            </div>
-            <hr class="w-100 mx-5 my-2 border rounded shadow">
-            <div class="row w-100 px-3 mx-auto align-items-center justify-content-around">
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.pk %}#reply"><i class="text-success fas fa-comment-dots"></i></a> 
-                        {% if post.bbsReply.all|length > 0 %}
-                        {{ post.bbsReply.all|length }}</span>
-                        {% else %}
-                        0</span>
-                        {% endif %}
-                </div>
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'likePost' post.pk %}"><i class="text-danger fas fa-heart"></i></a> 
-                        {% if post.likes.all|length > 0 %}
-                        {{ post.likes.all|length }}</span>
-                        {% else %}
-                        0</span>
-                        {% endif %}
-                </div>
-                {% if post.priority == 2 %}
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><i class="text-danger fas fa-bullhorn"></i></span>
-                </div>
-                {% elif post.department == 8 %}
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><i class="text-warning fas fa-bullhorn"></i></span>
-                </div>
-                {% endif %}
-                {% if post.is_reply %}
-                <div class="col-2 align-self-center">
-                    <span style="font-size: 1.2rem;"><a href="{% url 'postView' post.parent.id %}" data-toggle="tooltip" data-placement="top" title="View Parent Post!">
-                        <i class="text-primary fab fa-replyd"></i></a> 
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        <!-- END BBS REPLY POST -->
-        {% endfor %}
-    </div>
-</div>
-{% if user.username == viewUser.username or user.userProfile.access_level > 1 %}
-<div class="row">
-    <div class="col border border-secondary rounded shadow p-4 my-2">
-        <span class="text-center"><h3>Time Management</h3></span>
-        <hr class="border border-secondary rounded shadow mx-5">
-        <div class="row border border-secondary rounded shadow my-4">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Clock In</th>
-                        <th scope="col">Clock Out</th>
-                        <th scope="col">Time Worked (H:M)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for punch in timeClock|slice:":10" %}
-                    <tr>
-                        <th scope="row">{{ punch.pk }}</th>
-                        <td>{{ punch.time_in|date:"SHORT_DATE_FORMAT" }}</td>
-                        {% localtime on %}
-                        <td>{{ punch.time_in|date:"H:i" }}</td>
-                        <td>{{ punch.time_out|date:"H:i" }}</td>
-                        {% endlocaltime %}
-                        <td>{{ punch.total|duration }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="row justify-content-end">
-            <div class="col-2">
-                <small><a href="{% url 'allPunches' viewUser.username %}">See all punches.</a></small>
+            <div class="col text-end py-3">
+                    <a href="{% url 'allPunches' viewUser.username %}" role="button" class="btn btn-warning btn-rounded">See all punches.</a>
             </div>
         </div>
     </div>
 </div>
 {% endif %}
+{% include 'bbs/footer.html' %}
 {% endblock content %}

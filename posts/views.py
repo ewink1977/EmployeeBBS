@@ -16,6 +16,7 @@ def viewSinglePost(request, postID):
     }
     return render(request, 'posts/post_display.html', context)
 
+@login_required
 def partialPostReturn(request):
     if request.user.userProfile.department >= 6:
         postFilter = BBSPosts.objects.filter(priority = 1, is_reply = False)
@@ -36,6 +37,7 @@ def partialPostReturn(request):
     }
     return render(request, 'posts/partial_newpost_return.html', context)
 
+@login_required
 def createNewPost(request):
     if request.method == 'POST':
         userPosting = request.user
@@ -77,6 +79,7 @@ def createNewPost(request):
         messages.error(request, 'Sorry, you do not have permission to do this.', extra_tags = 'danger')
         return redirect('bbsHome')
 
+@login_required
 def replyPost(request):
     if request.method == 'POST':
         parentUUID = request.POST['bbsReplyParent']
@@ -97,6 +100,7 @@ def replyPost(request):
         messages.error(request, 'Sorry, you do not have permission to do this.', extra_tags = 'danger')
         return redirect('bbsHome')
 
+@login_required
 def likePost(request, postID):
     postToLike = BBSPosts.objects.get(id = postID)
     userLikingPost = User.objects.get(id = request.user.id)
@@ -104,18 +108,20 @@ def likePost(request, postID):
     messages.success(request, f"You are a nice person for liking {postToLike.author.username}'s post!!")
     return redirect('bbsHome')
 
+@login_required
 def deletePostConfirm(request, postID):
     postToDelete = BBSPosts.objects.get(id = postID)
     context = {
-        'postInfo': postToDelete,
+        'post_obj': postToDelete,
         'postType': 1
     }
     return render(request, 'posts/confirm_delete.html', context)
 
+@login_required
 def deleteReplyConfirm(request, postID):
     replyToDelete = BBSReply.objects.get(id = postID)
     context = {
-        'postInfo': replyToDelete,
+        'post_obj': replyToDelete,
         'postType': 2
         }
     return render(request, 'posts/confirm_delete.html', context)

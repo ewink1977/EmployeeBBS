@@ -1,4 +1,4 @@
-{% extends 'bbs/base.html' %} {% block content %} 
+{% extends 'bbs/base.html' %} {% block content %}
 {% include 'bbs/messages.html' %}
 <div class="container">
 	<div class="row border border-dark rounded shadow">
@@ -20,11 +20,8 @@
 				</p>
 				<p>
 					You can check out all of the features via the
-					<a
-						href="https://douglasavenue.com/ebbsdoc/documentation.html"
-						target="_blank"
-						>project's documentation</a
-					>!
+					<a href="https://douglasavenue.com/ebbsdoc/documentation.html" target="_blank">project's
+						documentation</a>!
 				</p>
 			</div>
 		</div>
@@ -46,20 +43,9 @@
 					<!-- Username input -->
 					<div class="form-outline mb-5">
 						{{ form.username.errors }}
-						<input
-							type="text"
-							class="form-control"
-							id="id_username"
-							name="username"
-							autofocus
-							autocapitalize="none"
-							autocomplete="off"
-							aria-describedby="usernamePrepend"
-							required
-						/>
-						<label class="form-label" for="id_username"
-							>username</label
-						>
+						<input type="text" class="form-control" id="id_username" name="username" autofocus
+							autocapitalize="none" autocomplete="off" aria-describedby="usernamePrepend" required />
+						<label class="form-label" for="id_username">username</label>
 						<div class="form-helper mb-2">
 							Do not type the @ sign before your username!
 						</div>
@@ -67,17 +53,9 @@
 					<!-- Password input -->
 					<div class="form-outline mb-4">
 						{{ form.password.errors }}
-						<input
-							class="form-control"
-							type="password"
-							name="password"
-							autocomplete="current-password"
-							required
-							id="id_password"
-						/>
-						<label class="form-label" for="id_password"
-							>Password</label
-						>
+						<input class="form-control" type="password" name="password" autocomplete="current-password"
+							required id="id_password" />
+						<label class="form-label" for="id_password">Password</label>
 					</div>
 					<div class="form-group text-right">
 						<button type="submit" class="btn btn-primary">
@@ -86,10 +64,8 @@
 					</div>
 				</form>
 				<div class="col border-top border-gray800 pt-2 text-right">
-					<small class="text-muted"
-						>If you do not have an account yet, please
-						<a href="{% url 'register' %}">register here</a>!</small
-					>
+					<small class="text-muted">If you do not have an account yet, please
+						<a href="{% url 'register' %}">register here</a>!</small>
 				</div>
 			</div>
 		</div>
