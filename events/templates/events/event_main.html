@@ -1,45 +1,53 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
-<div class="rounded shadow mt-3 px-3 py-2">
-    <div class="col text-right">
-        <small><a href="{% url 'bbsHome' %}">BBS Main</a> | <a href="{% url 'logout' %}">Log Out</a></small></span>
-    </div>
-    <!-- ADD EVENTS -->
-    <div class="row justify-content-end my-3">
-        <div class="col-2">
-            <a href="{% url 'createEvent' %}"><button type="button" class="btn btn-success shadow">New Event</button></a>
+{% include 'bbs/header.html' %}
+{% include 'bbs/messages.html' %}
+<div class="container">
+    <div class="rounded shadow mt-3 px-3 py-2">
+        <!-- ADD EVENTS OR GO BACK! -->
+        <div class="col text-end py-3 border-bottom">
+            <a href="{% url 'bbsHome' %}" class="btn btn-primary btn-lg shadow" role="button"><i
+                    class="fas fa-backspace fa-lg me-2"></i>BACK TO BBS MAIN PAGE</a>
+            <a href="{% url 'createEvent' %}" class="btn btn-success btn-lg shadow" role="button"><i
+                    class="fas fa-plus-square fa-lg me-2"></i>New Event</a>
         </div>
-    </div>
-    <!-- BEGIN EVENT LIST -->
-    {% for event_obj in events %}
-    <div class="row w-100 rounded text-center">
-        <div class="col mt-5">
-            <a href="{% url 'eventView' event_obj.id %}"><p class="kanit-900 xl-text">{{ event_obj.title }}</p></a>
-            {% for key, value in deptList.items %}
+        <!-- BEGIN EVENT LIST -->
+        {% for event_obj in events %}
+        <div class="row w-100 rounded text-center">
+            <div class="col mt-5">
+                <a href="{% url 'eventView' event_obj.id %}">
+                    <p class="kanit-900 xl-text">{{ event_obj.title }}</p>
+                </a>
+                {% for key, value in deptList.items %}
                 {% if key == event_obj.department %}
-            <h3 class="m-0 kula">{{ value }}</h3>
+                <h3 class="m-0 kula">{{ value }}</h3>
                 {% endif %}
-            {% endfor %}
-            {% if event_obj.start_date == event_obj.end_date %}
-            <h5 class="kula">On {{ event_obj.start_date|date:'l, F j, Y' }}</h5>
-            {% else %}
-            <h5 class="kula">From {{ event_obj.start_date|date:'l, F j, Y' }} through {{ event_obj.end_date|date:'l, F j, Y' }}</h5>
-            {% endif %}
+                {% endfor %}
+                {% if event_obj.start_date == event_obj.end_date %}
+                <h5 class="kula">On {{ event_obj.start_date|date:'l, F j, Y' }}</h5>
+                {% else %}
+                <h5 class="kula">From {{ event_obj.start_date|date:'l, F j, Y' }} through
+                    {{ event_obj.end_date|date:'l, F j, Y' }}</h5>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <hr class="mx-5 border border-light shadow">
-    <div class="row justify-content-end w-75">
-        <div class="col-11">
-            <h2 class="anton">Added by <a href="{% url 'userProfile' event_obj.poster.username %}">{{ event_obj.poster.username }}</a></h2>
+        <hr class="mx-5 border border-light shadow">
+        <div class="row justify-content-end w-75">
+            <div class="col-11">
+                <h2 class="anton">Added by <a
+                        href="{% url 'userProfile' event_obj.poster.username %}">{{ event_obj.poster.username }}</a>
+                </h2>
+            </div>
         </div>
-    </div>
-    <div class="row justify-content-end">
-        <div class="col-11">
-            <p>{{ event_obj.description }}</p>
+        <div class="row justify-content-end">
+            <div class="col-11">
+                <p>{{ event_obj.description }}</p>
+            </div>
         </div>
+        <hr class="mx-5 border border-secondary shadow">
+        {% endfor %}
+        <!-- END EVENT LIST -->
     </div>
-    <hr class="mx-5 border border-secondary shadow">
-    {% endfor %}
-    <!-- END EVENT LIST -->
 </div>
+{% include 'bbs/footer.html' %}
 {% endblock content %}

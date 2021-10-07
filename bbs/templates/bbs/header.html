@@ -1,19 +1,36 @@
 {% block header %}
 <nav class="navbar sticky-top navbar-dark bg-dark">
-	<div class="container-fluid">
-		<div class="col-4 ms-auto">
-			<h5 class="d-inline mx-1 text-white">@{{ user.username }}</h5>
-			<img src="{{ user.userProfile.image.url }}" class="rounded-circle mx-1" height="33"
-				alt="@{{ user.username }}" loading="lazy" />
-			<a href="{% url 'userProfile' user.username %}">
-				<button type="button" class="btn btn-outline-light" data-mdb-ripple-color="dark">
-					PROFILE
-				</button></a>
-			<a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-light"
-					data-mdb-ripple-color="dark">
-					LOG OUT
-				</button></a>
+		<div class="row w-100 justify-content-end align-items-center">
+			<div class="col-2 text-end">
+				<h5 class="d-inline mx-1 text-white">@{{ user.username }}</h5>
+				<img
+					src="{{ user.userProfile.image.url }}"
+					class="rounded-circle mx-1"
+					height="33"
+					alt="@{{ user.username }}"
+					loading="lazy"
+				/>
+			</div>
+			<div class="col-2">
+				<a href="{% url 'userProfile' user.username %}">
+					<button
+						type="button"
+						class="btn btn-outline-light"
+						data-mdb-ripple-color="dark"
+					>
+						PROFILE
+					</button></a
+				>
+				<a href="{% url 'logout' %}"
+					><button
+						type="button"
+						class="btn btn-outline-light"
+						data-mdb-ripple-color="dark"
+					>
+						LOG OUT
+					</button></a
+				>
+			</div>
 		</div>
-	</div>
 </nav>
 {% endblock header %}

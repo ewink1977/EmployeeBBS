@@ -5,7 +5,7 @@
 <div class="container">
 <div class="row my-5">
     <!-- POST DIV -->
-    <div class="col-md-5" id="postDisplayZone">
+    <div class="col-lg" id="postDisplayZone">
         <!-- STICKY LOGIC -->
         {% if stickyPosts %}
             {% for post_obj in stickyPosts %}
@@ -51,10 +51,10 @@
         <!-- END PAGINATION -->
     </div>
     <!-- USER DIV -->
-    <div class="col-md">
+    <div class="col-lg">
         <div class="row border border-dark rounded mt-2 p-2 shadow-2 align-items-center">
-            <div class="col-3">
-                <img src="{{ user.userProfile.image.url }}" alt="{{ user.username }}'s Profile Picture!" class="mainpic rounded shadow">
+            <div class="col-3 d-sm-none d-md-block">
+                <img src="{{ user.userProfile.image.url }}" alt="{{ user.username }}'s Profile Picture!" class="img-fluid mainpic rounded shadow">
             </div>
             <div class="col-8">
                 <h1 class="kula m-0"><a href="{% url 'userProfile' user.username %}">@{{ user.username }}</a></h1>

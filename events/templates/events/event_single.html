@@ -1,73 +1,88 @@
 {% extends 'bbs/base.html' %}
 {% block content %}
-<div class="rounded shadow mt-5 px-3 py-2">
-    <div class="col text-right">
-        <small><a href="{% url 'bbsHome' %}">BBS Main</a> | <a href="{% url 'eventHome' %}">Event Main</a> | <a href="{% url 'logout' %}">Log Out</a></small>
-    </div>
-    <div class="row w-100 rounded text-center">
-        <div class="col mt-5">
-            <p class="kanit-900 xl-text">{{ event.title }}</p>
-            {% for key, value in deptList.items %}
+{% include 'bbs/header.html' %}
+{% include 'bbs/messages.html' %}
+<div class="container">
+    <div class="rounded shadow mt-5 px-3 py-2">
+        <div class="col text-end">
+            <a href="{% url 'bbsHome' %}" class="btn btn-primary btn-lg shadow" role="button"><i
+                    class="fas fa-backspace fa-lg me-2"></i>BACK TO BBS MAIN PAGE</a>
+            <a href="{% url 'eventHome' %}" class="btn btn-info btn-lg shadow" role="button"><i
+                    class="fas fa-backspace fa-lg me-2"></i>BACK TO EVENT MAIN PAGE</a>
+        </div>
+        <div class="row w-100 rounded text-center">
+            <div class="col mt-5">
+                <p class="kanit-900 xl-text">{{ event.title }}</p>
+                {% for key, value in deptList.items %}
                 {% if key == event.department %}
-            <h3 class="m-0 kula">{{ value }}</h3>
+                <h3 class="m-0 kula">{{ value }}</h3>
                 {% endif %}
-            {% endfor %}
-            {% if event.start_date == event.end_date %}
-            <h5 class="kula">On {{ event.start_date|date:'l, F j, Y' }}</h5>
-            {% else %}
-            <h5 class="kula">From {{ event.start_date|date:'l, F j, Y' }} through {{ event.end_date|date:'l, F j, Y' }}</h5>
-            {% endif %}
+                {% endfor %}
+                {% if event.start_date == event.end_date %}
+                <h5 class="kula">On {{ event.start_date|date:'l, F j, Y' }}</h5>
+                {% else %}
+                <h5 class="kula">From {{ event.start_date|date:'l, F j, Y' }} through
+                    {{ event.end_date|date:'l, F j, Y' }}</h5>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <hr class="mx-5 border border-light shadow">
-    <div class="row justify-content-end w-75">
-        <div class="col-11">
-            <h2 class="anton">Added by <a href="{% url 'userProfile' event.poster.username %}">{{ event.poster.username }}</a></h2>
+        <hr class="mx-5 border border-light shadow">
+
+        <div class="row text-center">
+            <div class="col">
+                <p>{{ event.description }}</p>
+            </div>
         </div>
-    </div>
-    <div class="row justify-content-end">
-        <div class="col-11">
-            <p>{{ event.description }}</p>
+        <div class="row text-end mx-5">
+            <div class="col">
+                <h2 class="anton">Added by <a
+                        href="{% url 'userProfile' event.poster.username %}">{{ event.poster.username }}</a></h2>
+            </div>
         </div>
+        {% if user.userProfile.access_level > 1 %}
+        <div class="row w-100 text-end my-3">
+            <div class="col">
+                <a href="{% url 'createEvent' %}" class="btn btn-success shadow" role="button"><i
+                        class="fas fa-plus-square me-2"></i>New Event</a>
+                <a href="{% url 'editEvent' event.pk %}" class="btn btn-primary shadow" role="button"><i
+                        class="fas fa-edit me-2"></i>Edit Event</a>
+                <button type="button" class="btn btn-danger shadow" data-mdb-toggle="modal"
+                    data-mdb-target="#deleteEvent"><i class="fas fa-minus-square me-2"></i>Delete Event</button>
+            </div>
+        </div>
+        {% endif %}
     </div>
+
     {% if user.userProfile.access_level > 1 %}
-    <div class="row justify-content-end my-3">
-        <div class="col-4">
-            <a href="{% url 'createEvent' %}"><button type="button" class="btn btn-success shadow">New Event</button></a>
-            <a href="{% url 'editEvent' event.pk %}"><button type="button" class="btn btn-primary shadow">Edit Event</button></a>
-            <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#deleteEvent">Delete Event</button>
+    <!-- DELETE MODAL -->
+    <div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="deleteEventTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteEventTitle">Are you sure?</h5>
+                    <button type="button" class="close" data-mdb-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h2>ARE YOU SURE YOU WANT TO DELETE THIS EVENT?</h2>
+                        <h4>THIS CANNOT BE UNDONE!</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form action="{% url 'deleteEvent' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="eventID" id="eventID" value="{{ event.pk }}">
+                        <button type="button" class="btn-lg btn-secondary" data-mdb-dismiss="modal">Nevermind</button>
+                        <button type="submit" class="btn-lg btn-danger">YES. DELETE.</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     {% endif %}
 </div>
-
-{% if user.userProfile.access_level > 1 %}
-<!-- DELETE MODAL -->
-<div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="deleteEventTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteEventTitle">Are you sure?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <h2>ARE YOU SURE YOU WANT TO DELETE THIS EVENT?</h2>
-                    <h4>THIS CANNOT BE UNDONE!</h4>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <form action="{% url 'deleteEvent' %}" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="eventID" id="eventID" value="{{ event.pk }}">
-                    <button type="button" class="btn-lg btn-secondary" data-dismiss="modal">Nevermind</button>
-                    <button type="submit" class="btn-lg btn-danger">YES. DELETE.</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+{% include 'bbs/footer.html' %}
 {% endblock content %}
