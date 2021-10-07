@@ -3,181 +3,194 @@
 {% include 'bbs/header.html' %}
 {% include 'bbs/messages.html' %}
 <div class="container">
-<div class="row my-5">
-    <!-- POST DIV -->
-    <div class="col-lg" id="postDisplayZone">
-        <!-- STICKY LOGIC -->
-        {% if stickyPosts %}
+    <div class="row my-5">
+        <!-- POST DIV -->
+        <div class="col-lg" id="postDisplayZone">
+            <!-- STICKY LOGIC -->
+            {% if stickyPosts %}
             {% for post_obj in stickyPosts %}
-                {% if post_obj.department != 8 %}
-                    {% include 'posts/post_body.html' with tag="danger" %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        <!-- STOREWIDE POSTS ARE NEXT IN LINE! -->
-        {% if storewidePosts %}
-            {% for post_obj in storewidePosts %}
-                {% include 'posts/post_body.html' with tag="warning" %}
-            {% endfor %}
-        {% endif %}
-        <!-- FINALLY, THE DEPARTMENT LEVEL POSTS! -->
-        {% if page_obj %}
-            {% for post_obj in page_obj %}
-                {% if post_obj.department != 8 %}
-                    {% include 'posts/post_body.html' %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        <!-- POST LIST PAGINATION -->
-        {% if page_obj.has_other_pages %}
-        <div class="my-2 text-end">
-            {% if page_obj.has_previous %}
-            <a href="?page=1"><button type="button" class="btn btn-outline-primary btn-sm">First</button></a>
-            <a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&laquo;</button></a>
+            {% if post_obj.department != 8 %}
+            {% include 'posts/post_body.html' with tag="danger" %}
             {% endif %}
-            {% for num in page_obj.paginator.page_range %}
+            {% endfor %}
+            {% endif %}
+            <!-- STOREWIDE POSTS ARE NEXT IN LINE! -->
+            {% if storewidePosts %}
+            {% for post_obj in storewidePosts %}
+            {% include 'posts/post_body.html' with tag="warning" %}
+            {% endfor %}
+            {% endif %}
+            <!-- FINALLY, THE DEPARTMENT LEVEL POSTS! -->
+            {% if page_obj %}
+            {% for post_obj in page_obj %}
+            {% if post_obj.department != 8 %}
+            {% include 'posts/post_body.html' %}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <!-- POST LIST PAGINATION -->
+            {% if page_obj.has_other_pages %}
+            <div class="my-2 text-end">
+                {% if page_obj.has_previous %}
+                <a href="?page=1"><button type="button" class="btn btn-outline-primary btn-sm">First</button></a>
+                <a href="?page={{ page_obj.previous_page_number }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">&laquo;</button></a>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
                 {% if page_obj.number == num %}
                 <a href="?page={{ num }}"><button type="button" class="btn btn-primary btn-sm">{{ num }}</button></a>
                 {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a href="?page={{ num }}"><button type="button" class="btn btn-outline-primary btn-sm">{{ num }}</button></a>
+                <a href="?page={{ num }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">{{ num }}</button></a>
                 {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-outline-primary btn-sm">&raquo;</button></a>
-                <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-outline-primary btn-sm">Last</button></a>
-            {% endif %}
-            </div>
-        {% endif %}
-        <!-- END PAGINATION -->
-    </div>
-    <!-- USER DIV -->
-    <div class="col-lg">
-        <div class="row border border-dark rounded mt-2 p-2 shadow-2 align-items-center">
-            <div class="col-3 d-sm-none d-md-block">
-                <img src="{{ user.userProfile.image.url }}" alt="{{ user.username }}'s Profile Picture!" class="img-fluid mainpic rounded shadow">
-            </div>
-            <div class="col-8">
-                <h1 class="kula m-0"><a href="{% url 'userProfile' user.username %}">@{{ user.username }}</a></h1>
-                <h3 class="kanit-200 m-0">{{ user.first_name }} {{ user.last_name }}</h5>
-                <!-- Convert Department Number into Department Name! -->
-                {% for key, value in deptList.items %}
-                    {% if key == user.userProfile.department %}
-                    <h4 class="kanit-200 m-0">{{ value }}</h4>
-                    {% endif %}
                 {% endfor %}
-                <div class="row justify-content-end">
-                    <div class="pt-4 text-right">
-                        {% if timeBoolean == False %}
-                        <form action="{% url 'clockIN' %}" class="form-inline" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="oneClick" value="1">
-                            <button type="submit" class="btn btn-outline-success mx-1">Clock In</button>
-                            <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-dark mx-1">Log Out</button></a>
-                        </form>
-                        <small>Did you forget to clock in? Oops! <a href="#clockModal" data-mdb-toggle="modal" data-mdb-target="#clockModal">Click here</a>.</small>
-                        {% else %}
-                        <form action="{% url 'clockOUT' %}" class="form-inline" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-danger mx-1">Clock Out</button>
-                            <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-dark mx-1">Log Out</button></a>
-                        </form>
-                        <small>Did you forget to clock out? Oops! <a href="#clockModal" data-mdb-toggle="modal" data-mdb-target="#clockModal">Click here</a>.</small>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2 p-2">
-            <div class="col-12 text-center p-2">
-                <h1 class="kula">Upcoming Events</h1>
-            </div>
-        </div>
-        <div class="row p-2 border rounded">
-            <!-- EVENT LIST -->
-            {% if eventList.all|length == 0 %}
-            <h3 class="text-body text-center my-3">No events listed right now!</h3>
-            {% endif %}
-            {% for event_obj in eventList|slice:':5' %}
-            {% include 'events/event_card_bbs.html' %}
-            {% endfor %}
-            <!-- END EVENT LIST -->
-            <div class="row mx-1 my-4">
-                <div class="col p-0 text-end">
-                    <a href="{% url 'eventHome' %}"><button type="button" class="btn btn-outline-primary btn">All Events</button></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ADD A NEW POST -->
-
-        <div class="col-12 text-center my-3">
-            <h1 class="kula mt-1">Post A Message!</h1>
-        </div>
-        <div class="row border rounded justify-content-end">
-            <div class="col-12 my-3">
-                <form id="newPost" action="{% url 'createPost' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-outline">
-                        <textarea class="md-textarea form-control" id="bbsPostMessage" name="bbsPostMessage" rows="5"></textarea>
-                        <label class="form-label" for="bbsPostMessage">Type Your Message Here!</label>
-                    </div>
-                        <div class="row mt-1 gy-2 gx-3 align-items-center justify-content-end">
-                        <div class="col-auto">
-                            {% if user.userProfile.access_level > 1 %}
-                            <select class="form-select" name="bbsPostDepartment" aria-label="Post Department Selection">
-                                <option selected>Department/Distribution</option>
-                                {% for key, value in deptList.items %}
-                                <option value="{{ key }}">{{ value }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-auto">
-                            <select class="form-select" name="bbsPostPriority">
-                                <option selected>Post Priority</option>
-                                <option value="1">Normal</option>
-                                <option value="2">Sticky</option>
-                            </select>
-                        </div>
-                            {% endif %}
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-outline-primary">Post Message</button>
-                        </div>
-                        </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- TIME EDIT MODAL -->
-<div class="modal fade" id="clockModal" tabindex="-1" role="dialog" aria-labelledby="clockModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="clockModalLabel">Manual Time Entry</h5>
-                <button type="button" class="close" data-mdb-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body p-4">
-                {% if timeBoolean == False %}
-                <form action="{% url 'manualClockIN' %}" method="POST">
-                    {% csrf_token %}
-                    <label for="time">Set your clock in time.</label>
-                    <input type="datetime-local" name="time" id="time" class="form-control mb-3">
-                {% else %}
-                <form action="{% url 'manualClockOUT' %}" method="POST"> 
-                    {% csrf_token %}
-                    <label for="time">Set your clock out time.</label>
-                    <input type="datetime-local" name="time" id="time" class="form-control mb-3">
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">&raquo;</button></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button"
+                        class="btn btn-outline-primary btn-sm">Last</button></a>
                 {% endif %}
-                    <button type="button" class="btn btn-dark my-1" data-mdb-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary my-1">Submit Time</button>
-                </form>
+            </div>
+            {% endif %}
+            <!-- END PAGINATION -->
+        </div>
+        <!-- USER DIV -->
+        <div class="col-lg">
+            <div class="row border border-dark rounded mt-2 p-2 shadow-2 align-items-center">
+                <div class="col-3 d-sm-none d-md-block">
+                    <img src="{{ user.userProfile.image.url }}" alt="{{ user.username }}'s Profile Picture!"
+                        class="img-fluid mainpic rounded shadow">
+                </div>
+                <div class="col-8">
+                    <h1 class="kula m-0"><a href="{% url 'userProfile' user.username %}">@{{ user.username }}</a></h1>
+                    <h3 class="kanit-200 m-0">{{ user.first_name }} {{ user.last_name }}</h5>
+                        <!-- Convert Department Number into Department Name! -->
+                        {% for key, value in deptList.items %}
+                        {% if key == user.userProfile.department %}
+                        <h4 class="kanit-200 m-0">{{ value }}</h4>
+                        {% endif %}
+                        {% endfor %}
+                        <div class="row justify-content-end">
+                            <div class="pt-4 text-right">
+                                {% if timeBoolean == False %}
+                                <form action="{% url 'clockIN' %}" class="form-inline" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="oneClick" value="1">
+                                    <button type="submit" class="btn btn-outline-success mx-1">Clock In</button>
+                                    <a href="{% url 'logout' %}"><button type="button"
+                                            class="btn btn-outline-dark mx-1">Log Out</button></a>
+                                </form>
+                                <small>Did you forget to clock in? Oops! <a href="#clockModal" data-mdb-toggle="modal"
+                                        data-mdb-target="#clockModal">Click here</a>.</small>
+                                {% else %}
+                                <form action="{% url 'clockOUT' %}" class="form-inline" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger mx-1">Clock Out</button>
+                                    <a href="{% url 'logout' %}"><button type="button"
+                                            class="btn btn-outline-dark mx-1">Log Out</button></a>
+                                </form>
+                                <small>Did you forget to clock out? Oops! <a href="#clockModal" data-mdb-toggle="modal"
+                                        data-mdb-target="#clockModal">Click here</a>.</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="row mt-2 p-2">
+                <div class="col-12 text-center p-2">
+                    <h1 class="kula">Upcoming Events</h1>
+                </div>
+            </div>
+            <div class="row p-2 border rounded">
+                <!-- EVENT LIST -->
+                {% if eventList.all|length == 0 %}
+                <h3 class="text-body text-center my-3">No events listed right now!</h3>
+                {% endif %}
+                {% for event_obj in eventList|slice:':5' %}
+                {% include 'events/event_card_bbs.html' %}
+                {% endfor %}
+                <!-- END EVENT LIST -->
+                <div class="row mx-1 my-4">
+                    <div class="col p-0 text-end">
+                        <a href="{% url 'eventHome' %}"><button type="button" class="btn btn-outline-primary btn">All
+                                Events</button></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADD A NEW POST -->
+
+            <div class="col-12 text-center my-3">
+                <h1 class="kula mt-1">Post A Message!</h1>
+            </div>
+            <div class="row border rounded justify-content-end">
+                <div class="col-12 my-3">
+                    <form id="newPost" action="{% url 'createPost' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-outline">
+                            <textarea class="md-textarea form-control" id="bbsPostMessage" name="bbsPostMessage"
+                                rows="5"></textarea>
+                            <label class="form-label" for="bbsPostMessage">Type Your Message Here!</label>
+                        </div>
+                        <div class="row mt-1 gy-2 gx-3 align-items-center justify-content-end">
+                            <div class="col-auto">
+                                {% if user.userProfile.access_level > 1 %}
+                                <select class="form-select" name="bbsPostDepartment"
+                                    aria-label="Post Department Selection">
+                                    <option selected>Department/Distribution</option>
+                                    {% for key, value in deptList.items %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <select class="form-select" name="bbsPostPriority">
+                                    <option selected>Post Priority</option>
+                                    <option value="1">Normal</option>
+                                    <option value="2">Sticky</option>
+                                </select>
+                            </div>
+                            {% endif %}
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-outline-primary">Post Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- TIME EDIT MODAL -->
+    <div class="modal fade" id="clockModal" tabindex="-1" role="dialog" aria-labelledby="clockModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clockModalLabel">Manual Time Entry</h5>
+                    <button type="button" class="close" data-mdb-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    {% if timeBoolean == False %}
+                    <form action="{% url 'manualClockIN' %}" method="POST">
+                        {% csrf_token %}
+                        <label for="time">Set your clock in time.</label>
+                        <input type="datetime-local" name="time" id="time" class="form-control mb-3">
+                        {% else %}
+                        <form action="{% url 'manualClockOUT' %}" method="POST">
+                            {% csrf_token %}
+                            <label for="time">Set your clock out time.</label>
+                            <input type="datetime-local" name="time" id="time" class="form-control mb-3">
+                            {% endif %}
+                            <button type="button" class="btn btn-dark my-1" data-mdb-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary my-1">Submit Time</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END TIME EDIT MODAL -->
 
@@ -190,29 +203,29 @@
             url: '{% url "createPost" %}',
             method: 'post',
             data: $(this).serialize(),
-            success: function(serverResponse) {
-                $( '#postDisplayZone' ).html(serverResponse);
-                $( '#newPost' ).trigger("reset");
+            success: function (serverResponse) {
+                $('#postDisplayZone').html(serverResponse);
+                $('#newPost').trigger("reset");
             }
         })
     })
 
-// <!-- UPDATE THE DISPLAY EVERY 30 SECONDS IN CASE SOMEONE ELSE ADDED A POST! -->
+    // <!-- UPDATE THE DISPLAY EVERY 30 SECONDS IN CASE SOMEONE ELSE ADDED A POST! -->
 
     const update = () => {
         $.ajax({
             url: '{% url 'partialReturn' %}',
             method: 'get',
             ifModified: 'true',
-            success: function(serverResponse) {
+            success: function (serverResponse) {
                 console.log("Poking the server!");
-                $( '#postDisplayZone' ).html(serverResponse);
+                $('#postDisplayZone').html(serverResponse);
             }
         })
     }
 
     {% comment %} window.setInterval(update, 30000); {% endcomment %}
-    
+
 </script>
 {% include 'bbs/footer.html' %}
 

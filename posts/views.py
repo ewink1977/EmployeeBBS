@@ -11,7 +11,7 @@ def viewSinglePost(request, postID):
     replies = BBSReply.objects.filter(parent = postObj)
 
     context = {
-        'postObj': postObj,
+        'post_obj': postObj,
         'replies': replies,
     }
     return render(request, 'posts/post_display.html', context)
