@@ -70,9 +70,14 @@ WSGI_APPLICATION = 'EmployeeBBS.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),    
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+        'OPTIONS': {'sslmode': 'require'},
+        }
 }
 
 # Password validation
@@ -125,5 +130,28 @@ AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 
 AWS_S3_FILE_OVERWRITE = False
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_S3_REGION_NAME = 'sfo3'
+AWS_S3_ENDPOINT_URL = 'https://sfo3.digitaloceanspaces.com'
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_S3_CUSTOM_DOMAIN = 'cdn.douglasavenue.com'
+
+AWS_LOCATION = 'krk'
+
+MEDIAFILES_LOCATION = 'krk/media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+# Trying to seperate DEBUG STATIC from PRODUCTION STATIC
+if DEBUG == False:
+    STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+    STATICFILES_LOCATION = 'krk/static'
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+else:
+    STATIC_URL = '/static/'
+    STATICFILES_LOCATION = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
