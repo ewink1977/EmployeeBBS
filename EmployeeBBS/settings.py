@@ -148,10 +148,12 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 # Trying to seperate DEBUG STATIC from PRODUCTION STATIC
 if DEBUG == False:
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATICFILES_LOCATION = 'krk/static'
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 else:
     STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATICFILES_LOCATION = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
