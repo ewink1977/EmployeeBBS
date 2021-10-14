@@ -13,6 +13,9 @@ from bbs.departments import departments
 def landing_page(request):
     return render(request, 'bbs/landing.html')
 
+def error_404_view(request, exception):
+    return render(request, 'bbs/404.html')
+
 @login_required
 def bbsMainView(request):
     now = datetime.now()
@@ -50,6 +53,3 @@ def bbsMainView(request):
         'timeBoolean': lastPunchBoolean,
     }
     return render(request, 'bbs/main.html', context)
-
-def error_404_view(request, exception):
-    return render(request, 'bbs/404.html')
