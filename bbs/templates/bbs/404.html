@@ -1,0 +1,13 @@
+{% extends 'bbs/base.html' %}
+{% block content %}
+{% include 'bbs/messages.html' %}
+<div class="container">
+    <h1>404 Page Not Found</h1>
+    <p class="text-center p-5">
+        Sorry! The page you were looking for doesn't seem to exist! <a href="{% url 'bbsHome' %}">Click here</a> to go
+        back to the BBS Home Page! If you're not logged in, you will be redirected to the Login page where you can log
+        in or create an account!
+    </p>
+</div>
+
+{% include 'bbs/footer.html' %}

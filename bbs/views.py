@@ -50,3 +50,6 @@ def bbsMainView(request):
         'timeBoolean': lastPunchBoolean,
     }
     return render(request, 'bbs/main.html', context)
+
+def error_404_view(request, exception):
+    return render(request, 'bbs/404.html')
