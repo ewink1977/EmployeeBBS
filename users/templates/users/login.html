@@ -26,6 +26,27 @@
 			</div>
 		</div>
 		<div class="col-md">
+			<div class="tester_block border border-dark rounded p-4 d-sm-block d-md-none">
+				<h4>Test Users!</h4>
+				<p>
+					If you want to take a look around the system, please feel
+					free to
+					<a href="{% url 'register' %}">create an account</a>. You
+					can log in with the a test user account, username
+					<strong>testuser</strong> and the password
+					<strong>mytestaccount</strong>.
+				</p>
+				<p>
+					This will give you basic user access which will let you use
+					the Time Management System, post messages, reply to
+					messages, and view events!
+				</p>
+				<p>
+					You can check out all of the features via the
+					<a href="https://douglasavenue.com/ebbsdoc/documentation.html" target="_blank">project's
+						documentation</a>!
+				</p>
+			</div>
 			<div class="text-center">
 				<h1 class="mt-2 display-2 krona">MgRonald's</h1>
 				<h3 class="text-body">
@@ -71,4 +92,5 @@
 		</div>
 	</div>
 </div>
+{% include 'bbs/footer.html' %}
 {% endblock content %}
