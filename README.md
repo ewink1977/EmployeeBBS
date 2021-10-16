@@ -1,77 +1,50 @@
-<h1>Employee BBS & Time Management System</h1>
-<h2><a href="http://18.237.101.228/" target="_blank">PROJECT ONLINE HERE!</a></h2>
-<h3><a href="https://douglasavenue.com/ebbsdoc/documentation.html" target="_blank">FULL DOCUMENTATION!!</a></h3>
-<h3>UPDATE!</h3>
-<p>I have decided to hold off on upgrading this project to a REACT/DRF project due to the fact that I am still too new
-  at React, Redux, and all things in between to get it done any time this year. So for now I am going to make
-  improvements to this project while working on learning more React in the background!</p>
-<p>I am also rebranding this project as KRKBoard (pronounced corkboard) because all projects need a name and a
-  (spoiler)cool domain!</p>
-<p>ewink's Coding Dojo SOLO graduation project!</p>
-<h2> It's CRUNCH time!</h2>
-<img src="https://www.douglasavenue.com/img/mikucomputer.jpg" alt="Miku at a computer.">
-<p> I feel like this is going to be me in a few days, except I won't have anywhere near as much hair, won't be anywhere
-  close to being as adorable as Miku is, and will be a real human male, rather than a fictional girl. So, I guess that's
-  won't be me?</p>
-<p>UPDATE: Yeah, it is me, without the kawaii...</p>
-<p>Anyway, welcome to the GitRepo for my solo graduation project.</p>
+<h1>KRK -- The Employee BBS & Time Management System</h1>
+<h2><a href="https://krkboard.com" target="_blank">PROJECT ONLINE HERE!</a></h2>
+<hr />
+<h2>Introduction</h2>
+<p>Welcome to KRK (pronounced 'cork'). </p>
+<p>KRK is a virtual corkboard for businesses. I got the idea from back in the pre-internet era of the early 1990s. I worked at McDonald’s and in the breakroom, there was a corkboard where people would leave messages for each other, management would post notices, and a calendar was posted that had events and upcoming sales on it.</p>
 <h2>Concept</h2>
-<p>When complete, this project will act as a mini-intranet Twitter style message board for a business' employees.
-  Basically, a digital breakroom corkboard.</p>
-<p>Managers at both the department and top tier levels will be able to sticky messages and add events to the system to
-  ensure all users see things that will be affecting them and their departments.</p>
-<p>To increase the systems usefulness, there will also be a time management system built into the BBS, allowing
-  employees to clock in and out and track their hours.</p>
-<h3>Terminology</h3>
-<p>For the purpose of this README, there are three classes of users. <b>Superuser</b> which could be considered top-tier
-  level management (e.g. a store's general manager). <b>Managers</b> which would run departments (e.g. a restaurant's
-  head chef, or a shift supervisor). <b>Employees</b>, which should be considered base-level hourly staff with little or
-  no supervisory role. <i>Admins</i>, for the purpose of this explanation, are both Superusers and Managers.
-  <i>Users</i> are all users of the system, regardless of admin level.
-</p>
-<h2>Functions</h2>
-<p>There are three </p>
-<h2>Goals</h2>
-<p>When complete, the system should:</p>
+<p>KRK works to replicate this by creating a Twitter inspired timeline where employees can post messages, reply to those messages, and favorite them. Supervisors can sticky important department information to the top of the timeline, and store management can post important messages seen by all users.</p>
+<p>There is also an event calendar that allows department level and storewide events to be displayed. Finally, KRK offers a basic Time Management System which allows employees to keep track of their time worked.</p>
+<h2>Terminology</h2>
+<p>For the purpose of this README, there are 3 classes of users. To simplify this, we’ll say KRK is being used in a restaurant.</p>
 <ul>
-  <li>Allow a user to create an account, and log in with that account. <strong>FEATURE COMPLETE</strong>
-    <ul>
-      <li>Users will be able to upload a profile picture to use with their account. The will also be able to edit their
-        account information, including changing their username and password.</li>
-      <li>Admins will be able to edit user's accounts, including being able to change a user's password (in the case a
-        user forgets it and gets locked out).</li>
-      </ul>
-      </li>
-  <li>Allow a user to post messages that will appear on their and other user's timeline.
-    <ul>
-      <li>Superusers will be able to sticky messages that will appear to all users, regardless of admin level or
-        department. <strong>FEATURE COMPLETE</strong></li>
-      <li>Managers will be able to sticky messages that will appear to only their department. <strong>FEATURE
-          COMPLETE</strong></li>
-      <li>Users will be able to like and reply to messages. <strong>FEATURE COMPLETE</strong></li>
-      <li>Users will be able to delete their own messages. <strong>FEATURE COMPLETE</strong></li>
-      <li>Admins will be able to delete any message. <strong>FEATURE COMPLETE</strong></li>
-    </ul>
-    </li>
-    <li>Admins will be able to post and edit events that will be displayed on the user's homepage. <strong>FEATURE
-        COMPLETE</strong></li>
-    <li>Employees and managers will be able to use the system as a basic time management system with a clock-in and clock
-      out option, as well as the ability to edit their timesheets (e.g. in the case they forgot to clock out the night
-      before). Admins will be able to edit any user's timesheet. The timesheet system should add up hours worked.
-    <ul>
-      <li>It should be noted that TIME MANAGEMENT is a low priority feature which may not be completed on time, in which
-        case it will not be added.</li>
-      </ul>
-      </li>
-      </ul>
-<h2>Front-End</h2>
-<p>To keep things relatively simple, the front end will be developed using Bootstrap for styling, and will incorporate
-  some jQuery functions, primarily AJAX to basically allow the main page to update without reloading the whole page.
-  Tweaks will appear here and there, which is what this GitHub repo is for - so you can make fun of my tweaks.</p>
-<h2>Back-end</h2>
-<p>The backend will be built using Django and will utilize multiple python libraries. I will update this more when I
-  have decided how much of the built in Django auth I am going to use and how much I am going to build myself.</p>
-<h2>Questions?</h2>
-<p>Hit me up at erin@douglasavenue.com</p>
+  <li><b>Management</b> – This is the top tier management of the facility (e.g., a store’s General Manager).</li>
+  <li><b>Supervisors</b> – These are department managers and supervisors (e.g., the head chef, or a front-line shift manager).</li>
+  <li><b>Employees</b> – These are the backbone of your staff. Everyone who doesn’t count as Management or Supervisor is an employee. They have the lowest level of access, being restricted to interacting with their own department only.</li>
+</ul>
+<p>As well, <i>admins</i> cover both Management and Supervisors, as they both have some administrative privileges. <i>Users</i> refers to all users of the system, regardless of class.</p>
+<h2>Functions</h2>
+<p>Right now, KRK has three main functions – User Management, Posting, and Event Calendar.</p>
+<h4>User Management</h4>
+<p>Continuing with the concept of KRK being used for a restaurant, a new employee would sign up for an account, and, after management verification, be allowed to log in. <i>Right now, for the live site there is no user verification so that people may try out the system but restricting access to only ‘verified’ employees is a simple matter to enable.</i></p>
+<p>The user can then immediately access the Time Management System, which is a single click to clock in or clock out. There is a manual time edit in case the user forgot to clock in or out as well. The user has access to a profile which allows them to upload an image for their avatar, change their biography, and see all their posts, replies, and time clock punches.</p>
+<p>Users can see anyone’s profile. Admins can edit anyone’s profile as well (say a user changed their username to something bad, or their avatar was not appropriate).</p>
+<h4>Posting</h4>
+<p>On the BBS main page is the post timeline. Employees and Supervisors only see posts from others in their own department, while Management will see all posts. Supervisors can ‘sticky’ posts for their department, which locks them to the top of the timeline and changes the formatting slightly to indicate that they are a sticky post. Storewide posts can only be added by Management and are also stuck to the top of the timeline with a slightly different format.</p>
+<p>The concept of departments can be forgone as well allowing everyone to see everyone’s posts. The system is flexible in how to handle this.</p>
+<p>When making a post, the post is immediately added to the timeline. There is also an auto refresh system to update the timeline every now and then to make sure new posts from other users will be seen. <i>In the live version, this is currently disabled since, generally, there are not going to be multiple users posting at the same time so it would be an unnecessary drain on server resources.</i></p>
+<p>Posts can be replied to and favorited. Replies are handled on a post’s own page to avoid cluttering the main timeline with reply threads. Replies can have replies and be favorited. Like with Twitter, Users cannot edit posts, but can delete their own posts. Admins can delete any posts. Replies are destroyed when the parent is destroyed.</p>
+<h4>Event Calendar</h4>
+<p>The Event Calendar is the simplest part of the KRK application. Admins can create events, assign them dates that they will be active, and assign them to be either storewide or to single departments only (for instance your kitchen crew would not care about training on a new cash register system).</p>
+<p>These events show up, in chronological order, on the main BBS page. They disappear out of the calendar after they happen but remain in the database in case you want to simply change the dates and run them again.</p>
+<h2>Under The Hood</h2>
+<p>KRK is developed in Python and runs the Django backend framework. The current demo site uses Django 3.2. The front end now uses MDBootstrap 5 and regular Bootstrap 5 for styling, components, and so forth. There is not a lot of JavaScript in the app, given it’s rather simple and can mostly be handled with plain old HTML and CSS. The main BBS page uses jQuery and AJAX to process refreshing the post timeline without needing to reload the whole page.</p>
+<p>I am hosting the live site on a DigitalOcean droplet. The database is a PostgreSQL database instance also hosted by DO. All static files and media are served off my DO Spaces CDN (if you inspect the page or use View Source – don’t worry, I won’t turn you over to the governor of Missouri – you will see that material comes from https://cdn.douglasavenue.com).</p>
+<h2>The Future</h2>
+<p>I have just gone through and redid the UI for the site, upgrading from Bootstrap 4 to the MDB5/Bootstrap 5 layout. I’ve also improved the responsiveness of the site to make it mobile friendly.</p>
+<p>I also wish to separate the front and backend at some point, relying on React for the front and Django Rest Framework on the back. This is a long-term goal. I have already done some work on that, you can feel free to look at what has been done with both the <a href="https://github.com/ewink1977/KRK-Backend" target="_blank">backend</a> and <a href="https://github.com/ewink1977/KRK-Frontend" target="_blank">frontend</a> repos.</p>
+<p>In the short(ish) term, I plan on adding the following features:</p>
+<ul>
+  <li>Administration Dashboard. Right now, the only way to edit users is to use the Django Admin panel. This is bad as it allows too much access to the system. This will include the ability to activate and deactivate users.</li>
+  <li>Friends List. I would like users to be able to add friends and see if their friends are online.</li>
+  <li>Private Messaging. Users should be able to send private messages to their friends. A work based social media app would be cool, right? You could talk to your work friends without having to friend them on Facebook, or whatever the kids these days are using.</li>
+  <li>Better Time Management. I want the time management system to be able to add up hours for a week and be a system that could reasonably be used for payroll.</li>
+  <li>Event RSVP. I want users to be able to indicate that they are attending and event, and those users to be shown on the event page.</li>
+  <li>Better Timeline Mechanics. I would prefer that the timeline always be updated when a new post is added to the database so the client wouldn’t have to hammer the server every X seconds.</li>
+</ul>
+<h2>Questions/Concerns?</h2>
+<p>Please email me at erin@douglasavenue.com</p>
 <hr>
 <p>Thanks for checking this out!</p>
