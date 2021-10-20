@@ -61,7 +61,6 @@ def profileView(request, username):
     viewUser = User.objects.get(username = username)
     userPosts = BBSPosts.objects.filter(author = viewUser, is_reply = False)
     userReplies = BBSReply.objects.filter(author = viewUser, is_reply = True)
-    # Set clocked_in to False so partial punches are not pulled.
     timeClock = UserTimeManagement.objects.filter(user = viewUser, clocked_in = False).order_by('-created_at')
 
     paginatedPosts = Paginator(userPosts.order_by('-created_at'), 5)
@@ -157,7 +156,6 @@ def manualClockOUT(request):
         lastPunch.clocked_in = False
         lastPunch.save()
         total_worked = lastPunch.time_out - lastPunch.time_in
-        print(total_worked)
         lastPunch.total = total_worked
         lastPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')
@@ -194,7 +192,6 @@ def clockOUT(request):
         lastPunch.clocked_in = False
         lastPunch.save()
         total_worked = lastPunch.time_out - lastPunch.time_in
-        print(total_worked)
         lastPunch.total = total_worked
         lastPunch.save()
         messages.success(request, f'{ user.username }, you have been successfully clocked out, and you worked { total_worked }!')

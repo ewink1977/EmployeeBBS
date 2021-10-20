@@ -46,7 +46,7 @@ def createNewPost(request):
         else:
             postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department)
 
-        if request.user.userProfile.access_level == 1:
+        if request.user.userProfile.access_level == 1 or request.user.userProfile.access_level == 2:
             newPost = BBSPosts.objects.create(
                 author = userPosting,
                 content = request.POST['bbsPostMessage'],
@@ -126,6 +126,8 @@ def deleteReplyConfirm(request, postID):
         }
     return render(request, 'posts/confirm_delete.html', context)
 
+
+@login_required
 def deletePostFinal(request, postID):
     if request.method == 'POST':
         deletePost = BBSPosts.objects.get(id = request.POST['postID'])
@@ -136,6 +138,8 @@ def deletePostFinal(request, postID):
         messages.error(request, 'Sorry, you do not have permission to do this.', extra_tags = 'danger')
         return redirect('bbsHome')
 
+
+@login_required
 def deleteReplyFinal(request, postID):
     if request.method == 'POST':
         deleteReply = BBSReply.objects.get(id = request.POST['replyID'])

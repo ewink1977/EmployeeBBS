@@ -3,7 +3,7 @@
 {% include 'bbs/header.html' %}
 {% include 'bbs/messages.html' %}
 <div class="container pb-4">
-    <div class="row my-5">
+    <div class="row mb-3">
         <!-- POST DIV -->
         <div class="col-lg" id="postDisplayZone">
             <!-- STICKY LOGIC -->
@@ -133,8 +133,8 @@
                             <label class="form-label" for="bbsPostMessage">Type Your Message Here!</label>
                         </div>
                         <div class="row mt-1 gy-2 gx-3 align-items-center justify-content-end">
+                            {% if user.userProfile.access_level > 2 %}
                             <div class="col-auto">
-                                {% if user.userProfile.access_level > 1 %}
                                 <select class="form-select" name="bbsPostDepartment"
                                     aria-label="Post Department Selection">
                                     <option selected>Department/Distribution</option>
@@ -143,6 +143,8 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            {% endif %}
+                            {% if user.userProfile.access_level > 1 %}
                             <div class="col-auto">
                                 <select class="form-select" name="bbsPostPriority">
                                     <option selected>Post Priority</option>
