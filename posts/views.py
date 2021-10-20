@@ -23,7 +23,8 @@ def partialPostReturn(request):
     else:
         postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department, is_reply = False)
 
-    stickyPosts = BBSPosts.objects.filter(priority = 2)
+    stickyPosts = BBSPosts.objects.filter(
+        priority=2, department=request.user.userProfile.department)
     storewidePosts = BBSPosts.objects.filter(department = 8)
 
     paginator = Paginator(postFilter.order_by('-created_at'), 5)
@@ -42,14 +43,25 @@ def createNewPost(request):
     if request.method == 'POST':
         userPosting = request.user
         if request.user.userProfile.department >= 6:
-            postFilter = BBSPosts.objects.filter(priority = 1)
+            postFilter = BBSPosts.objects.filter(priority=1, is_reply=False)
         else:
-            postFilter = BBSPosts.objects.filter(priority = 1, department = request.user.userProfile.department)
+            postFilter = BBSPosts.objects.filter(
+                priority=1, department=request.user.userProfile.department, is_reply=False)
 
-        if request.user.userProfile.access_level == 1 or request.user.userProfile.access_level == 2:
+        if request.user.userProfile.access_level == 1:
+            newPost = BBSPosts.objects.create(
+                author=userPosting,
+                content=request.POST['bbsPostMessage'],
+                priority=1,
+                department=userPosting.userProfile.department,
+            )
+            newPost.save()
+
+        if request.user.userProfile.access_level == 2:
             newPost = BBSPosts.objects.create(
                 author = userPosting,
                 content = request.POST['bbsPostMessage'],
+                priority = request.POST['bbsPostPriority'],
                 department = userPosting.userProfile.department,
             )
             newPost.save()
@@ -62,7 +74,8 @@ def createNewPost(request):
             )
             newPost.save()
 
-        stickyPosts = BBSPosts.objects.filter(priority = 2)
+        stickyPosts = BBSPosts.objects.filter(
+            priority=2, department=request.user.userProfile.department)
         storewidePosts = BBSPosts.objects.filter(department = 8)
 
         paginator = Paginator(postFilter.order_by('-created_at'), 5)

@@ -3,30 +3,30 @@
 {% include 'bbs/header.html' %}
 {% include 'bbs/messages.html' %}
 <div class="container pb-4">
-    <div class="row mb-3">
+    <div class="row mb-3"> 
         <!-- POST DIV -->
         <div class="col-lg" id="postDisplayZone">
             <!-- STICKY LOGIC -->
             {% if stickyPosts %}
-            {% for post_obj in stickyPosts %}
-            {% if post_obj.department != 8 %}
-            {% include 'posts/post_body.html' with tag="danger" %}
-            {% endif %}
-            {% endfor %}
+                {% for post_obj in stickyPosts %}
+                    {% if post_obj.department != 8 %}
+                        {% include 'posts/post_body.html' with tag="danger" %}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
             <!-- STOREWIDE POSTS ARE NEXT IN LINE! -->
             {% if storewidePosts %}
-            {% for post_obj in storewidePosts %}
-            {% include 'posts/post_body.html' with tag="warning" %}
-            {% endfor %}
+                {% for post_obj in storewidePosts %}
+                    {% include 'posts/post_body.html' with tag="warning" %}
+                {% endfor %}
             {% endif %}
             <!-- FINALLY, THE DEPARTMENT LEVEL POSTS! -->
             {% if page_obj %}
-            {% for post_obj in page_obj %}
-            {% if post_obj.department != 8 %}
-            {% include 'posts/post_body.html' %}
-            {% endif %}
-            {% endfor %}
+                {% for post_obj in page_obj %}
+                    {% if post_obj.department != 8 %}
+                        {% include 'posts/post_body.html' %}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
             <!-- POST LIST PAGINATION -->
             {% if page_obj.has_other_pages %}

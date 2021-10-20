@@ -17,7 +17,7 @@
 {% if page_obj %}
     {% for post_obj in page_obj %}
         {% if post_obj.department != 8 %}
-            {% include 'posts/post_body.html' with tag="secondary" %}
+            {% include 'posts/post_body.html' %}
         {% endif %}
     {% endfor %}
 {% endif %}

@@ -32,7 +32,8 @@ def bbsMainView(request):
         eventFilterDept = storeEvent.objects.filter(department = request.user.userProfile.department, end_date__gte = now).order_by('start_date')
         eventFilterStorewide = storeEvent.objects.filter(department = 8, end_date__gte = now).order_by('start_date')
         eventFilter = sorted(chain(eventFilterDept, eventFilterStorewide), key=lambda data: data.start_date)
-    stickyPosts = BBSPosts.objects.filter(priority = 2)
+    stickyPosts = BBSPosts.objects.filter(
+        priority=2, department=request.user.userProfile.department)
     storewidePosts = BBSPosts.objects.filter(department = 8)
     paginator = Paginator(postFilter.order_by('-created_at'), 5)
 
