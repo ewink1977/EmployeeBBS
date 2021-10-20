@@ -6,7 +6,6 @@ from events.models import storeEvent
 from users.models import UserTimeManagement
 from datetime import datetime
 from itertools import chain
-# DEPARTMENT DICTIONARY IMPORT!
 from bbs.departments import departments
 
 
@@ -33,8 +32,8 @@ def bbsMainView(request):
         eventFilterStorewide = storeEvent.objects.filter(department = 8, end_date__gte = now).order_by('start_date')
         eventFilter = sorted(chain(eventFilterDept, eventFilterStorewide), key=lambda data: data.start_date)
     stickyPosts = BBSPosts.objects.filter(
-        priority=2, department=request.user.userProfile.department)
-    storewidePosts = BBSPosts.objects.filter(department = 8)
+        priority=2, department=request.user.userProfile.department, is_reply=False)
+    storewidePosts = BBSPosts.objects.filter(department=8, is_reply=False)
     paginator = Paginator(postFilter.order_by('-created_at'), 5)
 
     page_number = request.GET.get('page')

@@ -3,11 +3,11 @@
 {% include 'bbs/header.html' %}
 {% include 'bbs/messages.html' %}
 <div class="container">
-    <div class="col text-end py-3">
+    <div class="col text-end mt-2">
             <a href="{% url 'bbsHome' %}" class="btn btn-primary btn-lg shadow" role="button"><i
                     class="fas fa-backspace fa-lg me-2"></i>BACK TO BBS MAIN PAGE</a>
     </div>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center my-1">
         <div class="col-6">
         {% include 'posts/post_body.html' %}
         </div>
@@ -22,7 +22,7 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class="row d-flex justify-content-center" id="reply">
+    <div class="row d-flex justify-content-center mb-5" id="reply">
         <div class="col-6">
             <form action="{% url 'replyPost' %}" method="POST">
                 {% csrf_token %}
