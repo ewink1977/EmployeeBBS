@@ -88,6 +88,10 @@ def profileEdit(request):
             instance = request.user.userProfile
             )
         if u_form.is_valid() and p_form.is_valid():
+            if request.user.pk == 2 or request.user.pk == 3:
+                username = request.user.username
+                messages.warning(request, f'The profile for @{ username } cannot be edited on the test platform to avoid shenanagins, but if this was a full production version, your changes would now be saved to the database!')
+                return redirect('userProfile', username)
             u_form.save()
             p_form.save()
             username = request.user.username

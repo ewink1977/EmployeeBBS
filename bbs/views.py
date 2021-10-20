@@ -16,6 +16,9 @@ def landing_page(request):
 def error_404_view(request, exception):
     return render(request, 'bbs/404.html')
 
+def documentation(request):
+    return render(request, 'bbs/documentation.html')
+
 @login_required
 def bbsMainView(request):
     now = datetime.now()

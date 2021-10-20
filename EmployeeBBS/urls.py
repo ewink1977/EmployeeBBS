@@ -13,6 +13,7 @@ urlpatterns = [
     path('handle_login/', userView.Login, name = 'handle_login'), 
     path('logout/', userView.Logout, name = 'logout'),
     path('register/', userView.Register, name = 'register'),
+    path('documentation/', bbsView.documentation, name = 'documentation'),
     path('bbs/', include('bbs.urls')),
     path('events/', include('events.urls')),
     path('posts/', include('posts.urls')),
